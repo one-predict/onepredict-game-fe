@@ -22,58 +22,6 @@ const FadeCircle = styled.div`
     filter: blur(1.2rem);
 `
 
-const PageContainer = ({ children }: {children: ReactNode}) => {
-    return (
-        <LayoutContainer>
-            <div style={{
-                position: "absolute",
-                top: -50,
-                left: -50,
-            }}>
-                <FadeCircle/>
-            </div>
-            <div style={{
-                position: "absolute",
-                bottom: -10,
-                left: 100,
-            }}>
-                <FadeCircle/>
-            </div>
-            <div style={{
-                position: "absolute",
-                top: 100,
-                right: 100,
-            }}>
-                <FadeCircle/>
-            </div>
-            <div style={{
-                position: "absolute",
-                top: 110,
-                right: 110,
-            }}>
-                <FadeCircle/>
-            </div>
-            <div style={{
-                position: "absolute",
-                top: 200,
-                right: 50,
-            }}>
-                <FadeCircle/>
-            </div>
-            <div style={{
-                zIndex: 100,
-                width: "100%",
-                display: "flex",
-                justifyItems: "center",
-                alignItems: "center",
-                flexDirection: "column"
-            }}>
-                {children}
-            </div>
-        </LayoutContainer>
-    )
-}
-
 const StyledGameMenuButton = styled(Button)`
   margin-top: 24px;
   width: 100%;
@@ -82,8 +30,6 @@ const StyledGameMenuButton = styled(Button)`
     width: unset;
   }
 `;
-
-
 const FirstLayer = styled.div`
   width: 300px;
   height: 400px;
@@ -111,14 +57,20 @@ const ThirdLayer = styled.div`
 `;
 
 const StepContainer = styled.div`
-    width: 100%;
+    width: 80%;
+    align-self: center;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
+    margin-left: auto;
+    margin-right: auto;
 
-    @media (max-width: 768px) {
+    @media (max-width: 800px) {
+        width: 100%;
         flex-direction: column;
+        margin-left: 0;
+        margin-right: 0;
     }
 `;
 
@@ -148,7 +100,7 @@ const StepButton = styled.button`
     background-repeat: no-repeat;
     background-size: 20px 20px;
 
-    @media (max-width: 768px) {
+    @media (max-width: 800px) {
         width: 150px;
         height: 100px;
     }
@@ -156,7 +108,7 @@ const StepButton = styled.button`
 
 const MiddleContainer = styled.div`
     position: absolute;
-    @media (max-width: 768px) {
+    @media (max-width: 800px) {
         position: relative;
         transform: translateY(-25%) !important;
     }
@@ -302,38 +254,62 @@ const Choose = ({ onBack } : ChooseProps) => {
     }
         return (
         <PageContainer>
-            <div style={{ width: "100%"}}>
+            <div style={{ width: "100%" }}>
                 {steps[step]}
             </div>
         </PageContainer>
     )
 }
 
-
-const PortfolioRouter = () => {
-    const [ page, setPage ] = useState<number>(0);
-
-    const pages: { [key: number]: ReactNode } = {
-        0: <PageContainer>
-            <>
-                <h1 style={{
-                    color: "white"
-                }}>Portfolio</h1>
-                <StyledGameMenuButton onClick={() => setPage(1)}>Portfolio</StyledGameMenuButton>
-                <StyledGameMenuButton onClick={() => setPage(2)}>Choose</StyledGameMenuButton>
-            </>
-        </PageContainer>,
-        1: <Portfolio onBack={() => setPage(0)} />,
-        2: <Choose onBack={() => setPage(0)} />
-    }
-    if(page > 2) {
-        return null
-    }
-
+const PageContainer = ({ children }: {children: ReactNode}) => {
     return (
-        <>
-            {pages[page]}
-        </>
+        <LayoutContainer>
+            <div style={{
+                position: "absolute",
+                top: -50,
+                left: -50,
+            }}>
+                <FadeCircle/>
+            </div>
+            <div style={{
+                position: "absolute",
+                bottom: -10,
+                left: 100,
+            }}>
+                <FadeCircle/>
+            </div>
+            <div style={{
+                position: "absolute",
+                top: 100,
+                right: 100,
+            }}>
+                <FadeCircle/>
+            </div>
+            <div style={{
+                position: "absolute",
+                top: 110,
+                right: 110,
+            }}>
+                <FadeCircle/>
+            </div>
+            <div style={{
+                position: "absolute",
+                top: 200,
+                right: 50,
+            }}>
+                <FadeCircle/>
+            </div>
+            <div style={{
+                zIndex: 100,
+                width: "100%",
+                display: "flex",
+                justifyItems: "center",
+                alignItems: "center",
+                flexDirection: "column"
+            }}>
+                {children}
+            </div>
+        </LayoutContainer>
     )
 }
 
@@ -375,6 +351,33 @@ const Portfolio = ({ onBack }: PortfolioProps) => {
             </CoinsContainer>
             <StyledGameMenuButton onClick={onBack}>Back</StyledGameMenuButton>
         </PageContainer>
+    )
+}
+
+const PortfolioRouter = () => {
+    const [ page, setPage ] = useState<number>(0);
+
+    const pages: { [key: number]: ReactNode } = {
+        0: <PageContainer>
+            <>
+                <h1 style={{
+                    color: "white"
+                }}>Portfolio</h1>
+                <StyledGameMenuButton onClick={() => setPage(1)}>Portfolio</StyledGameMenuButton>
+                <StyledGameMenuButton onClick={() => setPage(2)}>Choose</StyledGameMenuButton>
+            </>
+        </PageContainer>,
+        1: <Portfolio onBack={() => setPage(0)} />,
+        2: <Choose onBack={() => setPage(0)} />
+    }
+    if(page > 2) {
+        return null
+    }
+
+    return (
+        <>
+            {pages[page]}
+        </>
     )
 }
 
