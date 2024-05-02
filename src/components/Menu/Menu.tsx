@@ -55,9 +55,10 @@ const StyledReadyToPlayTypography = styled(Typography)`
 export interface MenuProps {
   username: string;
   onStartGameClick: () => void;
+  onOpenPortfolio: () => void;
 }
 
-const Menu = ({ username, onStartGameClick }: MenuProps) => {
+const Menu = ({ username, onStartGameClick, onOpenPortfolio }: MenuProps) => {
   return (
     <StyledMenu>
       <Header />
@@ -65,6 +66,7 @@ const Menu = ({ username, onStartGameClick }: MenuProps) => {
         <Typography variant="h1">Hello, {username}!</Typography>
         <StyledReadyToPlayTypography variant="h5">Ready to play? Click to the button</StyledReadyToPlayTypography>
         <StyledGameMenuButton onClick={onStartGameClick}>Start Game</StyledGameMenuButton>
+          <StyledGameMenuButton onClick={onOpenPortfolio}>Portfolio</StyledGameMenuButton>
       </StyledMenuCard>
       <StyledBackgroundImage src={backgroundLarge} />
     </StyledMenu>

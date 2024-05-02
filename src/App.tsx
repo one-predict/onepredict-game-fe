@@ -7,8 +7,11 @@ import Menu from "./components/Menu/Menu.tsx";
 import SignIn from "./components/SignIn";
 import {useState} from "react";
 import Game from "./components/Game";
+import PortfolioRouter from "./pages/portfolio/page"
 
 const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+  
   *, *::before, *::after {
     box-sizing: border-box;
   }
@@ -76,6 +79,7 @@ const GlobalStyle = createGlobalStyle`
 
 const App = () => {
   const [startGame, setStageGame] = useState(false);
+  const [portfolio, setOpenPortfolio] = useState<boolean>(false);
   const { isAuthenticated, profile } = useProfile();
 
   const renderSecuredContent = () => {
@@ -85,8 +89,15 @@ const App = () => {
       );
     }
 
+    if(portfolio) {
+      return (
+          <PortfolioRouter />
+      )
+    }
+
     return (
       <Menu
+          onOpenPortfolio={() => setOpenPortfolio(true)}
         onStartGameClick={() => setStageGame(true)}
         username={profile.username || 'Unknown Picker'}
       />
