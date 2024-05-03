@@ -1,7 +1,7 @@
-import {Game} from "../../game/Game.ts";
-import {CollectableDrawer} from "./CollectableDrawer.ts";
-import {ScoreDrawer} from "./ScoreDrawer.ts";
-import TimerDrawer from "./TimerDrawer.ts";
+import { Game } from '../../game/Game';
+import { CollectableDrawer } from './CollectableDrawer';
+import { ScoreDrawer } from './ScoreDrawer';
+import TimerDrawer from './TimerDrawer';
 
 export interface TemporaryVisualFeedbackDrawer {
   draw(game: Game): void;
@@ -30,6 +30,10 @@ export default abstract class BaseGameDrawer {
     });
 
     this.scoreDrawer.draw(game.getScore(), gameWindowWidth, gameWindowHeight);
-    this.timerDrawer.draw((game.getCurrentGameTime() - game.getGameStartTime()) / 1000, gameWindowWidth, gameWindowHeight);
+    this.timerDrawer.draw(
+      (game.getCurrentGameTime() - game.getGameStartTime()) / 1000,
+      gameWindowWidth,
+      gameWindowHeight,
+    );
   }
 }

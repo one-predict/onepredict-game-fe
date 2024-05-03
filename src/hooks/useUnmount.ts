@@ -7,7 +7,7 @@ const useUnmount = (callback: () => void) => {
 
   useEffect(() => {
     return () => {
-      callbackRef.current()
+      callbackRef.current();
     };
   }, []);
 };

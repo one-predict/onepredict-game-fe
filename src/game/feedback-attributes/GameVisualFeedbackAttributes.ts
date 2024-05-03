@@ -1,5 +1,5 @@
-import SuccessCollectionVisualFeedbackAttributes from "./SuccessCollectionVisualFeedbackAttributes.ts";
-import MissedCollectionVisualFeedbackAttributes from "./MissedCollectionVisualFeedbackAttributes.ts";
+import SuccessCollectionVisualFeedbackAttributes from './SuccessCollectionVisualFeedbackAttributes';
+import MissedCollectionVisualFeedbackAttributes from './MissedCollectionVisualFeedbackAttributes';
 
 export type GameVisualFeedbackAttributes =
   | SuccessCollectionVisualFeedbackAttributes

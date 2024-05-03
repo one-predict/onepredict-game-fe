@@ -1,12 +1,13 @@
-import TokenCollectingGame, { Game } from "./game/Game.ts";
-import MediaPipePoseTracker, {PoseTracker } from "./PoseTracker.ts";
-import {NormalizedLandmark} from "@mediapipe/tasks-vision";
+import TokenCollectingGame, { Game } from './game/Game';
+import MediaPipePoseTracker, { PoseTracker } from './PoseTracker';
+import { NormalizedLandmark } from '@mediapipe/tasks-vision';
 
 export default class GameManager {
   private game: Game = new TokenCollectingGame(30000);
   private poseTracker: PoseTracker = new MediaPipePoseTracker();
   private gameLoopId: number = -1;
-  private handler: ((game: Game, gameWindowWidth: number, gameWindowHeight: number) => void) | undefined = undefined;
+  private handler: ((game: Game, gameWindowWidth: number, gameWindowHeight: number) => void) | undefined =
+    undefined;
   private onGameStop: ((game: Game) => void) | undefined = undefined;
 
   public constructor(private videoElement: HTMLVideoElement) {}
@@ -19,7 +20,9 @@ export default class GameManager {
     this.processGameLoop();
   }
 
-  public subscribeToGameEvent(handler: (game: Game, gameWindowWidth: number, gameWindowHeight: number) => void) {
+  public subscribeToGameEvent(
+    handler: (game: Game, gameWindowWidth: number, gameWindowHeight: number) => void,
+  ) {
     this.handler = handler;
 
     return () => this.stopGame();
@@ -38,7 +41,7 @@ export default class GameManager {
       const gameTime = this.game.startNewGameCycle();
       const aspectRatio = this.videoElement.videoWidth / this.videoElement.videoHeight;
 
-      if ((gameTime - this.game.getGameStartTime()) > this.game.getGameDuration()) {
+      if (gameTime - this.game.getGameStartTime() > this.game.getGameDuration()) {
         this.stopGame(true);
 
         return;
@@ -57,9 +60,21 @@ export default class GameManager {
 
         const [poseLandmarks] = poseTrackingResult.landmarks as NormalizedLandmark[][];
 
-        const filteredPoseLandmarks = poseLandmarks ? poseLandmarks.filter((_, index) => {
-          return index === 15 || index === 17 || index === 19 || index === 21 || index === 20 || index === 18 || index === 18 || index === 16 || index === 14;
-        }) : [];
+        const filteredPoseLandmarks = poseLandmarks
+          ? poseLandmarks.filter((_, index) => {
+              return (
+                index === 15 ||
+                index === 17 ||
+                index === 19 ||
+                index === 21 ||
+                index === 20 ||
+                index === 18 ||
+                index === 18 ||
+                index === 16 ||
+                index === 14
+              );
+            })
+          : [];
 
         const collidedCollectable = this.game.getCollectables().find((collectable) => {
           return filteredPoseLandmarks.some((landmark: NormalizedLandmark) => {
@@ -79,7 +94,6 @@ export default class GameManager {
         if (collidedCollectable) {
           this.game.collect(collidedCollectable);
         }
-
 
         this.game.tryToGenerateCollectables();
         this.game.checkMissedCollectables();

@@ -1,12 +1,12 @@
-import { createGlobalStyle } from "styled-components";
-import { useProfile } from "@farcaster/auth-kit";
+import { createGlobalStyle } from 'styled-components';
 
-import GothamProRegularFontUrl from "./assets/fonts/GothamPro.woff2";
-import GothamProBoldFontUrl from "./assets/fonts/GothamPro-Bold.woff2";
-import Menu from "./components/Menu/Menu.tsx";
-import SignIn from "./components/SignIn";
-import {useState} from "react";
-import Game from "./components/Game";
+import OrbitronRegularFontUrl from './assets/fonts/Orbitron-Regular.woff2';
+import OrbitronBoldFontUrl from './assets/fonts/Orbitron-Bold.woff2';
+import Menu from './components/Menu/Menu';
+import SignIn from './components/SignIn';
+import { useState } from 'react';
+import Game from './components/Game';
+import useSession from './hooks/useSession';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
   
   body {
     overflow-x: hidden;
-    font-family: 'Gotham Pro', sans-serif;
+    font-family: 'Orbitron', sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
@@ -53,17 +53,17 @@ const GlobalStyle = createGlobalStyle`
   }
 
   @font-face {
-    font-family: 'Gotham Pro';
-    src: url('${GothamProRegularFontUrl}') format('woff2'),
-    url('${GothamProRegularFontUrl}') format('woff');
+    font-family: 'Orbitron';
+    src: url('${OrbitronRegularFontUrl}') format('woff2'),
+    url('${OrbitronRegularFontUrl}') format('woff');
     font-weight: normal;
     font-style: normal;
   }
 
   @font-face {
-    font-family: 'Gotham Pro';
-    src: url('${GothamProBoldFontUrl}') format('woff2'),
-    url('${GothamProBoldFontUrl}') format('woff');
+    font-family: 'Orbitron';
+    src: url('${OrbitronBoldFontUrl}') format('woff2'),
+    url('${OrbitronBoldFontUrl}') format('woff');
     font-weight: bold;
     font-style: normal;
   }
@@ -76,30 +76,28 @@ const GlobalStyle = createGlobalStyle`
 
 const App = () => {
   const [startGame, setStageGame] = useState(false);
-  const { isAuthenticated, profile } = useProfile();
+
+  const currentUser = useSession();
 
   const renderSecuredContent = () => {
-    if (startGame) {
-      return (
-        <Game />
-      );
+    if (!currentUser) {
+      return null;
     }
 
-    return (
-      <Menu
-        onStartGameClick={() => setStageGame(true)}
-        username={profile.username || 'Unknown Picker'}
-      />
-    );
+    if (startGame) {
+      return <Game />;
+    }
+
+    return <Menu userBalance={currentUser.balance} onStartGameClick={() => setStageGame(true)} />;
   };
 
   return (
     <>
-      {!isAuthenticated && <SignIn />}
-      {isAuthenticated && renderSecuredContent()}
+      {!currentUser && <SignIn />}
+      {currentUser && renderSecuredContent()}
       <GlobalStyle />
     </>
-  )
-}
+  );
+};
 
 export default App;

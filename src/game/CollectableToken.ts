@@ -1,6 +1,6 @@
-import { Collectable } from "./Collectable.ts";
-import TokenType from "../enums/TokenType.ts";
-import BaseCollectable from "./Collectable.ts";
+import { Collectable } from './Collectable';
+import TokenType from '../enums/TokenType';
+import BaseCollectable from './Collectable';
 import aptosSrc from '../assets/Aptos.png';
 import arbitrumSrc from '../assets/arbitrum-arb-logo.png';
 import bnb from '../assets/bnb-bnb-logo.png';

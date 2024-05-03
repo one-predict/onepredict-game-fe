@@ -1,4 +1,4 @@
-import { nanoid } from "nanoid";
+import { nanoid } from 'nanoid';
 
 export interface Collectable<Type extends string = string> {
   getId(): string;

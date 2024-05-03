@@ -1,10 +1,10 @@
 import { sampleSize } from 'lodash';
-import {NormalizedLandmark} from '@mediapipe/tasks-vision';
-import {Collectable} from "./Collectable.ts";
-import CollectableToken from "./CollectableToken.ts";
-import TokenType from "../enums/TokenType.ts";
-import {TemporaryVisualFeedback} from "./TemporaryVisualFeedback.ts";
-import {GameVisualFeedbackAttributes} from "./feedback-attributes/GameVisualFeedbackAttributes.ts";
+import { NormalizedLandmark } from '@mediapipe/tasks-vision';
+import { Collectable } from './Collectable';
+import CollectableToken from './CollectableToken';
+import TokenType from '../enums/TokenType';
+import { TemporaryVisualFeedback } from './TemporaryVisualFeedback';
+import { GameVisualFeedbackAttributes } from './feedback-attributes/GameVisualFeedbackAttributes';
 
 export interface Game {
   start(): void;
@@ -46,9 +46,7 @@ export default class TokenCollectingGame implements Game {
   private gameWindowWidth = 0;
   private gameWindowHeight = 0;
 
-  constructor(
-    private gameDuration: number,
-  ) {}
+  constructor(private gameDuration: number) {}
 
   public start() {
     this.started = true;
@@ -116,7 +114,7 @@ export default class TokenCollectingGame implements Game {
     }
 
     sampleSize(Object.values(TokenType), 3).forEach((tokenType: TokenType) => {
-      this.generateCircle(this.gameWindowWidth, this.gameWindowHeight, tokenType, 60)
+      this.generateCircle(this.gameWindowWidth, this.gameWindowHeight, tokenType, 60);
     });
   }
 
@@ -170,14 +168,19 @@ export default class TokenCollectingGame implements Game {
   }
 
   public getCollectedItems(): Collectable[] {
-    return this.collectedItems
+    return this.collectedItems;
   }
 
   public getGameDuration(): number {
     return this.gameDuration;
   }
 
-  private generateCircle(gameWindowWidth: number, gameWindowHeight: number, tokenType: TokenType, radius: number) {
+  private generateCircle(
+    gameWindowWidth: number,
+    gameWindowHeight: number,
+    tokenType: TokenType,
+    radius: number,
+  ) {
     const offset = radius; // Отступ от края канваса
 
     // Определяем, будет ли кружок слева или справа (true для слева, false для справа)
@@ -189,13 +192,7 @@ export default class TokenCollectingGame implements Game {
     // Вычисляем X позицию кружка с учетом отступа и стороны
     const xPosition = isLeft ? offset + radius : gameWindowWidth - offset - radius;
 
-    const collectable = new CollectableToken(
-      xPosition,
-      yPosition,
-      tokenType,
-      this.currentGameTime,
-      2000,
-    );
+    const collectable = new CollectableToken(xPosition, yPosition, tokenType, this.currentGameTime, 2000);
 
     return this.collectables.push(collectable);
   }

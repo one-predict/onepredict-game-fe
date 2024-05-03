@@ -164,11 +164,7 @@ const VARIANTS_MAP = {
   `,
 };
 
-const Typography = ({
-  variant = 'body1',
-  children,
-  ...restProps
-}: TypographyProps) => {
+const Typography = ({ variant = 'body1', children, ...restProps }: TypographyProps) => {
   const Component = VARIANTS_MAP[variant];
 
   return <Component {...restProps}>{children}</Component>;

@@ -1,7 +1,9 @@
 import { FilesetResolver, PoseLandmarker } from '@mediapipe/tasks-vision';
 
 const createPoseTracker = async () => {
-  const vision = await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm');
+  const vision = await FilesetResolver.forVisionTasks(
+    'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm',
+  );
 
   return PoseLandmarker.createFromOptions(vision, {
     baseOptions: {

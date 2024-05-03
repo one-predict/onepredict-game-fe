@@ -1,15 +1,15 @@
-import { nanoid } from "nanoid";
+import { nanoid } from 'nanoid';
 
-export interface TemporaryVisualFeedback<FeedbackAttributes extends { type: string; }> {
+export interface TemporaryVisualFeedback<FeedbackAttributes extends { type: string }> {
   getId(): string;
   getAttributes(): FeedbackAttributes;
   getCoordinates(): [number, number];
   getDuration(): number;
 }
 
-export default class TokenCollectingTemporaryVisualFeedback<
-  FeedbackAttribute extends { type: string; }
-> implements TemporaryVisualFeedback<FeedbackAttribute> {
+export default class TokenCollectingTemporaryVisualFeedback<FeedbackAttribute extends { type: string }>
+  implements TemporaryVisualFeedback<FeedbackAttribute>
+{
   private feedbackId = nanoid();
 
   constructor(

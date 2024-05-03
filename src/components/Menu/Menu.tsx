@@ -1,73 +1,42 @@
 import styled from 'styled-components';
-import backgroundLarge from "../../assets/background-large.png";
-import Button from "../Button";
-import Typography from "../Typography";
-import Header from "../Header/Header.tsx";
+import Header from '../Header/Header';
+import Layout from '../Layout';
+import LayerCard from '../LayerCard';
 
+import bigLogoSrc from '../../assets/big-logo.png';
 
-const StyledMenu = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 100%;
+const StyledLogoLayeredCard = styled(LayerCard)`
+  padding: 85px 36px 96px 36px;
 `;
 
-const StyledMenuCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.7);
-  width: 380px;
-  border: 2px solid #AD3ED0;
-  padding: 32px 21px;
-  border-radius: 24px;
-  
-  @media (${({ theme }) => theme.devices.tablet}) {
-    width: 546px;
-    padding: 32px 21px;
-  }
-`;
-
-const StyledBackgroundImage = styled.img`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  height: 100%;
-  z-index: -1;
-`;
-
-const StyledGameMenuButton = styled(Button)`
-  margin-top: 24px;
-  width: 100%;
+const Logo = styled.img`
+  width: 190px;
+  height: 190px;
 
   @media (${({ theme }) => theme.devices.tablet}) {
-    width: unset;
+    width: 250px;
+    height: 250px;
   }
-`;
 
-const StyledReadyToPlayTypography = styled(Typography)`
-  margin-top: 20px;
+  @media (${({ theme }) => theme.devices.laptop}) {
+    width: 377px;
+    height: 377px;
+  }
 `;
 
 export interface MenuProps {
-  username: string;
   onStartGameClick: () => void;
+  userBalance: number;
 }
 
-const Menu = ({ username, onStartGameClick }: MenuProps) => {
+const Menu = ({ userBalance }: MenuProps) => {
   return (
-    <StyledMenu>
-      <Header />
-      <StyledMenuCard>
-        <Typography variant="h1">Hello, {username}!</Typography>
-        <StyledReadyToPlayTypography variant="h5">Ready to play? Click to the button</StyledReadyToPlayTypography>
-        <StyledGameMenuButton onClick={onStartGameClick}>Start Game</StyledGameMenuButton>
-      </StyledMenuCard>
-      <StyledBackgroundImage src={backgroundLarge} />
-    </StyledMenu>
+    <Layout>
+      <Header userBalance={userBalance} />
+      <StyledLogoLayeredCard>
+        <Logo src={bigLogoSrc} alt="big-logo" />
+      </StyledLogoLayeredCard>
+    </Layout>
   );
 };
 

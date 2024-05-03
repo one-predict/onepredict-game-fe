@@ -1,15 +1,15 @@
 import Webcam from 'react-webcam';
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import GameManager from "../../GameManager.ts";
-import { Game} from "../../game/Game.ts";
-import CanvasGameDrawer from "../../drawing/canvas/CanvasGameDrawer.ts";
-import {DrawingUtils} from "@mediapipe/tasks-vision";
-import MintNftModal from "../MintNftModal";
+import GameManager from '../../GameManager';
+import { Game } from '../../game/Game';
+import CanvasGameDrawer from '../../drawing/canvas/CanvasGameDrawer';
+import { DrawingUtils } from '@mediapipe/tasks-vision';
+import MintNftModal from '../MintNftModal';
 
 function mirrorLandmarks(landmarks: any) {
   return landmarks.map((landmark: any) => {
-    return {...landmark, x: 1 - landmark.x}; // Предполагая, что координаты x нормализованы [0, 1]
+    return { ...landmark, x: 1 - landmark.x }; // Предполагая, что координаты x нормализованы [0, 1]
   });
 }
 
@@ -35,13 +35,13 @@ const GameComponent = () => {
 
   const [error] = useState('');
 
-  const [,setGameManager] = useState<GameManager | null>(null);
+  const [, setGameManager] = useState<GameManager | null>(null);
 
   useEffect(() => {
     const canvasElement = canvasRef.current as unknown as HTMLCanvasElement;
     const videoElement = webcamRef.current.video!;
 
-    const canvasContext = canvasElement.getContext("2d");
+    const canvasContext = canvasElement.getContext('2d');
 
     if (!canvasContext) {
       throw new Error('Cannot find canvas 2D context.');
@@ -72,9 +72,21 @@ const GameComponent = () => {
 
       console.log(postLandmarks);
 
-      const filteredPoseLandmarks = postLandmarks ? postLandmarks.filter((_, index) => {
-        return index === 15 || index === 17 || index === 19 || index === 21 || index === 20 || index === 18 || index === 18 || index === 16 || index === 14;
-      }) : [];
+      const filteredPoseLandmarks = postLandmarks
+        ? postLandmarks.filter((_, index) => {
+            return (
+              index === 15 ||
+              index === 17 ||
+              index === 19 ||
+              index === 21 ||
+              index === 20 ||
+              index === 18 ||
+              index === 18 ||
+              index === 16 ||
+              index === 14
+            );
+          })
+        : [];
 
       const mirrowedLandmarks = mirrorLandmarks(filteredPoseLandmarks);
 
@@ -102,16 +114,16 @@ const GameComponent = () => {
     <div>
       {error && <p>{error}</p>}
       <StyledGameLayout>
-        <Webcam style={{ transform: 'scaleX(-1)'  }} ref={webcamRef} audio={false} />
+        <Webcam style={{ transform: 'scaleX(-1)' }} ref={webcamRef} audio={false} />
         <canvas
           ref={canvasRef}
           style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
+            position: 'absolute',
+            marginLeft: 'auto',
+            marginRight: 'auto',
             left: 0,
             right: 0,
-            textAlign: "center",
+            textAlign: 'center',
             zIndex: 9,
             width: 1280,
             height: 720,

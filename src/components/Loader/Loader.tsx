@@ -11,28 +11,34 @@ const LoaderKeyframes = keyframes`
 `;
 
 const StyledLoader = styled.div`
-    --s: 25px;
-    --g :5px;
+  --s: 25px;
+  --g: 5px;
 
-    width: calc(2*(1.353*var(--s) + var(--g)));
-    aspect-ratio: 1;
-    background: linear-gradient(#fbc2eb 0 0) left/50% 100% no-repeat, conic-gradient(from -90deg at var(--s) calc(0.353*var(--s)), #fff 135deg,#666 0 270deg,#aaa 0);
-    background-blend-mode: multiply;
-    --_m: linear-gradient(to bottom right, #0000 calc(0.25*var(--s)),#000 0 calc(100% - calc(0.25*var(--s)) - 1.414*var(--g)),#0000 0), conic-gradient(from -90deg at right var(--g) bottom var(--g),#000 90deg,#0000 0);
-    -webkit-mask: var(--_m);
-    mask: var(--_m);
-    background-size:   50% 50%;
-    -webkit-mask-size: 50% 50%;
-    mask-size: 50% 50%;
-    -webkit-mask-composite: source-in;
-    mask-composite: intersect;
-    animation: ${LoaderKeyframes} 1.5s infinite;
+  width: calc(2 * (1.353 * var(--s) + var(--g)));
+  aspect-ratio: 1;
+  background:
+    linear-gradient(#fbc2eb 0 0) left/50% 100% no-repeat,
+    conic-gradient(from -90deg at var(--s) calc(0.353 * var(--s)), #fff 135deg, #666 0 270deg, #aaa 0);
+  background-blend-mode: multiply;
+  --_m: linear-gradient(
+      to bottom right,
+      #0000 calc(0.25 * var(--s)),
+      #000 0 calc(100% - calc(0.25 * var(--s)) - 1.414 * var(--g)),
+      #0000 0
+    ),
+    conic-gradient(from -90deg at right var(--g) bottom var(--g), #000 90deg, #0000 0);
+  -webkit-mask: var(--_m);
+  mask: var(--_m);
+  background-size: 50% 50%;
+  -webkit-mask-size: 50% 50%;
+  mask-size: 50% 50%;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  animation: ${LoaderKeyframes} 1.5s infinite;
 `;
 
 const Loader = () => {
-  return (
-    <StyledLoader />
-  );
+  return <StyledLoader />;
 };
 
 export default Loader;

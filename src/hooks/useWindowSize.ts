@@ -1,17 +1,17 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import useDebounceCallback from './useDebounceCallback';
-import useEventListener from './useEventListener.ts';
-import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect.ts';
+import useEventListener from './useEventListener';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 type WindowSize<T extends number | undefined = number | undefined> = {
   width: T;
   height: T;
-}
+};
 
 type UseWindowSizeOptions<InitializeWithValue extends boolean | undefined> = {
   initializeWithValue: InitializeWithValue;
   debounceDelay?: number;
-}
+};
 
 const IS_SERVER = typeof window === 'undefined';
 
@@ -19,9 +19,7 @@ const IS_SERVER = typeof window === 'undefined';
 export function useWindowSize(options: UseWindowSizeOptions<false>): WindowSize;
 
 // CSR version of useWindowSize.
-export function useWindowSize(
-  options?: Partial<UseWindowSizeOptions<true>>,
-): WindowSize<number>;
+export function useWindowSize(options?: Partial<UseWindowSizeOptions<true>>): WindowSize<number>;
 
 export function useWindowSize(
   options: Partial<UseWindowSizeOptions<boolean>> = {},
@@ -29,7 +27,7 @@ export function useWindowSize(
   let { initializeWithValue = true } = options;
 
   if (IS_SERVER) {
-    initializeWithValue = false
+    initializeWithValue = false;
   }
 
   const [windowSize, setWindowSize] = useState<WindowSize>(() => {
@@ -45,15 +43,10 @@ export function useWindowSize(
     };
   });
 
-  const debouncedSetWindowSize = useDebounceCallback(
-    setWindowSize,
-    options.debounceDelay,
-  );
+  const debouncedSetWindowSize = useDebounceCallback(setWindowSize, options.debounceDelay);
 
   function handleSize() {
-    const setSize = options.debounceDelay
-      ? debouncedSetWindowSize
-      : setWindowSize;
+    const setSize = options.debounceDelay ? debouncedSetWindowSize : setWindowSize;
 
     setSize({
       width: window.innerWidth,

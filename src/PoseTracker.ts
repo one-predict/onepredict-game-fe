@@ -1,4 +1,4 @@
-import createPoseTracker from "./pose-tracking/createPoseTracker.ts";
+import createPoseTracker from './pose-tracking/createPoseTracker';
 
 export interface PoseTracker {
   initialize(): Promise<void>;
