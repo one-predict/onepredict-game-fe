@@ -1,39 +1,185 @@
-import React from 'react'
-import { ThemeProvider } from "styled-components";
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import { AuthKitProvider } from "@farcaster/auth-kit";
-import theme from "./theme.ts";
-import { JsonRpcProvider } from "ethers";
-import { MetaMaskProvider } from "@metamask/sdk-react";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import {createGlobalStyle, ThemeProvider} from 'styled-components';
+import { ToastContainer, toast } from 'react-toastify';
+import dayjs from 'dayjs';
+import { AuthKitProvider } from '@farcaster/auth-kit';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import { JsonRpcProvider } from 'ethers';
+import { MetaMaskProvider } from '@metamask/sdk-react';
+import {
+  QueryClient,
+  QueryClientProvider,
+  QueryCache,
+  MutationCache,
+} from '@tanstack/react-query';
+import { ApiProvider, IApiProviderValue } from '@providers/ApiProvider';
+import { SessionProvider } from '@providers/SessionProvider';
+import { RestApiClient } from '@app/api/ApiClient';
+import { HttpAuthApi } from '@app/api/AuthApi';
+import { HttpPortfolioApi } from '@app/api/PortfolioApi';
+import { HttpUserApi } from '@app/api/UserApi';
+import { HttpPortfolioOfferApi } from '@app/api/PortfolioOfferApi';
+import AuthorizedSection from '@components/AuthorizedSection';
+import UnauthorizedSection from '@components/UnauthorizedSection';
+import SignInPage from '@pages/SignInPage';
+import BoostingGamePage from '@pages/BoostingGamePage';
+import PortfolioOffersPage from '@pages/PortfolioOffersPage';
+import MenuPage from '@pages/MenuPage';
+import theme from './theme';
+
+import OrbitronRegularFontUrl from '@app/assets/fonts/Orbitron-Regular.woff2';
+import OrbitronBoldFontUrl from "@app/assets/fonts/Orbitron-Bold.woff2";
+import 'react-toastify/dist/ReactToastify.css';
+
+
+dayjs.extend(advancedFormat);
+
+const GlobalStyle = createGlobalStyle`
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  * {
+    margin: 0;
+  }
+  
+  html {
+    font-size: 16px;
+  }
+  
+  body, html {
+    height: 100%;
+    width: 100%;
+  }
+
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  
+  body {
+    overflow-x: hidden;
+    font-family: 'Orbitron', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  
+  button {
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  #root {
+    isolation: isolate;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    max-width: unset;
+  }
+
+  @font-face {
+    font-family: 'Orbitron';
+    src: url('${OrbitronRegularFontUrl}') format('woff2'),
+    url('${OrbitronRegularFontUrl}') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Orbitron';
+    src: url('${OrbitronBoldFontUrl}') format('woff2'),
+    url('${OrbitronBoldFontUrl}') format('woff');
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  .fc-authkit-qrcode-dialog {
+    position: fixed;
+    top: 0;
+  }
+`;
+
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error) => toast.error(error.message),
+  }),
+  mutationCache: new MutationCache({
+    onError: (error) => toast.error(error.message),
+  }),
+});
 
 const config = {
-  // For a production app, replace this with an Optimism Mainnet
-  // RPC URL from a provider like Alchemy or Infura.
-  relay: "https://relay.farcaster.xyz",
-  rpcUrl: "https://mainnet.optimism.io",
-  domain: "example.com",
-  siweUri: "https://example.com/login",
-  provider: new JsonRpcProvider(undefined, 10)
+  relay: import.meta.env.VITE_AUTH_RELAY,
+  rpcUrl: import.meta.env.VITE_AUTH_RPC_URL,
+  domain: window.location.host,
+  provider: new JsonRpcProvider('', Number(import.meta.env.VITE_AUTH_PROVIDER_NETWORK)),
 };
+
+const apiClient = new RestApiClient(import.meta.env.VITE_API_URL);
+
+const services: IApiProviderValue = {
+  authApi: new HttpAuthApi(apiClient),
+  userApi: new HttpUserApi(apiClient),
+  portfolioApi: new HttpPortfolioApi(apiClient),
+  portfolioOfferApi: new HttpPortfolioOfferApi(apiClient),
+};
+
+const router = createBrowserRouter([{
+  path: '/',
+  element: (
+    <AuthorizedSection>
+      <MenuPage />
+    </AuthorizedSection>
+  ),
+}, {
+  path: '/sign-in',
+  element: (
+    <UnauthorizedSection>
+      <SignInPage />
+    </UnauthorizedSection>
+  ),
+}, {
+  path: '/boosting',
+  element: (
+    <AuthorizedSection>
+      <BoostingGamePage />
+    </AuthorizedSection>
+  ),
+}, {
+  path: '/offers',
+  element: (
+    <AuthorizedSection>
+      <PortfolioOffersPage />
+    </AuthorizedSection>
+  ),
+}]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <AuthKitProvider config={config}>
-        <MetaMaskProvider
-          debug={false}
-          sdkOptions={{
-            dappMetadata: {
-              name: "Example React Dapp",
-              url: window.location.href,
-            },
-            // Other options.
-          }}
-        >
-          <App />
-        </MetaMaskProvider>
-      </AuthKitProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ApiProvider value={services}>
+        <ThemeProvider theme={theme}>
+          <SessionProvider>
+            <AuthKitProvider config={config}>
+              <MetaMaskProvider
+                debug={false}
+                sdkOptions={{ dappMetadata: {name: 'AIPick Game', url: window.location.href } }}
+              >
+                <GlobalStyle />
+                <RouterProvider router={router} />
+                <ToastContainer toastStyle={{ zIndex: 1000000 }} position="bottom-left" />
+              </MetaMaskProvider>
+            </AuthKitProvider>
+          </SessionProvider>
+        </ThemeProvider>
+      </ApiProvider>
+    </QueryClientProvider>
   </React.StrictMode>,
-)
+);

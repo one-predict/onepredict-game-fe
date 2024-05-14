@@ -3,21 +3,21 @@ import debounce from 'lodash.debounce';
 import useUnmount from './useUnmount';
 
 type DebounceOptions = {
-  leading?: boolean
-  trailing?: boolean
-  maxWait?: number
-}
+  leading?: boolean;
+  trailing?: boolean;
+  maxWait?: number;
+};
 
 type ControlFunctions = {
-  cancel: () => void
-  flush: () => void
-  isPending: () => boolean
-}
+  cancel: () => void;
+  flush: () => void;
+  isPending: () => boolean;
+};
 
 export type DebouncedState<T extends (...args: any) => ReturnType<T>> = ((
   ...args: Parameters<T>
 ) => ReturnType<T> | undefined) &
-  ControlFunctions
+  ControlFunctions;
 
 function useDebounceCallback<T extends (...args: any) => ReturnType<T>>(
   func: T,
@@ -48,8 +48,8 @@ function useDebounceCallback<T extends (...args: any) => ReturnType<T>>(
     };
 
     wrappedFunc.flush = () => {
-      return debouncedFuncInstance.flush()
-    }
+      return debouncedFuncInstance.flush();
+    };
 
     return wrappedFunc;
   }, [func, delay, options]);

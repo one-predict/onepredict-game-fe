@@ -1,17 +1,17 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import useDebounceCallback from './useDebounceCallback';
-import useEventListener from './useEventListener.ts';
-import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect.ts';
+import useEventListener from './useEventListener';
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect';
 
 type WindowSize<T extends number | undefined = number | undefined> = {
   width: T;
   height: T;
-}
+};
 
 type UseWindowSizeOptions<InitializeWithValue extends boolean | undefined> = {
   initializeWithValue: InitializeWithValue;
   debounceDelay?: number;
-}
+};
 
 const IS_SERVER = typeof window === 'undefined';
 
@@ -29,7 +29,7 @@ export function useWindowSize(
   let { initializeWithValue = true } = options;
 
   if (IS_SERVER) {
-    initializeWithValue = false
+    initializeWithValue = false;
   }
 
   const [windowSize, setWindowSize] = useState<WindowSize>(() => {
@@ -70,3 +70,5 @@ export function useWindowSize(
 
   return windowSize;
 }
+
+export default useWindowSize;

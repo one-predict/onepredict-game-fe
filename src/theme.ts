@@ -2,18 +2,17 @@ const breakpoints = {
   sm: '480px',
   md: '768px',
   lg: '1024px',
-  xl: '1280px'
+  xl: '1280px',
 };
-
-const palette = {
-  white100Base: '#FFFFFF',
-}
 
 const theme = {
   breakpoints,
-  palette,
-  colors: {
-    background: palette.white100Base,
+  palette: {
+    white: '#FFFFFF',
+    darkPurple: '#801f75',
+    brightPink: '#ff56f6',
+    seaGreen: '#3CB371',
+    black: '#000000',
   },
   devices: {
     mobile: `(min-width: ${breakpoints.sm})`,
