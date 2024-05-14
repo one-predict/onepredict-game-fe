@@ -29,7 +29,7 @@ export interface ApiClient {
   ): Promise<ResBody>;
 }
 
-export default class RestApiClient implements ApiClient {
+export class RestApiClient implements ApiClient {
   protected defaultContentType: ContentType = 'application/json';
 
   constructor(private baseUrl: string) {
@@ -42,7 +42,8 @@ export default class RestApiClient implements ApiClient {
     body?: ReqBody,
     options: Partial<FetchOptions> = {},
   ): Promise<ResBody> {
-    const { headers: customHeaders, contentType = this.defaultContentType } = options;
+    const { headers: customHeaders, contentType = this.defaultContentType } =
+      options;
 
     const headers = this.getBasicHeaders(contentType);
 
@@ -55,7 +56,7 @@ export default class RestApiClient implements ApiClient {
     return this.makeFetch(`${this.baseUrl}${path}`, {
       method,
       headers,
-      body: this.stringifyBody(body) as BodyInit
+      body: this.stringifyBody(body) as BodyInit,
     } as MakeFetchOptions);
   }
 
@@ -64,6 +65,7 @@ export default class RestApiClient implements ApiClient {
       headers: options.headers,
       body: options.body,
       method: options.method,
+      credentials: 'include',
     });
 
     await this.checkStatus(response as FetchResponse);
@@ -81,7 +83,11 @@ export default class RestApiClient implements ApiClient {
     }
 
     const body = await this.getErrorResponseBody(response);
-    const errorMessage = body.message || body.data?.error || body.error?.message || response.statusText;
+    const errorMessage =
+      body.message ||
+      body.data?.error ||
+      body.error?.message ||
+      response.statusText;
 
     throw new RequestError(errorMessage, response.status);
   }
@@ -98,7 +104,11 @@ export default class RestApiClient implements ApiClient {
   }
 
   protected stringifyBody(body?: RequestBody) {
-    if (typeof body === 'string' || body instanceof FormData || typeof body === 'undefined') {
+    if (
+      typeof body === 'string' ||
+      body instanceof FormData ||
+      typeof body === 'undefined'
+    ) {
       return body;
     }
 

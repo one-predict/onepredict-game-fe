@@ -1,44 +1,49 @@
 import styled, { keyframes } from 'styled-components';
 
+export interface LoaderProps {
+  className?: string;
+}
+
 const LoaderKeyframes = keyframes`
-  0%,12.5%    { background-position:0% 0%,0 0 }
-  12.6%,37.5% {background-position:100% 0%,0 0}
-  37.6%,62.5% {background-position:100% 100%,0 0}
-  62.6%,87.5% {background-position:0% 100%,0 0}
-  87.6%,100%  {
-    background-position:0% 0%,0 0
+  0%, 10% {
+    background-position: 33.4% 100%, 66.6% 100%;
+  }
+
+  40% {
+    background-position: 33.4% 0, 100% 100%;
+  }
+  
+  70% {
+    background-position: 0 100%, 66.6% 0;
+  }
+
+  100% {
+    background-position: 33.4% 100%, 66.6% 100%;
   }
 `;
 
 const StyledLoader = styled.div`
-  --s: 25px;
-  --g: 5px;
-
-  width: calc(2 * (1.353 * var(--s) + var(--g)));
+  display: grid;
+  height: 50px;
   aspect-ratio: 1;
-  background:
-    linear-gradient(#fbc2eb 0 0) left/50% 100% no-repeat,
-    conic-gradient(from -90deg at var(--s) calc(0.353 * var(--s)), #fff 135deg, #666 0 270deg, #aaa 0);
-  background-blend-mode: multiply;
-  --_m: linear-gradient(
-      to bottom right,
-      #0000 calc(0.25 * var(--s)),
-      #000 0 calc(100% - calc(0.25 * var(--s)) - 1.414 * var(--g)),
-      #0000 0
-    ),
-    conic-gradient(from -90deg at right var(--g) bottom var(--g), #000 90deg, #0000 0);
-  -webkit-mask: var(--_m);
-  mask: var(--_m);
-  background-size: 50% 50%;
-  -webkit-mask-size: 50% 50%;
-  mask-size: 50% 50%;
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
-  animation: ${LoaderKeyframes} 1.5s infinite;
+
+  &:before,
+  &:after {
+    --loader-background: no-repeat linear-gradient(#801f75 0 0);
+
+    content: '';
+    background: var(--loader-background), var(--loader-background);
+    background-size: 25% 50%;
+    animation: ${LoaderKeyframes} 1.5s infinite linear;
+  }
+
+  &:after {
+    transform: scale(-1);
+  }
 `;
 
-const Loader = () => {
-  return <StyledLoader />;
+const Loader = ({ className }: LoaderProps) => {
+  return <StyledLoader className={className} />;
 };
 
 export default Loader;

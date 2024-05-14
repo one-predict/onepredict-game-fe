@@ -1,42 +1,62 @@
 import styled from 'styled-components';
-import Header from '../Header/Header';
-import Layout from '../Layout';
-import LayerCard from '../LayerCard';
-
-import bigLogoSrc from '../../assets/big-logo.png';
-
-const StyledLogoLayeredCard = styled(LayerCard)`
-  padding: 85px 36px 96px 36px;
-`;
-
-const Logo = styled.img`
-  width: 190px;
-  height: 190px;
-
-  @media (${({ theme }) => theme.devices.tablet}) {
-    width: 250px;
-    height: 250px;
-  }
-
-  @media (${({ theme }) => theme.devices.laptop}) {
-    width: 377px;
-    height: 377px;
-  }
-`;
+import LayeredLogo from '@components/LayeredLogo';
+import Button from '@components/Button';
 
 export interface MenuProps {
-  onStartGameClick: () => void;
-  userBalance: number;
+  onCreatePortfolioButtonClick: () => void;
+  onBoostPointsButtonClick: () => void;
 }
 
-const Menu = ({ userBalance }: MenuProps) => {
+const StyledMenuContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 38px;
+
+  @media (${({ theme }) => theme.devices.tablet}) {
+    flex-direction: row;
+    align-items: center;
+    row-gap: 0;
+    column-gap: 72px;
+  }
+
+  @media (max-width: 1400px) {
+    display: flex;
+    flex-direction: column;
+    row-gap: 38px;
+  }
+`;
+
+const CreatePortfolioButton = styled(Button)`
+  width: 100%;
+
+  @media (${({ theme }) => theme.devices.tablet}) {
+    width: 440px;
+  }
+`;
+
+const BoostPointsButton = styled(Button)`
+  width: 100%;
+
+  @media (${({ theme }) => theme.devices.tablet}) {
+    width: 440px;
+  }
+`;
+
+const Menu = ({
+  onCreatePortfolioButtonClick,
+  onBoostPointsButtonClick,
+}: MenuProps) => {
   return (
-    <Layout>
-      <Header userBalance={userBalance} />
-      <StyledLogoLayeredCard>
-        <Logo src={bigLogoSrc} alt="big-logo" />
-      </StyledLogoLayeredCard>
-    </Layout>
+    <StyledMenuContainer>
+      <CreatePortfolioButton onClick={onCreatePortfolioButtonClick}>
+        Create Portfolio
+      </CreatePortfolioButton>
+      <LayeredLogo />
+      <BoostPointsButton onClick={onBoostPointsButtonClick}>
+        Boost Points
+      </BoostPointsButton>
+    </StyledMenuContainer>
   );
 };
 

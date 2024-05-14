@@ -1,4 +1,4 @@
-import ApiClient from './ApiClient';
+import { ApiClient } from './ApiClient';
 
 export interface SignInParams {
   message: string;
@@ -12,10 +12,14 @@ export interface AuthApi {
   signIn(params: SignInParams): Promise<void>;
 }
 
-export default class HttpAuthApi implements AuthApi {
+export class HttpAuthApi implements AuthApi {
   public constructor(private client: ApiClient) {}
 
   public async signIn(params: SignInParams) {
-    await this.client.makeCall<{ success: boolean }>('/auth/sign-in', 'POST', params);
+    await this.client.makeCall<{ success: boolean }>(
+      '/auth/sign-in',
+      'POST',
+      params,
+    );
   }
 }

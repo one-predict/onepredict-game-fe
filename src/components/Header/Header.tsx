@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import logoSrc from '../../assets/logo.png';
-import Typography from '../Typography';
+import Typography from '@app/components/Typography';
+import useSession from '@app/hooks/useSession';
+import logoSrc from '@app/assets/logo.png';
 
 const StyledHeaderContainer = styled.header`
   position: fixed;
@@ -30,22 +31,30 @@ const StyledLogo = styled.img`
   }
 `;
 
-const StyledTypography = styled(Typography)`
-  color: white;
+const StyledWalletInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
 `;
 
-export interface HeaderProps {
-  userBalance: number;
-}
+const StyledBalance = styled(Typography)`
+  color: #6f5bc0;
+`;
 
-const Header = ({ userBalance }: HeaderProps) => {
+const Header = () => {
+  const currentUser = useSession();
+
   return (
     <StyledHeaderContainer>
       <StyledLogo src={logoSrc} alt="logo" />
-      <div>
-        <StyledTypography>Wallet</StyledTypography>
-        <StyledTypography>{userBalance || '0'}</StyledTypography>
-      </div>
+      {currentUser && (
+        <>
+          <StyledWalletInfo>
+            <Typography>Wallet</Typography>
+            <StyledBalance>{currentUser.balance || '0'}</StyledBalance>
+          </StyledWalletInfo>
+        </>
+      )}
     </StyledHeaderContainer>
   );
 };

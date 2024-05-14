@@ -1,7 +1,11 @@
-import { DefaultError, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useAuthApi } from '../../providers/ApiServiceProvider';
-import { SignInParams } from '../../api/AuthApi';
 import { useCallback } from 'react';
+import {
+  DefaultError,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
+import { useAuthApi } from '@providers/ApiProvider';
+import { SignInParams } from '@api/AuthApi';
 
 const useSignInMutation = () => {
   const authApi = useAuthApi();

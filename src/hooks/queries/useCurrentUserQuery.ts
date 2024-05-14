@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { useUserApi } from '../../providers/ApiServiceProvider';
-import { useCallback } from 'react';
+import { useUserApi } from '@providers/ApiProvider';
 
 const useCurrentUserQuery = () => {
   const userApi = useUserApi();
 
-  const getCurrentUserFn = useCallback(() => userApi.getCurrentUser(), [userApi]);
-
-  return useQuery({ queryKey: ['current-user'], queryFn: getCurrentUserFn });
+  return useQuery({
+    queryKey: ['current-user'],
+    queryFn: () => userApi.getCurrentUser(),
+  });
 };
 
 export default useCurrentUserQuery;

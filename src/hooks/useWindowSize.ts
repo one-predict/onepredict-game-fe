@@ -19,7 +19,9 @@ const IS_SERVER = typeof window === 'undefined';
 export function useWindowSize(options: UseWindowSizeOptions<false>): WindowSize;
 
 // CSR version of useWindowSize.
-export function useWindowSize(options?: Partial<UseWindowSizeOptions<true>>): WindowSize<number>;
+export function useWindowSize(
+  options?: Partial<UseWindowSizeOptions<true>>,
+): WindowSize<number>;
 
 export function useWindowSize(
   options: Partial<UseWindowSizeOptions<boolean>> = {},
@@ -43,10 +45,15 @@ export function useWindowSize(
     };
   });
 
-  const debouncedSetWindowSize = useDebounceCallback(setWindowSize, options.debounceDelay);
+  const debouncedSetWindowSize = useDebounceCallback(
+    setWindowSize,
+    options.debounceDelay,
+  );
 
   function handleSize() {
-    const setSize = options.debounceDelay ? debouncedSetWindowSize : setWindowSize;
+    const setSize = options.debounceDelay
+      ? debouncedSetWindowSize
+      : setWindowSize;
 
     setSize({
       width: window.innerWidth,
@@ -63,3 +70,5 @@ export function useWindowSize(
 
   return windowSize;
 }
+
+export default useWindowSize;

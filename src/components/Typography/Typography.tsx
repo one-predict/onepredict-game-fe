@@ -3,7 +3,17 @@ import styled from 'styled-components';
 
 export interface TypographyProps {
   className?: string;
-  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subtitle1' | 'subtitle2' | 'body1' | 'body2';
+  variant?:
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'subtitle1'
+    | 'subtitle2'
+    | 'body1'
+    | 'body2';
   children?: React.ReactNode;
 }
 
@@ -13,7 +23,8 @@ const VARIANTS_MAP = {
     line-height: 1.2;
     font-weight: bold;
     letter-spacing: -0.03125rem;
-
+    color: ${({ theme }) => theme.palette.white};
+    
     @media (${({ theme }) => theme.devices.tablet}) {
       font-size: 1.625rem;
       letter-spacing: -0.03125rem;
@@ -29,6 +40,7 @@ const VARIANTS_MAP = {
     line-height: 1.3;
     font-weight: bold;
     letter-spacing: -0.03125rem;
+    color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
       font-size: 1.375rem;
@@ -45,6 +57,7 @@ const VARIANTS_MAP = {
     line-height: 1.3;
     font-weight: bold;
     letter-spacing: -0.03125rem;
+    color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
       font-size: 1.25rem;
@@ -60,6 +73,7 @@ const VARIANTS_MAP = {
     line-height: 1.3;
     font-weight: bold;
     letter-spacing: -0.03125rem;
+    color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
       font-size: 1.125rem;
@@ -75,6 +89,7 @@ const VARIANTS_MAP = {
     line-height: 1.4;
     font-weight: bold;
     letter-spacing: -0.015625rem;
+    color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
       font-size: 1rem;
@@ -91,6 +106,7 @@ const VARIANTS_MAP = {
     line-height: 1.4;
     font-weight: bold;
     letter-spacing: -0.015625rem;
+    color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
       font-size: 0.875rem;
@@ -107,6 +123,7 @@ const VARIANTS_MAP = {
     line-height: 1.4;
     font-weight: normal;
     letter-spacing: 0.00625rem;
+    color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
       font-size: 1.125rem;
@@ -122,6 +139,7 @@ const VARIANTS_MAP = {
     line-height: 1.4;
     font-weight: normal;
     letter-spacing: 0.00625rem;
+    color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
       font-size: 1rem;
@@ -137,6 +155,7 @@ const VARIANTS_MAP = {
     line-height: 1.5;
     font-weight: normal;
     letter-spacing: normal;
+    color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
       font-size: 1.125rem;
@@ -152,6 +171,7 @@ const VARIANTS_MAP = {
     line-height: 1.5;
     font-weight: normal;
     letter-spacing: normal;
+    color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
       font-size: 1rem;
@@ -164,7 +184,11 @@ const VARIANTS_MAP = {
   `,
 };
 
-const Typography = ({ variant = 'body1', children, ...restProps }: TypographyProps) => {
+const Typography = ({
+  variant = 'body1',
+  children,
+  ...restProps
+}: TypographyProps) => {
   const Component = VARIANTS_MAP[variant];
 
   return <Component {...restProps}>{children}</Component>;

@@ -1,6 +1,6 @@
 import { createContext, useMemo, ReactNode } from 'react';
-import { User } from '../api/UserApi';
-import { useCurrentUserQuery } from '../hooks/queries';
+import { User } from '@api/UserApi';
+import useCurrentUserQuery from '@hooks/queries/useCurrentUserQuery';
 
 export interface SessionProviderProps {
   children: ReactNode;
@@ -12,14 +12,16 @@ export interface SessionValue {
 
 export const SessionContext = createContext<SessionValue>({} as SessionValue);
 
-const SessionProvider = ({ children }: SessionProviderProps) => {
+export const SessionProvider = ({ children }: SessionProviderProps) => {
   const { data } = useCurrentUserQuery();
 
   const session = useMemo(() => {
     return { currentUser: data };
   }, [data]);
 
-  return <SessionContext.Provider value={session}>{children}</SessionContext.Provider>;
+  return (
+    <SessionContext.Provider value={session}>
+      {children}
+    </SessionContext.Provider>
+  );
 };
-
-export default SessionProvider;

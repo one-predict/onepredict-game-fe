@@ -1,4 +1,4 @@
-import ApiClient from './ApiClient';
+import { ApiClient } from './ApiClient';
 
 export interface TokenOffer {
   firstToken: string;
@@ -8,6 +8,7 @@ export interface TokenOffer {
 export interface PortfolioOffer {
   id: string;
   day: number;
+  date: string;
   tokenOffers: TokenOffer[];
 }
 
@@ -15,7 +16,7 @@ export interface PortfolioOfferApi {
   getPortfolioOffers(): Promise<PortfolioOffer[]>;
 }
 
-export default class HttpPortfolioOfferApi implements PortfolioOfferApi {
+export class HttpPortfolioOfferApi implements PortfolioOfferApi {
   public constructor(private client: ApiClient) {}
 
   public getPortfolioOffers() {
