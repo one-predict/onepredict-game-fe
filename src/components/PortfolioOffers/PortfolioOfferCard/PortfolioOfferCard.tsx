@@ -95,6 +95,18 @@ const StyledTokenOfferLinesContainer = styled.div`
   row-gap: 20px;
 `;
 
+const StyledYourPointsTitle = styled(Typography)`
+  text-align: center;
+`;
+
+const StyledPoints = styled(Typography)<{
+  $success: boolean & TypographyProps;
+}>`
+  color: ${({ theme, $success }) => $success ? theme.palette.seaGreen : theme.palette.red};
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
 const PortfolioOfferCard = ({
   offer,
   title,
@@ -104,6 +116,8 @@ const PortfolioOfferCard = ({
   isLiveOffer,
   portfolio,
 }: PortfolioOfferCardProps) => {
+  const earnedPoints = portfolio?.earnedPoints || 0;
+
   return (
     <StyledPortfolioOfferContainer>
       <StyledPortfolioOfferHeader>
@@ -115,6 +129,16 @@ const PortfolioOfferCard = ({
         </StyledDateInfo>
       </StyledPortfolioOfferHeader>
       <LayeredCard>
+        {portfolio?.isAwarded && (
+          <>
+            <StyledYourPointsTitle>
+              Your Points
+            </StyledYourPointsTitle>
+            <StyledPoints $success={earnedPoints > 0}>
+              {earnedPoints > 0 ? `+${earnedPoints}` : earnedPoints}
+            </StyledPoints>
+          </>
+        )}
         <StyledTokenOfferLinesContainer>
           {offer.tokenOffers.map((tokenOffer, index) => (
             <TokenOfferLine

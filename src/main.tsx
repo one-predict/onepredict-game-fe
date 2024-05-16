@@ -30,7 +30,7 @@ import MenuPage from '@pages/MenuPage';
 import theme from './theme';
 
 import OrbitronRegularFontUrl from '@app/assets/fonts/Orbitron-Regular.woff2';
-import OrbitronBoldFontUrl from "@app/assets/fonts/Orbitron-Bold.woff2";
+import OrbitronBoldFontUrl from '@app/assets/fonts/Orbitron-Bold.woff2';
 import 'react-toastify/dist/ReactToastify.css';
 
 

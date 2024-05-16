@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { usePortfolioApi } from '@providers/ApiProvider';
-import { Portfolio } from "@api/PortfolioApi";
+import { Portfolio } from '@api/PortfolioApi';
 
 const useUserPortfoliosQuery = (offerIds?: string[]) => {
   const portfolioApi = usePortfolioApi();

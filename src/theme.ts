@@ -13,6 +13,7 @@ const theme = {
     brightPink: '#ff56f6',
     seaGreen: '#3CB371',
     black: '#000000',
+    red: '#FF0000',
   },
   devices: {
     mobile: `(min-width: ${breakpoints.sm})`,

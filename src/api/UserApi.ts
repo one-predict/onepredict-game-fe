@@ -5,11 +5,13 @@ export interface User {
   fid: number;
   name: string;
   balance: number;
+  points: number;
   imageUrl: string;
 }
 
 export interface UserApi {
   getCurrentUser(): Promise<User | null>;
+  getCurrentUserRank(): Promise<number | null>;
 }
 
 export class HttpUserApi implements UserApi {
@@ -22,5 +24,14 @@ export class HttpUserApi implements UserApi {
     );
 
     return data.user;
+  }
+
+  public async getCurrentUserRank() {
+    const data = await this.client.makeCall<{ rank: number | null }>(
+      '/users/current-user/rank',
+      'GET',
+    );
+
+    return data.rank;
   }
 }

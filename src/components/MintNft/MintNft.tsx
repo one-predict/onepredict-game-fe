@@ -1,13 +1,13 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { ethers } from 'ethers';
 import styled, { keyframes } from 'styled-components';
-import {useSDK} from '@metamask/sdk-react';
-import {toast} from "react-toastify";
-import {nanoid} from "nanoid";
+import { useSDK } from '@metamask/sdk-react';
+import { toast } from 'react-toastify';
+import { nanoid } from 'nanoid';
 import useAsyncEffect from '@hooks/useAsyncEffect';
 import Button from '@components/Button';
 import Typography from '@components/Typography';
-import MintNftStatus from "@app/enums/MintNftStatus";
+import MintNftStatus from '@app/enums/MintNftStatus';
 
 export interface MintNftModalProps {
   score: number;

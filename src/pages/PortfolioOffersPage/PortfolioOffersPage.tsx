@@ -1,11 +1,26 @@
 import { useCallback, useMemo, useState } from 'react';
+import styled from 'styled-components';
 import { PortfolioOffer } from '@api/PortfolioOfferApi';
 import usePortfolioOffersQuery from '@hooks/queries/usePortfolioOffersQuery';
 import useUserPortfoliosQuery from '@hooks/queries/useUserPortfoliosQuery';
 import useCreatePortfolioMutation from '@hooks/mutations/useCreatePortfolioMutation';
+import useCurrentUserRank from '@hooks/queries/useCurrentUserRankQuery';
 import PageLayout from '@components/PageLayout';
 import PortfolioOffers from '@components/PortfolioOffers';
 import ChoosePortfolio from '@components/ChoosePortfolio';
+import Typography from '@components/Typography';
+
+const StyledYourPoints = styled(Typography)`
+  margin-bottom: 20px;
+  color: transparent;
+  background: linear-gradient(90deg, #A049C9 0%, #FF00FF 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  
+  @media (${({ theme }) => theme.devices.tablet}) {
+    margin-bottom: 60px;
+  }
+`
 
 const PortfolioOffersPage = () => {
   const [selectedOffer, setSelectedOffer] = useState<PortfolioOffer | null>(
@@ -19,6 +34,7 @@ const PortfolioOffersPage = () => {
   }, [offers]);
 
   const { data: portfolios } = useUserPortfoliosQuery(offerIds);
+  const { data: rank } = useCurrentUserRank();
 
   const {
     status: createPortfolioStatus,
@@ -44,6 +60,7 @@ const PortfolioOffersPage = () => {
 
   return (
     <PageLayout>
+      <StyledYourPoints variant="h1">Your rank is {rank ?? '-'}</StyledYourPoints>
       {selectedOffer ? (
         <ChoosePortfolio
           offer={selectedOffer}

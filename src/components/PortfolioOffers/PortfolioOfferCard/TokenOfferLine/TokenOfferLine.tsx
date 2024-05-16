@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { TokenOffer } from '@api/PortfolioOfferApi';
 import Typography from '@components/Typography';
-import { tokensLogoSrcMap } from "@app/data/tokens";
+import { tokensLogoSrcMap } from '@app/data/tokens';
 
 export interface TokenOfferLineProps {
   tokenOffer: TokenOffer;
