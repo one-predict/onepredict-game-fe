@@ -46,7 +46,7 @@ const AnimatedBodyTypography = styled(BodyTypography)`
   animation: ${OpacityKeyframes} 2.5s infinite;
 `;
 
-const DEGEN_CHAIN_ID = import.meta.env.VITE_DEGEN_CHAIN_ID;
+const MINT_NFT_CHAIN_ID = import.meta.env.VITE_MINT_NFT_CHAIN_ID;
 const CONTRACT_ABI = import.meta.env.VITE_CONTRACT_ABI;
 const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
 
@@ -75,7 +75,7 @@ const MintNft = ({ score }: MintNftModalProps) => {
       return;
     }
 
-    if (chainId !== DEGEN_CHAIN_ID) {
+    if (chainId !== MINT_NFT_CHAIN_ID) {
       return;
     }
 
@@ -119,9 +119,9 @@ const MintNft = ({ score }: MintNftModalProps) => {
       <Typography variant="h3">Wow! You've earned {score} points!</Typography>
       {connected && (
         <>
-          {chainId !== DEGEN_CHAIN_ID && (
+          {chainId !== MINT_NFT_CHAIN_ID && (
             <AnimatedBodyTypography variant="h4">
-              Waiting to DEGEN Network to be selected...
+              Waiting to Base Network to be selected...
             </AnimatedBodyTypography>
           )}
           {mintStatus === MintNftStatus.InProgress && (
