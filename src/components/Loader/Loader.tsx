@@ -5,40 +5,36 @@ export interface LoaderProps {
 }
 
 const LoaderKeyframes = keyframes`
-  0%, 10% {
-    background-position: 33.4% 100%, 66.6% 100%;
-  }
-
-  40% {
-    background-position: 33.4% 0, 100% 100%;
-  }
-  
-  70% {
-    background-position: 0 100%, 66.6% 0;
-  }
-
   100% {
-    background-position: 33.4% 100%, 66.6% 100%;
+    transform: rotate(1turn);
   }
 `;
 
 const StyledLoader = styled.div`
   display: grid;
-  height: 50px;
+  width: 80px;
   aspect-ratio: 1;
+  animation: ${LoaderKeyframes} 4s infinite;
 
-  &:before,
-  &:after {
-    --loader-background: no-repeat linear-gradient(#801f75 0 0);
-
-    content: '';
-    background: var(--loader-background), var(--loader-background);
-    background-size: 25% 50%;
-    animation: ${LoaderKeyframes} 1.5s infinite linear;
+  &::before,
+  &::after {
+    content: "";
+    grid-area: 1/1;
+    border: 8px solid;
+    border-radius: 50%;
+    border-color: #2CD8D5 #2CD8D5 #6B8DD6 #6B8DD6;
+    mix-blend-mode: darken;
+    animation: ${LoaderKeyframes} 1s infinite linear;
   }
-
-  &:after {
-    transform: scale(-1);
+  
+  &::after {
+    border-color: #6B8DD6 #6B8DD6 #8E37D7 #8E37D7;
+    animation-direction: reverse;
+  }
+  
+  @media (${({ theme }) => theme.devices.tablet}) {
+    width: 120px;
+    height: 120px;
   }
 `;
 

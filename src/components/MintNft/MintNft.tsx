@@ -135,7 +135,7 @@ const MintNft = ({ score }: MintNftModalProps) => {
             </BodyTypography>
           )}
           {mintStatus === MintNftStatus.Failed && (
-            <MintNftButton size="small" onClick={handleRetryMintButtonClick}>
+            <MintNftButton onClick={handleRetryMintButtonClick}>
               Retry Mint
             </MintNftButton>
           )}
@@ -143,8 +143,11 @@ const MintNft = ({ score }: MintNftModalProps) => {
       )}
       {!connected && (
         <>
-          <BodyTypography variant="h4">You can take your nft. Please connect your wallet to proceed.</BodyTypography>
-          <MintNftButton size="small" onClick={handleConnectWalletButtonClick} loading={connecting}>
+          <BodyTypography variant="h4">
+            Good job! You will be able to earn coins by playing this game soon.
+            For now, you can take your nft. Please connect your wallet to proceed.
+          </BodyTypography>
+          <MintNftButton onClick={handleConnectWalletButtonClick} loading={connecting}>
             Connect you wallet.
           </MintNftButton>
         </>

@@ -20,9 +20,8 @@ export interface TypographyProps {
 const VARIANTS_MAP = {
   h1: styled.h1`
     font-size: 1.5rem;
-    line-height: 1.2;
-    font-weight: bold;
-    letter-spacing: -0.03125rem;
+    line-height: 1.875rem;
+    font-weight: 700;
     color: ${({ theme }) => theme.palette.white};
     
     @media (${({ theme }) => theme.devices.tablet}) {
@@ -38,8 +37,7 @@ const VARIANTS_MAP = {
   h2: styled.h2`
     font-size: 1.25rem;
     line-height: 1.3;
-    font-weight: bold;
-    letter-spacing: -0.03125rem;
+    font-weight: 700;
     color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
@@ -55,8 +53,7 @@ const VARIANTS_MAP = {
   h3: styled.h3`
     font-size: 1.125rem;
     line-height: 1.3;
-    font-weight: bold;
-    letter-spacing: -0.03125rem;
+    font-weight: 700;
     color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
@@ -71,8 +68,7 @@ const VARIANTS_MAP = {
   h4: styled.h4`
     font-size: 1rem;
     line-height: 1.3;
-    font-weight: bold;
-    letter-spacing: -0.03125rem;
+    font-weight: 700;
     color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
@@ -87,8 +83,7 @@ const VARIANTS_MAP = {
   h5: styled.h5`
     font-size: 0.875rem;
     line-height: 1.4;
-    font-weight: bold;
-    letter-spacing: -0.015625rem;
+    font-weight: 700;
     color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
@@ -104,8 +99,7 @@ const VARIANTS_MAP = {
   h6: styled.h6`
     font-size: 0.75rem;
     line-height: 1.4;
-    font-weight: bold;
-    letter-spacing: -0.015625rem;
+    font-weight: 700;
     color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
@@ -121,8 +115,7 @@ const VARIANTS_MAP = {
   subtitle1: styled.p`
     font-size: 1rem;
     line-height: 1.4;
-    font-weight: normal;
-    letter-spacing: 0.00625rem;
+    font-weight: 500;
     color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
@@ -135,10 +128,9 @@ const VARIANTS_MAP = {
     }
   `,
   subtitle2: styled.p`
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     line-height: 1.4;
-    font-weight: normal;
-    letter-spacing: 0.00625rem;
+    font-weight: 400;
     color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
@@ -153,8 +145,7 @@ const VARIANTS_MAP = {
   body1: styled.p`
     font-size: 1rem;
     line-height: 1.5;
-    font-weight: normal;
-    letter-spacing: normal;
+    font-weight: 400;
     color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {
@@ -169,8 +160,7 @@ const VARIANTS_MAP = {
   body2: styled.p`
     font-size: 0.875rem;
     line-height: 1.5;
-    font-weight: normal;
-    letter-spacing: normal;
+    font-weight: 400;
     color: ${({ theme }) => theme.palette.white};
 
     @media (${({ theme }) => theme.devices.tablet}) {

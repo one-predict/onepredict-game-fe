@@ -6,7 +6,7 @@ export interface Portfolio {
   offerId: string;
   createdAt: Date;
   selectedTokens: string[];
-  earnedPoints?: number;
+  earnedCoins: number;
   isAwarded: boolean;
 }
 

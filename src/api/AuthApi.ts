@@ -3,7 +3,7 @@ import { ApiClient } from './ApiClient';
 export interface SignInParams {
   message: string;
   signature: string;
-  name: string;
+  username: string;
   pfp: string;
   nonce: string;
 }

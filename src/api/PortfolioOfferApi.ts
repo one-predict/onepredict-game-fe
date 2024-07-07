@@ -13,13 +13,13 @@ export interface PortfolioOffer {
 }
 
 export interface PortfolioOfferApi {
-  getPortfolioOffers(): Promise<PortfolioOffer[]>;
+  getLatestPortfolioOffers(): Promise<PortfolioOffer[]>;
 }
 
 export class HttpPortfolioOfferApi implements PortfolioOfferApi {
   public constructor(private client: ApiClient) {}
 
-  public getPortfolioOffers() {
-    return this.client.makeCall<PortfolioOffer[]>(`/portfolio-offers`, 'GET');
+  public getLatestPortfolioOffers() {
+    return this.client.makeCall<PortfolioOffer[]>(`/portfolio-offers/latest`, 'GET');
   }
 }

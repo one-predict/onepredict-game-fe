@@ -2,78 +2,45 @@ import React from 'react';
 import styled from 'styled-components';
 import ButtonLoader from './ButtonLoader';
 
-type ButtonSize = 'small' | 'medium' | 'large';
-
 export interface ButtonProps {
   className?: string;
   children?: React.ReactNode;
   disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  size?: ButtonSize;
   loading?: boolean;
 }
 
-const StyledButton = styled.button<{ $size?: ButtonSize; $loading?: boolean }>`
+const StyledButton = styled.button<{ $loading?: boolean }>`
   position: relative;
-  min-width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  background: linear-gradient(111.04deg, rgba(44, 216, 213, 0.4) 0%, rgba(107, 141, 214, 0.4) 47.26%, rgba(142, 55, 215, 0.4) 98.45%);
+  border: 1px solid #8C8498;
+  box-shadow: 0 4px 10px 0 #8B46AB99;
+  border-radius: 12px;
   color: ${({ theme }) => theme.palette.white};
-  padding: 8px;
+  padding: 12px;
   cursor: ${({ $loading }) => ($loading ? 'default' : 'pointer')};
   outline: 0;
-  border: 0;
-  font-weight: 400;
-  font-size: ${({ $size }) => {
-    if ($size === 'small') {
-      return `0.75rem`;
-    }
-
-    if ($size === 'medium') {
-      return `1rem`;
-    }
-
-    return `1.125rem`;
-  }};
-
-  line-height: 1.5;
-  background:
-    linear-gradient(to right, ${({ theme }) => theme.palette.brightPink} 1px, transparent 1px) 0 100%,
-    linear-gradient(to left, ${({ theme }) => theme.palette.brightPink} 1px, transparent 1px) 100% 0,
-    linear-gradient(to bottom, ${({ theme }) => theme.palette.brightPink} 1px, transparent 1px) 100% 0,
-    linear-gradient(to top, ${({ theme }) => theme.palette.brightPink} 1px, transparent 1px) 0 100%;
-  background-repeat: no-repeat;
-  background-size: 20px 20px;
+  line-height: 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
   text-transform: uppercase;
-
+  
   &:not(:disabled):hover {
-    color: ${({ theme }) => theme.palette.darkPurple};
+    background: linear-gradient(111.04deg, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
   }
-
-  @media (${({ theme }) => theme.devices.tablet}) {
-    font-size: ${({ $size }) => {
-      if ($size === 'small') {
-        return `1rem`;
-      }
-
-      if ($size === 'medium') {
-        return `1.5rem`;
-      }
-
-      return `2rem`;
-    }};
-
-    padding: 12px;
+  
+  &:focus-visible, &:focus {
+    border: 1px solid ${({ theme }) => theme.palette.white};
   }
   
   &:disabled {
     cursor: default;
-    color: gray;
-    background:
-      linear-gradient(to right, gray 1px, transparent 1px) 0 100%,
-      linear-gradient(to left, gray 1px, transparent 1px) 100% 0,
-      linear-gradient(to bottom, gray 1px, transparent 1px) 100% 0,
-      linear-gradient(to top, gray 1px, transparent 1px) 0 100%;
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
+    opacity: 40%;
   }
 `;
 
@@ -82,7 +49,6 @@ const Button = ({
   disabled,
   className,
   onClick,
-  size = 'large',
   loading,
 }: ButtonProps) => {
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -96,7 +62,6 @@ const Button = ({
   return (
     <StyledButton
       $loading={loading}
-      $size={size}
       onClick={handleButtonClick}
       className={className}
       disabled={disabled}

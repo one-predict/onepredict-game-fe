@@ -1,4 +1,4 @@
-import PageLayout from '../../components/PageLayout';
+import { PageLayout } from '@components/Layouts';
 import SignInCard from '@components/SignInCard';
 
 const SignInPage = () => {

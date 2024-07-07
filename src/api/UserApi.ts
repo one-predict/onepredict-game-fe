@@ -3,8 +3,8 @@ import { ApiClient } from './ApiClient';
 export interface User {
   id: string;
   fid: number;
-  name: string;
-  balance: number;
+  username: string;
+  coinsBalance: number;
   points: number;
   imageUrl: string;
 }

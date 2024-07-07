@@ -1,5 +1,5 @@
 {
-  "name": "aipicker-fe",
+  "name": "aipick-game-fe",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -57,6 +57,7 @@
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-plugin-mkcert": "^1.17.5",
-    "vite-plugin-pwa": "^0.19.8"
+    "vite-plugin-pwa": "^0.19.8",
+    "vite-plugin-svgr": "^4.2.0"
   }
 }

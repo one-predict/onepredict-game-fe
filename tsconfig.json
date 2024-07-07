@@ -22,11 +22,12 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@app/*": ["./src/*"],
+      "@assets/*": ["./src/assets/*"],
       "@api/*": ["./src/api/*"],
       "@providers/*": ["./src/providers/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@components/*": ["./src/components/*"],
-      "@boosting-game/*": ["./src/boosting-game/*"],
+      "@tap-video-game/*": ["./src/tap-video-game/*"],
       "@pages/*": ["./src/pages/*"],
     }
   },

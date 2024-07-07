@@ -1,7 +1,9 @@
+import './fonts.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
-import {createGlobalStyle, ThemeProvider} from 'styled-components';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { ToastContainer, toast } from 'react-toastify';
 import dayjs from 'dayjs';
 import { AuthKitProvider } from '@farcaster/auth-kit';
@@ -24,13 +26,11 @@ import { HttpPortfolioOfferApi } from '@app/api/PortfolioOfferApi';
 import AuthorizedSection from '@components/AuthorizedSection';
 import UnauthorizedSection from '@components/UnauthorizedSection';
 import SignInPage from '@pages/SignInPage';
-import BoostingGamePage from '@pages/BoostingGamePage';
-import PortfolioOffersPage from '@pages/PortfolioOffersPage';
-import MenuPage from '@pages/MenuPage';
+import PortfoliosPage from '@pages/PortfoliosPage';
+import HomePage from '@pages/HomePage';
+import BattlesPage from '@pages/BattlesPage';
+import TournamentsPage from '@pages/TournamentsPage';
 import theme from './theme';
-
-import OrbitronRegularFontUrl from '@app/assets/fonts/Orbitron-Regular.woff2';
-import OrbitronBoldFontUrl from '@app/assets/fonts/Orbitron-Bold.woff2';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -83,22 +83,6 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     max-width: unset;
   }
-
-  @font-face {
-    font-family: 'Orbitron';
-    src: url('${OrbitronRegularFontUrl}') format('woff2'),
-    url('${OrbitronRegularFontUrl}') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Orbitron';
-    src: url('${OrbitronBoldFontUrl}') format('woff2'),
-    url('${OrbitronBoldFontUrl}') format('woff');
-    font-weight: bold;
-    font-style: normal;
-  }
   
   .fc-authkit-qrcode-dialog {
     position: fixed;
@@ -135,7 +119,7 @@ const router = createBrowserRouter([{
   path: '/',
   element: (
     <AuthorizedSection>
-      <MenuPage />
+      <HomePage />
     </AuthorizedSection>
   ),
 }, {
@@ -146,17 +130,24 @@ const router = createBrowserRouter([{
     </UnauthorizedSection>
   ),
 }, {
-  path: '/boosting',
+  path: '/portfolios',
   element: (
     <AuthorizedSection>
-      <BoostingGamePage />
+      <PortfoliosPage />
     </AuthorizedSection>
   ),
 }, {
-  path: '/offers',
+  path: '/battles',
   element: (
     <AuthorizedSection>
-      <PortfolioOffersPage />
+      <BattlesPage />
+    </AuthorizedSection>
+  ),
+}, {
+  path: '/tournaments',
+  element: (
+    <AuthorizedSection>
+      <TournamentsPage />
     </AuthorizedSection>
   ),
 }]);

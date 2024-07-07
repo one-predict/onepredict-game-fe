@@ -11,25 +11,25 @@ const StyledSignInCardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 370px;
-  padding: 20px;
+  width: 343px;
+  padding: 20px 0;
   border-radius: 24px;
   box-shadow: 0 0 8px -1px rgba(33, 30, 33, 1);
-  border: 2px solid ${({ theme }) => theme.palette.darkPurple};
   background-color: ${({ theme }) => theme.palette.white};
   z-index: 10;
 
   @media (${({ theme }) => theme.devices.tablet}) {
-    width: 546px;
+    width: 500px;
   }
 `;
 
 const SignInCardTypography = styled(Typography)`
-  color: ${({ theme }) => theme.palette.black};
+  color: #439CB5;
 `;
 
 const StyledTitle = styled(SignInCardTypography)`
   margin-bottom: 16px;
+  color: #439CB5;
 `;
 
 const StyledQRCodeContainer = styled.div`
@@ -51,7 +51,7 @@ const SignInCard = () => {
         message: response.message || '',
         signature: response.signature as string,
         pfp: response.pfpUrl || '',
-        name: response.displayName || '',
+        username: response.username || '',
         nonce: response.nonce,
       });
     },
@@ -77,7 +77,7 @@ const SignInCard = () => {
   return (
     <StyledSignInCardContainer>
       <StyledTitle variant="h1">Hello Picker!</StyledTitle>
-      <SignInCardTypography variant="h3">Sign in with Farcaster to continue.</SignInCardTypography>
+      <SignInCardTypography variant="h4">Sign in with Farcaster to continue.</SignInCardTypography>
       <StyledQRCodeContainer>
         {url && (
           <QRCode
