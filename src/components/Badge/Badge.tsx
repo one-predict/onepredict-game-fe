@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Typography from '@components/Typography';
+import LabeledContent from '@components/LabeledContent';
 
 export interface BadgeItem {
   title: string;
@@ -30,25 +31,11 @@ const StyledBadgeItem = styled.div`
   align-items: center;
 `;
 
-const StyledBadgeItemInnerContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-`;
-
 const StyledBadgeItemImage = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 50%;
   margin-right: 8px;
-`;
-
-const StyledBadgeItemTitle = styled(Typography)`
-  color: #439CB5;
-`;
-
-const StyledBadgeItemValue = styled(Typography)<{ $valueAlignment?: 'left' | 'right'}>`
-  text-align: ${({ $valueAlignment }) => $valueAlignment || 'left'};
 `;
 
 const Badge = ({ className, items }: BadgeProps) => {
@@ -58,10 +45,9 @@ const Badge = ({ className, items }: BadgeProps) => {
         return (
           <StyledBadgeItem key={index}>
             {item.imageSrc && <StyledBadgeItemImage src={item.imageSrc} />}
-            <StyledBadgeItemInnerContainer>
-              <StyledBadgeItemTitle variant="body2">{item.title}</StyledBadgeItemTitle>
-              <StyledBadgeItemValue $valueAlignment={item.valueAlignment}>{item.value}</StyledBadgeItemValue>
-            </StyledBadgeItemInnerContainer>
+            <LabeledContent title={item.title}>
+              <Typography alignment={item.valueAlignment}>{item.value}</Typography>
+            </LabeledContent>
           </StyledBadgeItem>
         );
       })}

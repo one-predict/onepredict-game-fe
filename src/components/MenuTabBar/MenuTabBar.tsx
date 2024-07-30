@@ -13,6 +13,7 @@ interface MenuSection {
   title: string;
   icon: ReactNode;
   path: string;
+  link: string;
   exact?: boolean;
 }
 
@@ -122,19 +123,23 @@ const sections: MenuSection[] = [{
   title: 'Home',
   icon: <HomeIcon />,
   path: '/',
+  link: '/',
   exact: true,
 }, {
   title: 'Portfolio',
   icon: <FolderIcon />,
-  path: '/portfolios',
+  link: '/portfolios',
+  path: '/portfolios/*',
 }, {
   title: 'PvP',
   icon: <VsIcon />,
-  path: '/battles'
+  link: '/battles',
+  path: '/battles/*'
 }, {
   title: 'Tournaments',
   icon: <CupIcon />,
-  path: '/tournaments'
+  link: '/tournaments',
+  path: '/tournaments/*'
 }];
 
 const MenuTabBar = ({ className }: MenuTabProps) => {
@@ -156,7 +161,7 @@ const MenuTabBar = ({ className }: MenuTabProps) => {
           <StyledMenuSectionContainer
             key={item.title}
             $selected={!!match}
-            onClick={() => navigate(item.path)}
+            onClick={() => navigate(item.link)}
           >
             {item.icon}
             <StyledMenuSectionTitle variant="body2" key={index}>

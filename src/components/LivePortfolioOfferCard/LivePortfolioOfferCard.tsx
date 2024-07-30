@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { PortfolioOffer } from '@api/PortfolioOfferApi.ts';
-import { Portfolio} from '@api/PortfolioApi.ts';
+import { PortfolioOffer } from '@api/PortfolioOfferApi';
+import { Portfolio} from '@api/PortfolioApi';
 import PortfolioOfferCard from '@components/PortfolioOfferCard';
 import Typography from '@components/Typography';
 

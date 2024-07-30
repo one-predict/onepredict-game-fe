@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import dayjs from 'dayjs';
 import { AuthKitProvider } from '@farcaster/auth-kit';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
+import utcPlugin from 'dayjs/plugin/utc';
 import { JsonRpcProvider } from 'ethers';
 import { MetaMaskProvider } from '@metamask/sdk-react';
 import {
@@ -23,6 +24,7 @@ import { HttpAuthApi } from '@app/api/AuthApi';
 import { HttpPortfolioApi } from '@app/api/PortfolioApi';
 import { HttpUserApi } from '@app/api/UserApi';
 import { HttpPortfolioOfferApi } from '@app/api/PortfolioOfferApi';
+import { HttpTournamentApi } from '@api/TournamentApi'
 import AuthorizedSection from '@components/AuthorizedSection';
 import UnauthorizedSection from '@components/UnauthorizedSection';
 import SignInPage from '@pages/SignInPage';
@@ -30,11 +32,14 @@ import PortfoliosPage from '@pages/PortfoliosPage';
 import HomePage from '@pages/HomePage';
 import BattlesPage from '@pages/BattlesPage';
 import TournamentsPage from '@pages/TournamentsPage';
+import TournamentPage from '@pages/TournamentPage';
 import theme from './theme';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 
 dayjs.extend(advancedFormat);
+dayjs.extend(utcPlugin);
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -113,6 +118,7 @@ const services: IApiProviderValue = {
   userApi: new HttpUserApi(apiClient),
   portfolioApi: new HttpPortfolioApi(apiClient),
   portfolioOfferApi: new HttpPortfolioOfferApi(apiClient),
+  tournamentApi: new HttpTournamentApi(apiClient),
 };
 
 const router = createBrowserRouter([{
@@ -141,6 +147,13 @@ const router = createBrowserRouter([{
   element: (
     <AuthorizedSection>
       <BattlesPage />
+    </AuthorizedSection>
+  ),
+}, {
+  path: '/tournaments/:displayId',
+  element: (
+    <AuthorizedSection>
+      <TournamentPage />
     </AuthorizedSection>
   ),
 }, {

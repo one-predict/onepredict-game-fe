@@ -5,7 +5,6 @@ export interface User {
   fid: number;
   username: string;
   coinsBalance: number;
-  points: number;
   imageUrl: string;
 }
 
