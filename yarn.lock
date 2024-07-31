@@ -2368,6 +2368,18 @@
   dependencies:
     "@tanstack/query-core" "5.32.1"
 
+"@twa-dev/sdk@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@twa-dev/sdk/-/sdk-7.0.0.tgz#6d4dafe856efbe188bd09e1bb286d5af8ec80d67"
+  integrity sha512-OZvqGGrdrgE0xU/IGjvsGKKouia5bTu6rA/BOOU6pJYLu776nQJs/HNFl7lwW16RONf1vvPqeV8XximsuzZ9Iw==
+  dependencies:
+    "@twa-dev/types" "^7.0.0"
+
+"@twa-dev/types@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@twa-dev/types/-/types-7.0.0.tgz#4bfa26472144704a12ec9a4bf91f90918afcaba0"
+  integrity sha512-LBnMklxORuXd/ypv9gFKcQVNJkCktkeuU+2V6B5Ww7dcxDCoYBAKkNnIwEQ3cShq+cxTi96jC/CqWhgDMQ7AXQ==
+
 "@types/debug@^4.1.7":
   version "4.1.12"
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.12.tgz#a155f21690871953410df4b6b6f53187f0500917"
