@@ -1,0 +1,53 @@
+.finishedPortfolioOfferCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px 16px;
+  background-color: #190A31;
+  border: 1px solid #8C8498;
+  border-radius: 12px;
+}
+
+.coloredPoints {
+  order: 1;
+  margin: 0;
+}
+
+.offerDate {
+  color: #439CB5;
+  margin-bottom: 8px;
+  order: 0;
+}
+
+.collapseContainer {
+  width: 100%;
+  order: 2;
+}
+
+.toggleIconContainer {
+  position: absolute;
+  right: 16px;
+  cursor: pointer;
+
+  & > svg {
+    width: 16px;
+    height: 16px;
+    stroke: #439CB5;
+  }
+}
+
+.expandedFinishedPortfolioOfferCard {
+  @extend .finishedPortfolioOfferCard;
+
+  align-items: center;
+
+  .coloredPoints {
+    order: 1;
+    margin: 4px 0;
+  }
+
+  .offerDate {
+    order: 1;
+  }
+}

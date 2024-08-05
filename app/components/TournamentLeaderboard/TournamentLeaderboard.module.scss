@@ -1,0 +1,38 @@
+.tournamentLeaderboard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #08042D;
+  border: 1px solid #8C8498;
+  width: 100%;
+  border-radius: 12px;
+  padding: 54px 10px 16px;
+}
+
+.tournamentAvailabilityInfo {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+}
+
+.participationInfo {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  margin-top: 24px;
+}
+
+.joinTournamentButton {
+  width: 200px;
+  height: 33px;
+  min-height: 33px;
+}
+
+.tournamentLeaderboardSubheader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin: 16px 0 32px;
+}

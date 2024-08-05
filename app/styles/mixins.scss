@@ -1,0 +1,13 @@
+@mixin overflowed-ellipsis {
+  width: auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  &:hover {
+    overflow: auto;
+    text-overflow: unset;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+  }
+}

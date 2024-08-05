@@ -1,0 +1,87 @@
+.color-primary {
+  color: #FFFFFF;
+}
+
+.color-gradient1 {
+  background: -webkit-linear-gradient(90deg, #2CD8D5 0%, #6B8DD6 48%, #8E37D7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.color-gradient2 {
+  background: -webkit-linear-gradient(90deg, #2CD8D5 100%, #6B8DD6 100%, #8E37D7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.alignment-left {
+  text-align: left;
+}
+
+.alignment-center {
+  text-align: center;
+}
+
+.alignment-right {
+  text-align: right;
+}
+
+.variant-h1 {
+  font-size: 1.5rem;
+  line-height: 1.875rem;
+  font-weight: 700;
+}
+
+.variant-h2 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.variant-h3 {
+  font-size: 1.125rem;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.variant-h4 {
+  font-size: 1rem;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.variant-h5 {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.variant-h6 {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.variant-subtitle1 {
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.variant-subtitle2 {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.variant-body1 {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.variant-body2 {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 400;
+}

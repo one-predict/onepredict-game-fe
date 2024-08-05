@@ -1,0 +1,48 @@
+.dateRangeView {
+  display: flex;
+  flex-direction: row;
+  column-gap: 4px;
+  align-items: center;
+}
+
+.pastDateRangeView {
+  @extend .dateRangeView;
+
+  & > .dateRangeViewClockIcon {
+    fill: #8C8498;
+  }
+
+  & > .dateRangeViewTitle {
+    color: #8C8498;
+  }
+}
+
+.presentDateRangeView {
+  @extend .dateRangeView;
+
+  & > .dateRangeViewClockIcon {
+    fill: #439CB5;
+  }
+
+  & > .dateRangeViewTitle {
+    color: #F2F2F2;
+  }
+}
+
+.futureDateRangeView {
+  @extend .dateRangeView;
+
+  & > .dateRangeViewClockIcon {
+    fill: #FFB800;
+  }
+
+  & > .dateRangeViewTitle {
+    color: #F2F2F2;
+  }
+}
+
+.dateRangeViewClockIcon {
+  width: 15px;
+  height: 15px;
+  margin-bottom: 2px;
+}

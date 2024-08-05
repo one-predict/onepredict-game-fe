@@ -1,0 +1,51 @@
+.coloredPointsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 4px;
+}
+
+.positiveColoredPointsContainer {
+  @extend .coloredPointsContainer;
+
+  .pointsTypography {
+    color: #10C600;
+  }
+
+  .triangleIcon {
+    fill: #10C600;
+  }
+}
+
+.neutralColoredPointsContainer {
+  @extend .coloredPointsContainer;
+
+  .pointsTypography {
+    color: #8C8498;
+  }
+
+  .triangleIcon {
+    fill: #8C8498;
+    margin-top: 4px;
+    margin-bottom: 0;
+  }
+}
+
+.negativeColoredPointsContainer {
+  @extend .coloredPointsContainer;
+
+  .pointsTypography {
+    color: #D60000;
+  }
+
+  .triangleIcon {
+    fill: #D60000;
+    transform: rotate(180deg);
+  }
+}
+
+.triangleIcon {
+  width: 16px;
+  height: 16px;
+  margin-bottom: 4px;
+}

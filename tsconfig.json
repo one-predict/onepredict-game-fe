@@ -1,36 +1,38 @@
 {
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/.server/**/*.ts",
+    "**/.server/**/*.tsx",
+    "**/.client/**/*.ts",
+    "**/.client/**/*.tsx"
+  ],
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "types": ["@remix-run/node", "vite/client"],
     "isolatedModules": true,
-    "noEmit": true,
+    "esModuleInterop": true,
     "jsx": "react-jsx",
-
-    /* Linting */
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "target": "ES2022",
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
     "paths": {
-      "@app/*": ["./src/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@api/*": ["./src/api/*"],
-      "@providers/*": ["./src/providers/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@components/*": ["./src/components/*"],
-      "@tap-video-game/*": ["./src/tap-video-game/*"],
-      "@pages/*": ["./src/pages/*"],
-    }
-  },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+      "@app/*": ["./app/*"],
+      "@assets/*": ["./app/assets/*"],
+      "@api/*": ["./app/api/*"],
+      "@providers/*": ["./app/providers/*"],
+      "@hooks/*": ["./app/hooks/*"],
+      "@components/*": ["./app/components/*"],
+      "@tap-video-game/*": ["./app/tap-video-game/*"],
+      "@utils/*": ["./app/utils/*"]
+    },
+    // Vite takes care of building everything, not tsc.
+    "noEmit": true
+  }
 }
