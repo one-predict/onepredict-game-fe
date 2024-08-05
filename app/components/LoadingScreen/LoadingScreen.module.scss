@@ -1,0 +1,70 @@
+@keyframes wave {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.loader {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  background: linear-gradient(139.83deg, rgba(220, 216, 255, 0.2) 13.92%, rgba(10, 0, 104, 0.2) 86.22%);
+  box-shadow: 0 0 10px 0 #08042C inset;
+  cursor: pointer;
+}
+
+.wave {
+  position: absolute;
+  border-radius: 50%;
+  animation: wave 1.5s infinite;
+}
+
+.firstWave {
+  @extend .wave;
+
+  width: 100%;
+  height: 100%;
+  border: 2px solid #8C8498;
+}
+
+.secondWave {
+  @extend .wave;
+
+  width: 120%;
+  height: 120%;
+  border: 2px solid #8C8498CC;
+}
+
+.thirdWave {
+  @extend .wave;
+
+  width: 140%;
+  height: 140%;
+  border: 2px solid #8C849866;
+}
+
+.fourthWave {
+  @extend .wave;
+
+  width: 160%;
+  height: 160%;
+  border: 2px solid #8C849833;
+}
+
+.logoImage {
+  width: 100px;
+  height: 100px;
+}

@@ -1,0 +1,21 @@
+.innerContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  padding: 16px;
+}
+
+.navigationHeader {
+  position: sticky;
+  top: -16px;
+  display: flex;
+  width: 100%;
+  min-height: 77px;
+  padding-top: 10px;
+  margin-top: -16px;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 2;
+}

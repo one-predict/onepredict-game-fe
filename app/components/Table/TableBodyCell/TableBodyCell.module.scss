@@ -1,0 +1,16 @@
+@use 'app/styles/mixins' as *;
+
+.tableBodyCell {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20.06px;
+  padding-right: 20px;
+  color: #FFFFFF;
+}
+
+.overflowedTableBodyCellContainer {
+  @include overflowed-ellipsis;
+}

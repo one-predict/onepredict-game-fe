@@ -1,0 +1,61 @@
+$DOT_SIZE: 6px;
+
+@keyframes dotTransformingKeyframes {
+  0% {
+    transform: translate(0, 3px);
+  }
+
+  100% {
+    transform: translate(0, -3px);
+  }
+}
+
+@keyframes dotColorChangeKeyframes {
+  0%, 100% {
+    background-color: #801f75;
+  }
+
+  33% {
+    background-color: #ff56f6;
+  }
+
+  66% {
+    background-color: #FFFFFF;
+  }
+}
+
+.buttonLoader {
+  height: 10px;
+  position: relative;
+}
+
+.buttonLoaderDot {
+  width: $DOT_SIZE;
+  height: $DOT_SIZE;
+  border-radius: 50%;
+  position: absolute;
+  animation: dotTransformingKeyframes 0.8s ease-in-out alternate infinite, dotColorChangeKeyframes 1.5s linear infinite;
+  margin: 0 auto 0;
+  transform: translate(0, 3px);
+}
+
+.leftButtonLoaderDot {
+  @extend .buttonLoaderDot;
+
+  left: calc(50% - #{$DOT_SIZE * 0.5} - #{$DOT_SIZE * 2});
+  animation-delay: 0.48s;
+}
+
+.middleButtonLoaderDot {
+  @extend .buttonLoaderDot;
+
+  left: calc(50% - #{$DOT_SIZE * 0.5});
+  animation-delay: 0.32s;
+}
+
+.rightButtonLoaderDot {
+  @extend .buttonLoaderDot;
+
+  left: calc(50% - #{$DOT_SIZE * 0.5} + #{$DOT_SIZE * 2});
+  animation-delay: 0.16s;
+}

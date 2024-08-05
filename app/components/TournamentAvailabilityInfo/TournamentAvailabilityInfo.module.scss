@@ -1,0 +1,34 @@
+.tournamentAvailabilityInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.statusBadge {
+  height: 15px;
+  background-color: #190A31;
+  padding: 0 18.5px;
+  border: 1px solid #8C8498;
+  border-radius: 12px;
+  font-size: 0.625rem;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+.upcomingStatusBadge {
+  @extend .statusBadge;
+
+  color: #FFB800;
+}
+
+.liveStatusBadge {
+  @extend .statusBadge;
+
+  color: #10C600;
+}
+
+.finishedStatusBadge {
+  @extend .statusBadge;
+
+  color: #8C8498;
+}

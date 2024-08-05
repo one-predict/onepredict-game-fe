@@ -1,0 +1,28 @@
+@keyframes loaderKeyframes {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.loader {
+  display: grid;
+  width: 80px;
+  aspect-ratio: 1;
+  animation: loaderKeyframes 4s infinite;
+
+  &::before,
+  &::after {
+    content: "";
+    grid-area: 1/1;
+    border: 8px solid;
+    border-radius: 50%;
+    border-color: #2CD8D5 #2CD8D5 #6B8DD6 #6B8DD6;
+    mix-blend-mode: darken;
+    animation: loaderKeyframes 1s infinite linear;
+  }
+
+  &::after {
+    border-color: #6B8DD6 #6B8DD6 #8E37D7 #8E37D7;
+    animation-direction: reverse;
+  }
+}
