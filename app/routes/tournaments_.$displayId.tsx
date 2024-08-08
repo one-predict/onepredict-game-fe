@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 import { useParams } from '@remix-run/react';
 import Typography from '@components/Typography';
-import UserBadge from '@components/UserBadge';
 import Loader from '@components/Loader';
 import TournamentLeaderboard from '@components/TournamentLeaderboard/TournamentLeaderboard';
 import ColoredPoints from '@components/ColoredPoints';
@@ -16,7 +15,6 @@ import useSession from '@hooks/useSession';
 import styles from './tournament.module.scss';
 
 export const handle = {
-  pageTitle: 'Tournament',
   backHref: '/tournaments',
 };
 
@@ -67,7 +65,6 @@ const TournamentPage = () => {
   return (
     <>
       <div className={styles.tournamentPageHead}>
-        <UserBadge />
         <LabeledContent title="Rank">{renderParticipationContent()}</LabeledContent>
       </div>
       <div className={styles.tournamentPageBody}>

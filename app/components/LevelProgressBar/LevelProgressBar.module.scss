@@ -1,0 +1,22 @@
+.levelProgressBar {
+  transform: rotate(-90deg);
+}
+
+.text {
+  transform: rotate(90deg);
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.progressText {
+  @extend .text;
+
+  fill: #FFFFFF;
+}
+
+.levelText {
+  @extend .text;
+
+  font-size: 1.25rem;
+  fill: #439CB5;
+}

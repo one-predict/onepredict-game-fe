@@ -3,6 +3,7 @@ import styles from './PageLayout.module.scss';
 
 interface PageLayoutProps {
   children?: ReactNode;
+  noBackgroundImage?: boolean;
 }
 
 const PageLayout = ({ children }: PageLayoutProps) => {

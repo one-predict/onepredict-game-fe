@@ -5,7 +5,7 @@ import Collapse from 'react-collapse';
 import { PortfolioOffer } from '@api/PortfolioOfferApi';
 import { Portfolio } from '@api/PortfolioApi';
 import Typography from '@components/Typography';
-import PortfolioOfferCard from '@components/PortfolioOfferCard';
+import PortfolioCard from '@components/PortfolioCard';
 import ExpandIcon from '@assets/icons/expand.svg?react';
 import CrossIcon from '@assets/icons/cross.svg?react';
 import ColoredPoints from '@components/ColoredPoints';
@@ -46,8 +46,8 @@ const FinishedPortfolioOfferCard = ({ offer, portfolio }: FinishedPortfolioOffer
       {portfolio && portfolio.isAwarded && portfolio.earnedCoins ? (
         <>
           <ColoredPoints points={portfolio.earnedCoins} />
-          <Collapse className={styles.collapseContainer} isOpened={expanded}>
-            <PortfolioOfferCard offer={offer} selectedTokensMap={portfolio?.selectedTokens || []} />
+          <Collapse theme={{ collapse: styles.collapseContainer, content: styles.collapseContent }} isOpened={expanded}>
+            <PortfolioCard portfolio={portfolio} />
           </Collapse>
         </>
       ) : (

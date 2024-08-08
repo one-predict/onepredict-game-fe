@@ -1,9 +1,9 @@
 import { createContext, useMemo, ReactNode } from 'react';
+import { useLaunchParams } from '@telegram-apps/sdk-react';
 import { User } from '@api/UserApi';
 import useCurrentUserQuery from '@hooks/queries/useCurrentUserQuery';
 import useSignInMutation from '@hooks/mutations/useSignInMutation';
 import useAsyncEffect from '@hooks/useAsyncEffect';
-import { convertArrayBufferToHex, generateHMACSHA256 } from '@utils/crypto';
 
 export interface SessionProviderProps {
   children: ReactNode;
@@ -16,49 +16,20 @@ export interface SessionValue {
 export const SessionContext = createContext<SessionValue>({} as SessionValue);
 
 export const SessionProvider = ({ children }: SessionProviderProps) => {
-  const { data } = useCurrentUserQuery();
+  const { data: currentUser } = useCurrentUserQuery();
   const { mutateAsync: signIn } = useSignInMutation();
 
+  const launchParams = useLaunchParams(true);
+
   useAsyncEffect(async () => {
-    if (import.meta.env.VITE_TELEGRAM_BOT_TOKEN_DEV) {
-      const messageData: Record<string, string> = {
-        user: JSON.stringify({
-          id: -1,
-          first_name: 'User',
-          last_name: 'Test',
-          username: 'test_user',
-        }),
-      };
-
-      const secretKey = await generateHMACSHA256('WebAppData', import.meta.env.VITE_TELEGRAM_BOT_TOKEN_DEV);
-
-      const messageHash = convertArrayBufferToHex(
-        await generateHMACSHA256(
-          secretKey,
-          Object.keys(messageData)
-            .sort()
-            .reduce((message, key) => {
-              return message ? `${message}\n${key}=${messageData[key]}` : `${key}=${messageData[key]}`;
-            }, ''),
-        ),
-      );
-
-      const signInMessage = new URLSearchParams({
-        ...messageData,
-        hash: messageHash,
-      }).toString();
-
-      await signIn(signInMessage);
-
-      return;
+    if (launchParams?.initDataRaw) {
+      await signIn(launchParams.initDataRaw);
     }
-
-    await signIn(window.Telegram.WebApp.initData);
-  }, []);
+  }, [launchParams]);
 
   const session = useMemo(() => {
-    return { currentUser: data };
-  }, [data]);
+    return { currentUser };
+  }, [currentUser]);
 
   return <SessionContext.Provider value={session}>{children}</SessionContext.Provider>;
 };

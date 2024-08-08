@@ -1,23 +1,44 @@
-.portfoliosPageHead {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 16px;
-  row-gap: 16px;
-}
-
 .portfoliosPageBody {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 100%;
   flex-grow: 1;
 }
 
-.upcomingPortfolioOffer {
+.buttonToggle {
+  margin-bottom: 16px;
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.upcomingPortfolio {
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 16px;
   width: 100%;
+}
+
+.upcomingPortfolioCard {
+  margin-top: 16px;
+}
+
+.livePortfolio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.livePortfolioCard {
+  margin-top: 16px;
+}
+
+.livePortfolioChoiceDescription {
+  margin-top: 4px;
 }

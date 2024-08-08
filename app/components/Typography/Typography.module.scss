@@ -2,14 +2,18 @@
   color: #FFFFFF;
 }
 
+.color-secondary {
+  color: #439CB5;
+}
+
 .color-gradient1 {
-  background: -webkit-linear-gradient(90deg, #2CD8D5 0%, #6B8DD6 48%, #8E37D7 100%);
+  background: linear-gradient(to right, #2CD8D5 0%, #6B8DD6 48%, #8E37D7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .color-gradient2 {
-  background: -webkit-linear-gradient(90deg, #2CD8D5 100%, #6B8DD6 100%, #8E37D7 100%);
+  background: linear-gradient(to right, #2CD8D5 80%, #6B8DD6 85%, #8E37D7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

@@ -1,47 +1,86 @@
-import { useCallback, useMemo, useState } from 'react';
-import { PortfolioOffer } from '@api/PortfolioOfferApi';
+import { useCallback, useState } from 'react';
+import { PortfolioOffer, TokenDirection } from '@api/PortfolioOfferApi';
+import { PortfolioSelectedToken } from '@api/PortfolioApi';
 import { SubmitButton } from '@components/Button';
-import PortfolioOfferCard from '@components/PortfolioOfferCard';
 import Typography from '@components/Typography';
+import TokensCard from '@components/TokensCard';
+import TimeRemaining from '@components/TimeRemaining';
 import styles from './SubmitPortfolio.module.scss';
 
 export interface SubmitPortfolioProps {
   offer: PortfolioOffer;
-  onSubmit: (offerId: string, selectedTokens: string[]) => void;
+  onSubmit: (offerId: string, selectedTokens: PortfolioSelectedToken[]) => void;
   isSubmitInProgress?: boolean;
 }
 
-const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfolioProps) => {
-  const [selectedTokensMap, setSelectedTokensMap] = useState<Record<number, string>>({});
+const MAX_TOKENS_PER_PORTFOLIO = 6;
 
-  const handleTokenSelect = useCallback(
-    (tokenId: string, lineIndex: number) => {
-      setSelectedTokensMap((previousSelectedTokensMap) => ({
-        ...previousSelectedTokensMap,
-        [lineIndex]: tokenId,
-      }));
+const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfolioProps) => {
+  const [selectedTokens, setSelectedTokens] = useState<PortfolioSelectedToken[]>([]);
+
+  const handleTokenClick = useCallback(
+    (token: string) => {
+      setSelectedTokens((previousSelectedTokens) => {
+        const hasToken = previousSelectedTokens.some((selectedToken) => selectedToken.id === token);
+
+        if (hasToken) {
+          return previousSelectedTokens.filter((selectedToken) => selectedToken.id !== token);
+        }
+
+        if (previousSelectedTokens.length >= MAX_TOKENS_PER_PORTFOLIO) {
+          const [, ...restTokens] = previousSelectedTokens;
+
+          return [...restTokens, { id: token, direction: 'growth' }];
+        }
+
+        return [...previousSelectedTokens, { id: token, direction: 'growth' }];
+      });
     },
-    [setSelectedTokensMap],
+    [setSelectedTokens],
   );
 
-  const allTokensSelected = useMemo(() => {
-    return Object.keys(selectedTokensMap).length === offer.tokenOffers.length;
-  }, [offer.tokenOffers.length, selectedTokensMap]);
+  const handleTokenDirectionSelect = useCallback(
+    (token: string, direction: TokenDirection) => {
+      setSelectedTokens((previousSelectedTokens) => {
+        return previousSelectedTokens.map((selectedToken) => {
+          if (selectedToken.id === token) {
+            return { ...selectedToken, direction };
+          }
+
+          return selectedToken;
+        });
+      });
+    },
+    [setSelectedTokens],
+  );
 
   return (
     <div className={styles.submitPortfolioContainer}>
       <Typography color="gradient1" variant="h1">
         Make your choice
       </Typography>
-      <PortfolioOfferCard
-        className={styles.portfolioOfferCard}
-        offer={offer}
-        selectedTokensMap={selectedTokensMap}
-        onTokenSelect={handleTokenSelect}
+      <Typography alignment="center" className={styles.submitPortfolioDescription} variant="body1">
+        Choose {MAX_TOKENS_PER_PORTFOLIO} coins you want to add to your portfolio
+      </Typography>
+      <TimeRemaining day={offer.day}>
+        {(remainingHours, remainingMinutes) => {
+          return (
+            <Typography className={styles.offerAvailabilityInfo} variant="body2" color="secondary" alignment="center">
+              This offer will be available for next {remainingHours} hours and {remainingMinutes} minutes.
+            </Typography>
+          );
+        }}
+      </TimeRemaining>
+      <TokensCard
+        className={styles.chooseTokensCard}
+        availableTokens={offer.tokens}
+        selectedTokens={selectedTokens}
+        onTokenClick={handleTokenClick}
+        onTokenDirectionSelect={handleTokenDirectionSelect}
       />
       <SubmitButton
-        disabled={!allTokensSelected}
-        onClick={() => onSubmit(offer.id, Object.values(selectedTokensMap))}
+        disabled={selectedTokens.length !== MAX_TOKENS_PER_PORTFOLIO}
+        onClick={() => onSubmit(offer.id, selectedTokens)}
         loading={isSubmitInProgress}
       >
         Submit

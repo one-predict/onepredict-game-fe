@@ -2,8 +2,11 @@ import { ApiClient } from './ApiClient';
 
 export interface User {
   id: string;
-  fid: number;
-  username: string;
+  externalId: number | string;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  avatarUrl?: string;
   coinsBalance: number;
   imageUrl: string;
 }

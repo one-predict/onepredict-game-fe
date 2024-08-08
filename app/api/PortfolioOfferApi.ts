@@ -1,15 +1,12 @@
 import { ApiClient } from './ApiClient';
 
-export interface TokenOffer {
-  firstToken: string;
-  secondToken: string;
-}
+export type TokenDirection = 'growth' | 'falling';
 
 export interface PortfolioOffer {
   id: string;
   day: number;
   date: string;
-  tokenOffers: TokenOffer[];
+  tokens: string[];
 }
 
 export interface PortfolioOfferApi {

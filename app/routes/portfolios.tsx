@@ -1,25 +1,20 @@
 import { useCallback, useMemo, useState } from 'react';
-import lodash from 'lodash';
+import _ from 'lodash';
 import { toast } from 'react-toastify';
+import { PortfolioSelectedToken } from '@api/PortfolioApi';
 import useLatestPortfolioOffersQuery from '@hooks/queries/useLatestPortfolioOffersQuery';
 import useUserPortfoliosQuery from '@hooks/queries/useUserPortfoliosQuery';
 import useCreatePortfolioMutation from '@hooks/mutations/useCreatePortfolioMutation';
 import Typography from '@components/Typography';
 import ButtonsToggle from '@components/ButtonsToggle';
-import UserBadge from '@components/UserBadge';
-import PortfolioOfferCard from '@components/PortfolioOfferCard';
+import PortfolioCard from '@components/PortfolioCard';
 import SubmitPortfolio from '@components/SubmitPortfolio';
-import LivePortfolioOfferCard from '@components/LivePortfolioOfferCard';
 import FinishedPortfolioOffers from '@components/FinishedPortfolioOffers';
 import Loader from '@components/Loader';
+import TimeRemaining from '@components/TimeRemaining';
 import styles from './portfolios.module.scss';
 
 type OffersCategory = 'upcoming' | 'live' | 'finished';
-
-export const handle = {
-  pageTitle: 'Portfolios',
-  backHref: '/',
-};
 
 const PortfoliosPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<OffersCategory>('upcoming');
@@ -32,12 +27,12 @@ const PortfoliosPage = () => {
 
   const { data: portfolios } = useUserPortfoliosQuery(offerIds);
 
-  const portfoliosMap = useMemo(() => lodash.keyBy(portfolios, 'offerId'), [portfolios]);
+  const portfoliosMap = useMemo(() => _.keyBy(portfolios, 'offerId'), [portfolios]);
 
   const { status: createPortfolioStatus, mutate: createPortfolio } = useCreatePortfolioMutation();
 
   const handleSubmitPortfolio = useCallback(
-    async (offerId: string, selectedTokens: string[]) => {
+    async (offerId: string, selectedTokens: PortfolioSelectedToken[]) => {
       await createPortfolio({
         offerId,
         selectedTokens,
@@ -50,7 +45,11 @@ const PortfoliosPage = () => {
 
   const renderOffersCategory = () => {
     if (!offers || !portfolios) {
-      return <Loader />;
+      return (
+        <div className={styles.loaderContainer}>
+          <Loader />
+        </div>
+      );
     }
 
     const [upcomingOffer, liveOffer, ...finishedOffers] = offers;
@@ -59,9 +58,20 @@ const PortfoliosPage = () => {
       const upcomingPortfolio = portfoliosMap[upcomingOffer.id];
 
       return upcomingPortfolio ? (
-        <div className={styles.upcomingPortfolioOffer}>
-          <Typography variant="h1">Your choice today</Typography>
-          <PortfolioOfferCard offer={upcomingOffer} selectedTokensMap={upcomingPortfolio.selectedTokens} />
+        <div className={styles.upcomingPortfolio}>
+          <Typography variant="h1" color="gradient1">
+            Your choice:
+          </Typography>
+          <TimeRemaining day={upcomingOffer.day}>
+            {(remainingHours, remainingMinutes) => {
+              return remainingHours > 0 || remainingMinutes > 0 ? (
+                <Typography color="secondary" alignment="center" variant="body2">
+                  This offer will become live in {remainingHours} hours and {remainingMinutes} minutes
+                </Typography>
+              ) : null;
+            }}
+          </TimeRemaining>
+          <PortfolioCard className={styles.upcomingPortfolioCard} portfolio={upcomingPortfolio} />
         </div>
       ) : (
         <SubmitPortfolio
@@ -75,7 +85,33 @@ const PortfoliosPage = () => {
     if (selectedCategory === 'live') {
       const livePortfolio = portfoliosMap[liveOffer.id];
 
-      return <LivePortfolioOfferCard offer={liveOffer} portfolio={livePortfolio} />;
+      return livePortfolio ? (
+        <div className={styles.livePortfolio}>
+          <Typography variant="h1" color="gradient1">
+            Your choice:
+          </Typography>
+          <TimeRemaining day={liveOffer.day + 1}>
+            {(remainingHours, remainingMinutes) => {
+              return remainingHours > 0 || remainingMinutes > 0 ? (
+                <Typography alignment="center" variant="body2">
+                  Open for {remainingHours} hours and {remainingMinutes} minutes
+                </Typography>
+              ) : null;
+            }}
+          </TimeRemaining>
+          <Typography
+            className={styles.livePortfolioChoiceDescription}
+            alignment="center"
+            color="secondary"
+            variant="subtitle2"
+          >
+            The results of your choice will be ready in few hours after your portfolio will be finished.
+          </Typography>
+          <PortfolioCard className={styles.livePortfolioCard} portfolio={livePortfolio} />
+        </div>
+      ) : (
+        <Typography variant="subtitle1">You did not submit your portfolio</Typography>
+      );
     }
 
     return <FinishedPortfolioOffers portfoliosMap={portfoliosMap} offers={finishedOffers} />;
@@ -83,27 +119,25 @@ const PortfoliosPage = () => {
 
   return (
     <>
-      <div className={styles.portfoliosPageHead}>
-        <UserBadge />
-        <ButtonsToggle
-          onSwitch={(category) => setSelectedCategory(category as OffersCategory)}
-          toggles={[
-            {
-              title: 'Upcoming',
-              id: 'upcoming',
-            },
-            {
-              title: 'Live',
-              id: 'live',
-            },
-            {
-              title: 'Finished',
-              id: 'finished',
-            },
-          ]}
-          selectedId={selectedCategory}
-        />
-      </div>
+      <ButtonsToggle
+        className={styles.buttonToggle}
+        onSwitch={(category) => setSelectedCategory(category as OffersCategory)}
+        toggles={[
+          {
+            title: 'Upcoming',
+            id: 'upcoming',
+          },
+          {
+            title: 'Live',
+            id: 'live',
+          },
+          {
+            title: 'Finished',
+            id: 'finished',
+          },
+        ]}
+        selectedId={selectedCategory}
+      />
       <div className={styles.portfoliosPageBody}>{renderOffersCategory()}</div>
     </>
   );
