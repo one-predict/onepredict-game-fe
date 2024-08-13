@@ -1,0 +1,37 @@
+.nextButton {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(139.83deg, #2c2b33 13.92%, #020015 86.22%);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -1;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #2CD8D5 0%, #6B8DD6 45%, #8E37D7 98%);
+  }
+}
+
+.gradientBorder {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
