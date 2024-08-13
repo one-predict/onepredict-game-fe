@@ -1,0 +1,75 @@
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  10% {
+    transform: rotate(-5deg);
+  }
+
+  25% {
+    transform: rotate(5deg);
+  }
+
+  50.1% {
+    transform: rotate(0deg)
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.pageBody {
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  height: 100%;
+}
+
+.deckConfigurationContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  border-bottom: 2.5px solid #8C8498;
+  padding-bottom: 32px;
+  border-radius: 12px;
+  box-shadow: 0 25px 30px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.deckConfiguration {
+  overflow-y: auto;
+  padding: 0 16px;
+  min-height: 168px;
+}
+
+.myCardsContainer {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex-grow: 1;
+  row-gap: 16px;
+  padding: 16px 16px 90px;
+}
+
+.saveChangesButton {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: calc(100% - 32px);
+}
+
+.unavailableCard {
+  opacity: 0.2;
+}
+
+.shakingCard {
+  animation: shake 3s ease-in-out infinite;
+}
+
+.loader {
+  margin: auto;
+}

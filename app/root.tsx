@@ -13,6 +13,10 @@ import { HttpUserApi } from '@api/UserApi';
 import { HttpPortfolioApi } from '@api/PortfolioApi';
 import { HttpPortfolioOfferApi } from '@api/PortfolioOfferApi';
 import { HttpTournamentApi } from '@api/TournamentApi';
+import { HttpGameCardApi } from '@api/GameCardApi';
+import { HttpUserInventoryApi } from '@api/UserInventoryApi';
+import { HttpPortfolioCardsDeckApi } from '@api/PortfolioCardsDeckApi';
+import { HttpGameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
 import { PageLayoutWithMenu } from '@components/Layouts';
 import LoadingScreen from '@components/LoadingScreen';
 import AuthorizedSection from '@components/AuthorizedSection';
@@ -62,6 +66,13 @@ const App = () => {
       mutationCache: new MutationCache({
         onError: (error) => toast.error(error.message),
       }),
+      defaultOptions: {
+        queries: {
+          refetchOnWindowFocus: false,
+          refetchOnReconnect: false,
+          refetchIntervalInBackground: false,
+        },
+      },
     });
   }, []);
 
@@ -74,6 +85,10 @@ const App = () => {
       portfolioApi: new HttpPortfolioApi(apiClient),
       portfolioOfferApi: new HttpPortfolioOfferApi(apiClient),
       tournamentApi: new HttpTournamentApi(apiClient),
+      gameCardApi: new HttpGameCardApi(apiClient),
+      userInventoryApi: new HttpUserInventoryApi(apiClient),
+      portfolioCardsDeckApi: new HttpPortfolioCardsDeckApi(apiClient),
+      gameCardsMarketplaceApi: new HttpGameCardsMarketplaceApi(apiClient),
     };
   }, []);
 
@@ -89,7 +104,13 @@ const App = () => {
                   <Outlet />
                 </PageLayoutWithMenu>
               </AuthorizedSection>
-              <ToastContainer toastStyle={{ zIndex: 1000000 }} position="bottom-left" />
+              <ToastContainer
+                pauseOnFocusLoss={false}
+                pauseOnHover={false}
+                theme="dark"
+                toastStyle={{ zIndex: 1000000 }}
+                position="bottom-right"
+              />
             </SessionProvider>
           </ApiProvider>
         </QueryClientProvider>

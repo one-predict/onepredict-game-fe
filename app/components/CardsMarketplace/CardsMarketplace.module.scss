@@ -1,0 +1,24 @@
+.marketplaceGameCardPreview {
+  &:nth-child(odd) {
+    transform: rotateZ(-1.6deg);
+  }
+
+  &:nth-child(even) {
+    transform: translateY(20px) rotateZ(1.6deg);
+  }
+}
+
+.gameCardPreviewFooterContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 4px;
+  padding: 2px 8px;
+  background-color: #190A31;
+  border-radius: 12px;
+
+  & > img {
+    width: 24px;
+    height: 21px;
+  }
+}

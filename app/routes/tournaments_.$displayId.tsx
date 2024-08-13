@@ -1,5 +1,7 @@
 import { toast } from 'react-toastify';
 import { useParams } from '@remix-run/react';
+import AppSection from '@enums/AppSection';
+import PageBody from '@components/PageBody';
 import Typography from '@components/Typography';
 import Loader from '@components/Loader';
 import TournamentLeaderboard from '@components/TournamentLeaderboard/TournamentLeaderboard';
@@ -16,6 +18,7 @@ import styles from './tournament.module.scss';
 
 export const handle = {
   backHref: '/tournaments',
+  appSection: AppSection.Tournaments,
 };
 
 const TournamentPage = () => {
@@ -31,7 +34,7 @@ const TournamentPage = () => {
 
   const { data: tournamentLeaderboard } = useTournamentLeaderboardQuery(tournament?.id || '');
 
-  const { mutate: joinTournament, status: joinTournamentMutationStatus } = useJoinTournamentMutation();
+  const { mutateAsync: joinTournament, status: joinTournamentMutationStatus } = useJoinTournamentMutation();
 
   const tournamentStatus = useTournamentStatus(tournament ?? null);
 
@@ -63,11 +66,11 @@ const TournamentPage = () => {
   };
 
   return (
-    <>
-      <div className={styles.tournamentPageHead}>
+    <PageBody>
+      <div className={styles.tournamentParticipationInfoContainer}>
         <LabeledContent title="Rank">{renderParticipationContent()}</LabeledContent>
       </div>
-      <div className={styles.tournamentPageBody}>
+      <div className={styles.tournamentLeaderboardContainer}>
         {tournament && tournamentLeaderboard && tournamentParticipation !== undefined ? (
           <TournamentLeaderboard
             tournament={tournament}
@@ -85,7 +88,7 @@ const TournamentPage = () => {
           </div>
         )}
       </div>
-    </>
+    </PageBody>
   );
 };
 

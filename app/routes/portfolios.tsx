@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
+import AppSection from '@enums/AppSection';
 import { PortfolioSelectedToken } from '@api/PortfolioApi';
 import useLatestPortfolioOffersQuery from '@hooks/queries/useLatestPortfolioOffersQuery';
 import useUserPortfoliosQuery from '@hooks/queries/useUserPortfoliosQuery';
@@ -12,9 +13,14 @@ import SubmitPortfolio from '@components/SubmitPortfolio';
 import FinishedPortfolioOffers from '@components/FinishedPortfolioOffers';
 import Loader from '@components/Loader';
 import TimeRemaining from '@components/TimeRemaining';
+import PageBody from '@components/PageBody';
 import styles from './portfolios.module.scss';
 
 type OffersCategory = 'upcoming' | 'live' | 'finished';
+
+export const handle = {
+  appSection: AppSection.Portfolios,
+};
 
 const PortfoliosPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<OffersCategory>('upcoming');
@@ -29,7 +35,7 @@ const PortfoliosPage = () => {
 
   const portfoliosMap = useMemo(() => _.keyBy(portfolios, 'offerId'), [portfolios]);
 
-  const { status: createPortfolioStatus, mutate: createPortfolio } = useCreatePortfolioMutation();
+  const { mutateAsync: createPortfolio, status: createPortfolioStatus } = useCreatePortfolioMutation();
 
   const handleSubmitPortfolio = useCallback(
     async (offerId: string, selectedTokens: PortfolioSelectedToken[]) => {
@@ -110,7 +116,9 @@ const PortfoliosPage = () => {
           <PortfolioCard className={styles.livePortfolioCard} portfolio={livePortfolio} />
         </div>
       ) : (
-        <Typography variant="subtitle1">You did not submit your portfolio</Typography>
+        <Typography className={styles.noLivePortfolioTypography} variant="subtitle1">
+          You did not submit your portfolio
+        </Typography>
       );
     }
 
@@ -118,7 +126,7 @@ const PortfoliosPage = () => {
   };
 
   return (
-    <>
+    <PageBody>
       <ButtonsToggle
         className={styles.buttonToggle}
         onSwitch={(category) => setSelectedCategory(category as OffersCategory)}
@@ -138,8 +146,8 @@ const PortfoliosPage = () => {
         ]}
         selectedId={selectedCategory}
       />
-      <div className={styles.portfoliosPageBody}>{renderOffersCategory()}</div>
-    </>
+      <div className={styles.offersContainer}>{renderOffersCategory()}</div>
+    </PageBody>
   );
 };
 

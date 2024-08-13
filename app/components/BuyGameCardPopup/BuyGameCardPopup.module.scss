@@ -1,0 +1,21 @@
+.priceSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 8px;
+
+  & > img {
+    width: 44px;
+    height: 34px;
+  }
+}
+
+.buySection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 16px;
+  width: 100%;
+  margin-top: auto;
+}

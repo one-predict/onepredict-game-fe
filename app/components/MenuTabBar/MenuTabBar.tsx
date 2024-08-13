@@ -1,19 +1,19 @@
 import { ReactNode } from 'react';
-import { useLocation, useNavigate, matchPath } from '@remix-run/react';
+import { useNavigate, useMatches } from '@remix-run/react';
 import clsx from 'clsx';
+import AppSection from '@enums/AppSection';
 import Typography from '@components/Typography';
 import HomeIcon from '@assets/icons/home.svg?react';
 import FolderIcon from '@assets/icons/folder.svg?react';
-import VsIcon from '@assets/icons/vs.svg?react';
+import TasksIcon from '@assets/icons/tasks.svg?react';
 import CupIcon from '@assets/icons/cup.svg?react';
 import styles from './MenuTabBar.module.scss';
 
 interface MenuSection {
   title: string;
   icon: ReactNode;
-  path: string;
   link: string;
-  exact?: boolean;
+  section: AppSection;
 }
 
 export interface MenuTabProps {
@@ -24,49 +24,44 @@ const sections: MenuSection[] = [
   {
     title: 'Home',
     icon: <HomeIcon />,
-    path: '/',
     link: '/',
-    exact: true,
+    section: AppSection.Home,
   },
   {
     title: 'Portfolios',
     icon: <FolderIcon />,
     link: '/portfolios',
-    path: '/portfolios/*',
+    section: AppSection.Portfolios,
   },
   {
-    title: 'PvP',
-    icon: <VsIcon />,
-    link: '/battles',
-    path: '/battles/*',
+    title: 'Tasks',
+    icon: <TasksIcon />,
+    link: '/tasks',
+    section: AppSection.Tasks,
   },
   {
     title: 'Tournaments',
     icon: <CupIcon />,
     link: '/tournaments',
-    path: '/tournaments/*',
+    section: AppSection.Tournaments,
   },
 ];
 
 const MenuTabBar = ({ className }: MenuTabProps) => {
   const navigate = useNavigate();
-  const location = useLocation();
+
+  const matches = useMatches();
+  const match = matches[matches.length - 1];
 
   return (
     <div className={clsx(styles.menuTabBar, className)}>
       {sections.map((item, index) => {
-        const match = matchPath(
-          {
-            path: item.path,
-            end: item.exact,
-          },
-          location.pathname,
-        );
-
         return (
           <div
             key={item.title}
-            className={clsx(styles.menuSection, { [styles.selectedMenuSection]: !!match })}
+            className={clsx(styles.menuSection, {
+              [styles.selectedMenuSection]: match.handle?.appSection === item.section,
+            })}
             onClick={() => navigate(item.link)}
           >
             {item.icon}

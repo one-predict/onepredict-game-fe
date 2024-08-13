@@ -1,0 +1,90 @@
+.gameCardPreview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+
+.smallSizeGameCardPreview {
+  .gameCardPreviewHead {
+    min-height: 24px;
+  }
+
+  .gameCardPreviewContent {
+    height: calc(100% - 24px);
+  }
+}
+
+.commonGameCardPreview {
+  @extend .gameCardPreview;
+  box-shadow: 0 0 10px 1px #FECFEF;
+
+  .gameCardPreviewHead {
+    background: linear-gradient(90deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%);
+  }
+}
+
+.rareGameCardPreview {
+  @extend .gameCardPreview;
+
+  box-shadow: 0 0 10px 1px #00C9FF;
+
+  .gameCardPreviewHead {
+    background: linear-gradient(90deg, #92FE9D 0%, #00C9FF 100%);
+  }
+}
+
+.epicGameCardPreview {
+  @extend .gameCardPreview;
+
+  box-shadow: 0 0 10px 1px #CD9CF2;
+
+  .gameCardPreviewHead {
+    background: linear-gradient(90deg, #CD9CF2 0%, #F6F3FF 100%);
+  }
+}
+
+.legendaryGameCardPreview {
+  @extend .gameCardPreview;
+
+  box-shadow: 0 0 10px 1px #FF4E50;
+
+  .gameCardPreviewHead {
+    background: linear-gradient(90deg, #F9D423 0%, #FF4E50 100%);
+  }
+}
+
+.gameCardPreviewHead {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  min-height: 36px;
+}
+
+.cardName {
+  color: #101828;
+}
+
+.gameCardPreviewContent {
+  height: calc(100% - 36px);
+  background-color: #07032B;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.gameCardPreviewImage {
+  width: 100%;
+  height: 100%;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.gameCardPreviewFooter {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}

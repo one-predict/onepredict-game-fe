@@ -1,0 +1,46 @@
+.gameCardDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 55px;
+  flex-grow: 1;
+}
+
+.gameCardPreview {
+  height: 45%;
+  width: unset;
+  aspect-ratio: 1 / 1;
+  max-height: 215px;
+}
+
+.gameCardDescription {
+  position: relative;
+  width: 100%;
+  padding: 24px;
+}
+
+.gameCardDescription::before {
+  content: 'When active';
+  position: absolute;
+  top: -10px;
+  width: 40%;
+  color: #439CB5;
+  background-color: #190A31;
+  text-align: center;
+}
+
+.gameCardDescription::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 12px;
+  padding: 2px;
+  background: linear-gradient(111.04deg, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  z-index: -1;
+}

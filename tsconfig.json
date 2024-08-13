@@ -28,6 +28,7 @@
       "@api/*": ["./app/api/*"],
       "@providers/*": ["./app/providers/*"],
       "@hooks/*": ["./app/hooks/*"],
+      "@enums/*": ["./app/enums/*"],
       "@components/*": ["./app/components/*"],
       "@tap-video-game/*": ["./app/tap-video-game/*"],
       "@utils/*": ["./app/utils/*"]
