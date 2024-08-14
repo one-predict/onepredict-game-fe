@@ -16,7 +16,6 @@ const CardsMarketplace = ({ isCardPurchased, gameCards, onCardClick, className }
       className={className}
       gameCards={gameCards}
       onCardClick={onCardClick}
-      previewCardClassName={styles.marketplaceGameCardPreview}
       renderPreviewCardFooter={(card) => (
         <div className={styles.gameCardPreviewFooterContent}>
           {isCardPurchased(card) ? (

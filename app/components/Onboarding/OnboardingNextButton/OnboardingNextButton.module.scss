@@ -1,0 +1,65 @@
+.onboardingNextButton {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.innerContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  z-index: 3;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 50%;
+  background: #362e53;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.border {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.gradientBorder {
+  @extend .border;
+
+  z-index: 1;
+  background: linear-gradient(90deg, #2CD8D5 0%, #6B8DD6 45%, #8E37D7 98%);
+}
+
+.transparencyBorder {
+  @extend .border;
+
+  z-index: 2;
+  background: conic-gradient(from 0deg, transparent calc(var(--next-button-gradient-percentage) * 1%), #FFFFFF 0);
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  fill: #FFFFFF;
+}
+
+.checkmarkIcon {
+  width: 24px;
+  height: 24px;
+  fill: #FFFFFF;
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
+  fill: #FFFFFF;
+  transform: rotateY(180deg);
+}

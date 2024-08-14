@@ -9,11 +9,12 @@ export interface User {
   avatarUrl?: string;
   coinsBalance: number;
   imageUrl: string;
+  onboarded: boolean;
 }
 
 export interface UserApi {
   getCurrentUser(): Promise<User | null>;
-  getCurrentUserRank(): Promise<number | null>;
+  finishOnboarding(): Promise<void>;
 }
 
 export class HttpUserApi implements UserApi {
@@ -25,9 +26,7 @@ export class HttpUserApi implements UserApi {
     return data.user;
   }
 
-  public async getCurrentUserRank() {
-    const data = await this.client.makeCall<{ rank: number | null }>('/users/current-user/rank', 'GET');
-
-    return data.rank;
+  public async finishOnboarding() {
+    await this.client.makeCall('/users/current-user/onboard', 'POST', {});
   }
 }

@@ -1,2 +1,1 @@
-export * from './Onboarding';
-export * from './types';
+export { default } from './Onboarding';

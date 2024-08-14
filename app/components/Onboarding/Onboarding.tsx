@@ -1,47 +1,70 @@
+import { useEffect, useState } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import OnboardingSlide from './OnboardingSlide';
+import OnboardingNextButton from './OnboardingNextButton';
+import Typography from '@components/Typography';
+import slides from './slides';
 import styles from './Onboarding.module.scss';
-import { OnboardingItem } from './OnboardingItem';
-import { IOnboardingItem } from './types';
-import { useState } from 'react';
-import { useNavigate } from '@remix-run/react';
-import { NextButton } from './NextButton';
 
 interface OnboardingProps {
-  items: IOnboardingItem[];
+  onBoardingComplete: () => void;
 }
 
-export const Onboarding = ({ items }: OnboardingProps) => {
+const Onboarding = ({ onBoardingComplete }: OnboardingProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const navigate = useNavigate();
 
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
+  const [emblaRef, emblaApi] = useEmblaCarousel({});
+
+  useEffect(() => {
+    const callback = () => {
+      if (!emblaApi) {
+        return;
+      }
+
+      setCurrentIndex(emblaApi.selectedScrollSnap());
+    };
+
+    emblaApi?.on('select', callback);
+
+    return () => {
+      emblaApi?.off('select', callback);
+    };
+  }, [emblaApi]);
+
+  const handleNextButtonClick = () => {
+    if (!emblaApi) {
+      return;
+    }
+
+    if (!emblaApi.canScrollNext()) {
+      onBoardingComplete();
+    } else {
+      emblaApi.scrollNext();
+    }
   };
 
-  const completeOnboarding = () => {
-    navigate('/');
-  };
-
-  const isLastItem = currentIndex === items.length - 1;
-  const percentage = ((currentIndex + 1) / items.length) * 100;
+  const percentage = ((currentIndex + 1) / slides.length) * 100;
 
   return (
     <div className={styles.onboarding}>
       <div className={styles.onboardingPanel}>
-        <img className={styles.onboardingLogo} src="/images/aipick-coin.png" alt="Aipick Logo" />
-        <a className={styles.onboardingSkip} onClick={completeOnboarding}>
+        <img className={styles.coinImage} src="/images/aipick-coin.png" alt="Aipick Logo" />
+        <Typography variant="body2" color="primary" onClick={onBoardingComplete}>
           Skip
-        </a>
+        </Typography>
       </div>
-      <div className={styles.onboardingItem}>
-        <OnboardingItem item={items[currentIndex]} />
+      <div ref={emblaRef} className={styles.sliderContainer}>
+        <div className={styles.sliderInnerContainer}>
+          {slides.map((item, index) => (
+            <OnboardingSlide key={index} className={styles.slider} slideData={slides[index]} />
+          ))}
+        </div>
       </div>
-      <div className={styles.onboardingNext}>
-        {isLastItem ? (
-          <NextButton percentage={percentage} onClick={completeOnboarding} />
-        ) : (
-          <NextButton percentage={percentage} onClick={handleNext} />
-        )}
+      <div className={styles.onboardingNextButtonPanel}>
+        <OnboardingNextButton percentage={percentage} onClick={handleNextButtonClick} />
       </div>
     </div>
   );
 };
+
+export default Onboarding;

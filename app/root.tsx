@@ -20,6 +20,7 @@ import { HttpGameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
 import { PageLayoutWithMenu } from '@components/Layouts';
 import LoadingScreen from '@components/LoadingScreen';
 import AuthorizedSection from '@components/AuthorizedSection';
+import OnboardedSection from '@components/OnboardedSection';
 import TelegramInit from '@components/TelegramInit';
 import { SessionProvider } from '@providers/SessionProvider';
 
@@ -100,9 +101,11 @@ const App = () => {
           <ApiProvider value={services}>
             <SessionProvider>
               <AuthorizedSection>
-                <PageLayoutWithMenu>
-                  <Outlet />
-                </PageLayoutWithMenu>
+                <OnboardedSection>
+                  <PageLayoutWithMenu>
+                    <Outlet />
+                  </PageLayoutWithMenu>
+                </OnboardedSection>
               </AuthorizedSection>
               <ToastContainer
                 pauseOnFocusLoss={false}

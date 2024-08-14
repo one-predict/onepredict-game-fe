@@ -36,9 +36,7 @@ const Popup = ({ height = DEFAULT_POPUP_HEIGHT, children, isOpen, onClose }: Pop
         className={clsx(styles.popup, isOpen && styles.visiblePopup)}
       >
         <div onClick={onClose} className={styles.crossIcon}></div>
-        <div className={styles.popupContent}>
-          {cachedChildren}
-        </div>
+        <div className={styles.popupContent}>{cachedChildren}</div>
       </div>
     </Portal>
   );

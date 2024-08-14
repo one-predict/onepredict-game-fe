@@ -9,6 +9,7 @@ const useGameCardsByIdsQuery = (ids: GameCardId[]) => {
     queryKey: ['game-cards', ids],
     queryFn: () => gameCardApi.getCardsByIds(ids),
     enabled: ids.length > 0,
+    placeholderData: ids.length ? undefined : [],
   });
 };
 

@@ -142,6 +142,28 @@ const MyDeckPage = () => {
     [checkCardUnavailable, isCardSelectingInProgress],
   );
 
+  const renderMyCardsSection = () => {
+    if (!myCards) {
+      return <Loader className={styles.loader} />;
+    }
+
+    if (myCards.length === 0) {
+      return (
+        <Typography className={styles.noCardsText} alignment="center" variant="subtitle1">
+          You don't have any cards yet.
+        </Typography>
+      );
+    }
+
+    return (
+      <GameCardsGrid
+        onCardClick={handleCardClick}
+        previewCardClassName={getPreviewClassName}
+        gameCards={myCards}
+      />
+    );
+  };
+
   return (
     <PageBody className={styles.pageBody}>
       <div className={styles.deckConfigurationContainer}>
@@ -166,11 +188,7 @@ const MyDeckPage = () => {
         <Typography alignment="center" color="gradient1" variant="h1">
           My Cards:
         </Typography>
-        {myCards ? (
-          <GameCardsGrid onCardClick={handleCardClick} previewCardClassName={getPreviewClassName} gameCards={myCards} />
-        ) : (
-          <Loader className={styles.loader} />
-        )}
+        {renderMyCardsSection()}
       </div>
       {myDeck !== undefined && isDeckChanged && (
         <Button
