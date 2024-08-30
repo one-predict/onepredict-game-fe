@@ -3,6 +3,7 @@ import { TournamentParticipant } from '@api/TournamentApi';
 import TournamentParticipantRow from './TournamentParticipantRow';
 
 export interface TournamentParticipantsTableProps {
+  className?: string;
   rankedParticipants: Array<TournamentParticipant>;
 }
 
@@ -21,7 +22,7 @@ const TOURNAMENTS_TABLE_CELLS = [
   },
 ];
 
-const TournamentParticipantsTable = ({ rankedParticipants }: TournamentParticipantsTableProps) => {
+const TournamentParticipantsTable = ({ className, rankedParticipants }: TournamentParticipantsTableProps) => {
   const renderRow = (participant: TournamentParticipant, rowCellWidthConfig: number[], index: number) => {
     return (
       <TournamentParticipantRow
@@ -34,7 +35,12 @@ const TournamentParticipantsTable = ({ rankedParticipants }: TournamentParticipa
   };
 
   return (
-    <Table<TournamentParticipant> cells={TOURNAMENTS_TABLE_CELLS} items={rankedParticipants} renderRow={renderRow} />
+    <Table<TournamentParticipant>
+      className={className}
+      cells={TOURNAMENTS_TABLE_CELLS}
+      items={rankedParticipants}
+      renderRow={renderRow}
+    />
   );
 };
 

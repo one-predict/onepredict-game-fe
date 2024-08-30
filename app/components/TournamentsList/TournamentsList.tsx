@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { Tournament } from '@api/TournamentApi';
 import TournamentListCard from './TournamentListCard';
+import Typography from '@components/Typography';
 import styles from './TournamentsList.module.scss';
 
 export interface TournamentsListProps {
@@ -10,6 +11,14 @@ export interface TournamentsListProps {
 }
 
 const TournamentsList = ({ className, tournaments, onViewTournamentDetailsClick }: TournamentsListProps) => {
+  if (!tournaments.length) {
+    return (
+      <Typography variant="subtitle1" className={styles.noTournamentsMessage}>
+        No tournaments found!
+      </Typography>
+    );
+  }
+
   return (
     <div className={clsx(styles.tournamentsList, className)}>
       {tournaments.map((tournament) => (

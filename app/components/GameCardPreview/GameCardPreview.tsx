@@ -39,11 +39,7 @@ const GameCardPreview = ({ className, card, onClick, size = 'default', previewFo
         </Typography>
       </div>
       <div className={styles.gameCardPreviewContent}>
-        <img
-          className={styles.gameCardPreviewImage}
-          src={`/images/cards/${imageUrlPath}-${size}.png`}
-          alt={`${card.name}`}
-        />
+        <img className={styles.gameCardPreviewImage} src={`/images/cards/${imageUrlPath}.png`} alt={`${card.name}`} />
       </div>
       {previewFooter && <div className={styles.gameCardPreviewFooter}>{previewFooter}</div>}
     </div>

@@ -2,6 +2,8 @@ import { Tournament } from '@api/TournamentApi';
 import Button from '@components/Button';
 import Typography from '@components/Typography';
 import TournamentAvailabilityInfo from '@components/TournamentAvailabilityInfo';
+import LabeledContent from '@components/LabeledContent';
+import AipickCoins from '@components/AipickCoins';
 import styles from './TournamentListCard.module.scss';
 
 export interface TournamentListCardProps {
@@ -15,14 +17,24 @@ const TournamentListCard = ({ tournament, onViewDetailsClick }: TournamentListCa
   return (
     <div className={styles.tournamentListCard}>
       <TournamentAvailabilityInfo className={styles.tournamentAvailabilityInfo} tournament={tournament} />
-      <Typography variant="h1" color="gradient2">
-        Weekly
-      </Typography>
-      <Typography className={styles.prizePoolText} variant="h6">
-        Prize Pool {prizePool} AIP
-      </Typography>
-      <img width={94} height={94} src="/images/aipick-coin.png" className={styles.aipickCoinImage} alt="aipick-coin" />
-      <div className={styles.aipickImageShadow} />
+      <div className={styles.titleWithParticipantsContainer}>
+        <Typography variant="h1" color="gradient1">
+          {tournament.title}
+        </Typography>
+        <LabeledContent row title="Participants:">
+          <Typography variant="body2">{tournament.participantsCount}</Typography>
+        </LabeledContent>
+      </div>
+      <img src={tournament.imageUrl} className={styles.tournamentImage} alt={`${tournament.id}-image`} />
+      <div className={styles.tournamentImageShadow} />
+      <div className={styles.tournamentPrizeInfo}>
+        <LabeledContent title="Prize Pool">
+          <AipickCoins variant="body2" coins={prizePool} />
+        </LabeledContent>
+        <LabeledContent title="Entry Fee">
+          <AipickCoins variant="body2" coins={tournament.entryPrice} />
+        </LabeledContent>
+      </div>
       <Button className={styles.viewDetailsButton} onClick={() => onViewDetailsClick(tournament)}>
         View Details
       </Button>

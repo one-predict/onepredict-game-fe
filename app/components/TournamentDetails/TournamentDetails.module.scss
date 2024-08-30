@@ -1,0 +1,97 @@
+.tournamentDetails {
+  position: relative;
+  padding: 16px;
+  background-color: #08042D;
+  border: 2.5px solid #8C849866;
+  border-radius: 12px;
+}
+
+.tournamentAvailabilityInfo {
+  margin-bottom: 16px;
+}
+
+.tournamentTitleWithDescription {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  width: calc(100% - 104px);
+  min-height: 64px;
+  margin-top: 24px;
+}
+
+.tournamentImage {
+  position: absolute;
+  top: 48px;
+  right: 24px;
+  height: 94px;
+  width: 94px;
+}
+
+.detailsSections {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+
+  &:not(:empty) {
+    margin-top: 24px;
+  }
+}
+
+.tournamentDeckSection {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.portfoliosSection {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.actionButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 8px;
+  position: relative;
+  width: 100%;
+  padding: 8px;
+  margin: auto;
+  border: 1px solid #8C8498;
+  background: #FFFFFF1A;
+  border-radius: 12px;
+
+  & > svg {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.tournamentPrizeInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.participationInfo {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  margin-top: 24px;
+}
+
+.joinTournamentButton {
+  width: 200px;
+  height: 33px;
+  min-height: 33px;
+  font-size: 0.75rem;
+}
+
+.sectionLoader {
+  width: 64px;
+  height: 64px;
+}

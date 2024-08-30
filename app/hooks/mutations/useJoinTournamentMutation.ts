@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { toast } from 'react-toastify';
 import { DefaultError, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTournamentApi } from '@providers/ApiProvider';
 
@@ -12,8 +13,11 @@ const useJoinTournamentMutation = () => {
       await queryClient.invalidateQueries({ queryKey: ['tournament-participations', tournamentId] });
       await queryClient.invalidateQueries({ queryKey: ['tournament-participation-ranks', tournamentId] });
       await queryClient.invalidateQueries({ queryKey: ['tournament-leaderboards', tournamentId] });
-      await queryClient.invalidateQueries({ queryKey: ['tournaments'] });
+      await queryClient.invalidateQueries({ queryKey: ['tournaments', tournamentId] });
       await queryClient.invalidateQueries({ queryKey: ['current-user'] });
+      await queryClient.invalidateQueries({ queryKey: ['tournament-decks', tournamentId, 'my'] });
+
+      toast(`You have successfully joined the tournament!`);
     },
     [queryClient],
   );

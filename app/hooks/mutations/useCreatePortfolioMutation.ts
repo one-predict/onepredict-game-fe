@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { toast } from 'react-toastify';
 import { DefaultError, useMutation, useQueryClient } from '@tanstack/react-query';
 import { usePortfolioApi } from '@providers/ApiProvider';
 import { CreatePortfolioParams, Portfolio } from '@api/PortfolioApi';
@@ -10,6 +11,8 @@ const useCreatePortfolioMutation = () => {
 
   const handleMutationSuccess = useCallback(async () => {
     await queryClient.invalidateQueries({ queryKey: ['portfolios'] });
+
+    toast(`Your portfolio has been successfully created.`);
   }, [queryClient]);
 
   return useMutation<Portfolio, DefaultError, CreatePortfolioParams>({

@@ -1,15 +1,21 @@
 import { ApiClient } from './ApiClient';
 
+export enum TournamentStatus {
+  Upcoming = 'upcoming',
+  Live = 'live',
+  Finished = 'finished',
+}
+
 export interface Tournament {
   id: string;
   title: string;
   description: string;
-  displayId: string;
   entryPrice: number;
   staticPrizePool: number;
   participantsCount: number;
-  startDay: number;
-  endDay: number;
+  startTimestamp: number;
+  endTimestamp: number;
+  imageUrl?: string;
 }
 
 export interface TournamentParticipant {
@@ -36,9 +42,9 @@ export interface TournamentLeaderboard {
 }
 
 export interface TournamentApi {
-  getLatestTournaments(): Promise<Tournament[]>;
-  getTournamentByDisplayId(displayId: string): Promise<Tournament>;
-  getTournamentLeaderboard(displayId: string): Promise<TournamentLeaderboard>;
+  getLatestTournaments(status?: TournamentStatus): Promise<Tournament[]>;
+  getTournamentById(tournamentId: string): Promise<Tournament>;
+  getTournamentLeaderboard(tournamentId: string): Promise<TournamentLeaderboard>;
   getTournamentParticipation(tournamentId: string): Promise<TournamentParticipation | null | undefined>;
   getTournamentParticipationRank(tournamentId: string): Promise<number>;
   joinTournament(tournamentId: string): Promise<void>;
@@ -47,12 +53,18 @@ export interface TournamentApi {
 export class HttpTournamentApi implements TournamentApi {
   public constructor(private client: ApiClient) {}
 
-  public getLatestTournaments() {
-    return this.client.makeCall<Tournament[]>('/tournaments/latest', 'GET');
+  public getLatestTournaments(status?: TournamentStatus) {
+    const urlSearchParams = new URLSearchParams();
+
+    if (status) {
+      urlSearchParams.append('status', status);
+    }
+
+    return this.client.makeCall<Tournament[]>(`/tournaments/latest?${urlSearchParams}`, 'GET');
   }
 
-  public getTournamentByDisplayId(displayId: string) {
-    return this.client.makeCall<Tournament>(`/tournaments/${displayId}?identifierType=displayId`, 'GET');
+  public getTournamentById(tournamentId: string) {
+    return this.client.makeCall<Tournament>(`/tournaments/${tournamentId}`, 'GET');
   }
 
   public getTournamentLeaderboard(tournamentId: string) {

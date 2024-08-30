@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import dayjs from 'dayjs';
 import { Tournament } from '@api/TournamentApi';
-import { getDateFromUtcDay } from '@app/utils/date';
+import { getDateFromUnixTimestamp } from '@app/utils/date';
 
 type TournamentStatus = 'upcoming' | 'live' | 'finished';
 
@@ -13,8 +13,8 @@ function useTournamentStatus(tournament: Tournament | null): TournamentStatus | 
       return null;
     }
 
-    const tournamentStartDate = getDateFromUtcDay(tournament.startDay);
-    const tournamentEndDate = getDateFromUtcDay(tournament.endDay);
+    const tournamentStartDate = getDateFromUnixTimestamp(tournament.startTimestamp);
+    const tournamentEndDate = getDateFromUnixTimestamp(tournament.endTimestamp);
 
     if (dayjs().isAfter(tournamentEndDate)) {
       return 'finished';

@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import AppSection from '@enums/AppSection';
 import Typography from '@components/Typography';
 import HomeIcon from '@assets/icons/home.svg?react';
-import FolderIcon from '@assets/icons/folder.svg?react';
-import TasksIcon from '@assets/icons/tasks.svg?react';
+import ShoppingBagIcon from '@assets/icons/shopping-bag.svg?react';
+import DiamondIcon from '@assets/icons/diamong.svg?react';
 import CupIcon from '@assets/icons/cup.svg?react';
 import styles from './MenuTabBar.module.scss';
 
@@ -28,16 +28,16 @@ const sections: MenuSection[] = [
     section: AppSection.Home,
   },
   {
-    title: 'Portfolios',
-    icon: <FolderIcon />,
-    link: '/portfolios',
-    section: AppSection.Portfolios,
+    title: 'Store',
+    icon: <ShoppingBagIcon />,
+    link: '/store',
+    section: AppSection.Store,
   },
   {
-    title: 'Tasks',
-    icon: <TasksIcon />,
-    link: '/tasks',
-    section: AppSection.Tasks,
+    title: 'Rewards',
+    icon: <DiamondIcon />,
+    link: '/rewards',
+    section: AppSection.Rewards,
   },
   {
     title: 'Tournaments',

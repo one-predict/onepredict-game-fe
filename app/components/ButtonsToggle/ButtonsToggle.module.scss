@@ -5,6 +5,7 @@
   border-radius: 12px;
   padding: 4px;
   background-color: #190A31;
+  border: 1px solid rgba(140, 132, 152, 0.4);
 }
 
 .toggleButton {
@@ -21,7 +22,5 @@
 .selectedToggleButton {
   @extend .toggleButton;
 
-  border: 1px solid #8C8498;
   background: linear-gradient(111.04deg, rgba(44, 216, 213, 0.4) 0%, rgba(107, 141, 214, 0.4) 47.26%, rgba(142, 55, 215, 0.4) 98.45%);
-  box-shadow: 0 4px 10px 0 #8B46AB99;
 }

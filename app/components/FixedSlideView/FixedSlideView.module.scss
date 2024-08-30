@@ -1,0 +1,23 @@
+$pageHeadSize: 59px;
+$pageMenuSize: 77px;
+
+.fixedSlideView {
+  position: fixed;
+  top: $pageHeadSize;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100% - $pageHeadSize - $pageMenuSize);
+  z-index: 2;
+  overflow-y: auto;
+  background-color: #07032B;
+  transform: translateY(calc(100% + $pageHeadSize + $pageMenuSize));
+  transition: transform 0.5s;
+}
+
+.visibleFixedSlideView {
+  @extend .fixedSlideView;
+
+  transform: translateY(0);
+}

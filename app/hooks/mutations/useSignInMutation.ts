@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { DefaultError, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuthApi } from '@providers/ApiProvider';
+import { SignInParams } from '@api/AuthApi';
 
 const useSignInMutation = () => {
   const authApi = useAuthApi();
@@ -11,8 +12,8 @@ const useSignInMutation = () => {
     await queryClient.invalidateQueries({ queryKey: ['current-user'] });
   }, [queryClient]);
 
-  return useMutation<void, DefaultError, string>({
-    mutationFn: (signInMessage: string) => authApi.signIn(signInMessage),
+  return useMutation<void, DefaultError, SignInParams>({
+    mutationFn: (params: SignInParams) => authApi.signIn(params),
     onSuccess: handleMutationSuccess,
   });
 };

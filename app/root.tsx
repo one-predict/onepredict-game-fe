@@ -1,4 +1,4 @@
-import { Outlet, Links, Meta, Scripts, ScrollRestoration } from '@remix-run/react';
+import { Outlet, Links, Meta, Scripts, ScrollRestoration, useMatches } from '@remix-run/react';
 import { ReactNode, useMemo } from 'react';
 import { SDKProvider } from '@telegram-apps/sdk-react';
 import dayjs from 'dayjs';
@@ -11,11 +11,11 @@ import { ApiProvider, IApiProviderValue } from '@providers/ApiProvider';
 import { HttpAuthApi } from '@api/AuthApi';
 import { HttpUserApi } from '@api/UserApi';
 import { HttpPortfolioApi } from '@api/PortfolioApi';
-import { HttpPortfolioOfferApi } from '@api/PortfolioOfferApi';
+import { HttpTokensOfferApi } from '@api/TokensOfferApi';
 import { HttpTournamentApi } from '@api/TournamentApi';
 import { HttpGameCardApi } from '@api/GameCardApi';
 import { HttpUserInventoryApi } from '@api/UserInventoryApi';
-import { HttpPortfolioCardsDeckApi } from '@api/PortfolioCardsDeckApi';
+import { HttpTournamentDeckApi } from '@api/TournamentDeck';
 import { HttpGameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
 import { PageLayoutWithMenu } from '@components/Layouts';
 import LoadingScreen from '@components/LoadingScreen';
@@ -27,6 +27,7 @@ import { SessionProvider } from '@providers/SessionProvider';
 import './styles/global.css';
 import './styles/fonts.css';
 import 'react-toastify/dist/ReactToastify.css';
+import ErrorBoundary from '@components/ErrorBoundary';
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utcPlugin);
@@ -37,7 +38,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Aipick Game</title>
+        <title>AiPick Game</title>
         <Meta />
         <Links />
       </head>
@@ -59,6 +60,11 @@ export function HydrateFallback() {
 }
 
 const App = () => {
+  const matches = useMatches();
+  const match = matches[matches.length - 1];
+
+  const pageBackground = match.handle?.background;
+
   const queryClient = useMemo(() => {
     return new QueryClient({
       queryCache: new QueryCache({
@@ -84,17 +90,17 @@ const App = () => {
       authApi: new HttpAuthApi(apiClient),
       userApi: new HttpUserApi(apiClient),
       portfolioApi: new HttpPortfolioApi(apiClient),
-      portfolioOfferApi: new HttpPortfolioOfferApi(apiClient),
+      tokensOfferApi: new HttpTokensOfferApi(apiClient),
       tournamentApi: new HttpTournamentApi(apiClient),
       gameCardApi: new HttpGameCardApi(apiClient),
       userInventoryApi: new HttpUserInventoryApi(apiClient),
-      portfolioCardsDeckApi: new HttpPortfolioCardsDeckApi(apiClient),
+      tournamentDeckApi: new HttpTournamentDeckApi(apiClient),
       gameCardsMarketplaceApi: new HttpGameCardsMarketplaceApi(apiClient),
     };
   }, []);
 
   return (
-    <>
+    <ErrorBoundary>
       <SDKProvider debug>
         <TelegramInit />
         <QueryClientProvider client={queryClient}>
@@ -102,7 +108,7 @@ const App = () => {
             <SessionProvider>
               <AuthorizedSection>
                 <OnboardedSection>
-                  <PageLayoutWithMenu>
+                  <PageLayoutWithMenu background={pageBackground}>
                     <Outlet />
                   </PageLayoutWithMenu>
                 </OnboardedSection>
@@ -112,13 +118,13 @@ const App = () => {
                 pauseOnHover={false}
                 theme="dark"
                 toastStyle={{ zIndex: 1000000 }}
-                position="bottom-right"
+                position="top-right"
               />
             </SessionProvider>
           </ApiProvider>
         </QueryClientProvider>
       </SDKProvider>
-    </>
+    </ErrorBoundary>
   );
 };
 

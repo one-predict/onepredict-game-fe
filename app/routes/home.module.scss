@@ -1,58 +1,46 @@
-.pageBody {
-  align-items: center;
-  row-gap: 16px;
+.buttons {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  justify-content: center;
+  margin-top: 24px;
 }
 
-.progressSection {
+.earnPointsButton {
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 20px;
-  height: 55%;
-}
-
-.buttonsSection {
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  column-gap: 16px;
+  justify-content: center;
   width: 100%;
-}
-
-.navigationButton {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: no-repeat, center, center;
-  background-size: cover;
-  border: 1px solid #8C8498;
+  height: 134px;
+  background: linear-gradient(to left, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
   border-radius: 12px;
+
+  & > svg {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 24px;
+  }
 }
 
-.marketplaceButton {
-  @extend .navigationButton;
-
-  background-image: url('/images/marketplace.webp');
-}
-
-.myDeckButton {
-  @extend .navigationButton;
-
-  background-image: url('/images/deck.webp');
-}
-
-.navigationButtonBackdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
+.tournaments {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid #8C8498;
+  width: 100%;
+  height: 134px;
+  background: linear-gradient(to left, #F9D423 0%, #FF4E50 100%);
   border-radius: 12px;
-  cursor: pointer;
+
+  & > svg {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 24px;
+  }
+}
+
+.portfoliosGame {
+  flex-grow: 1;
+  padding: 32px 16px 16px;
 }

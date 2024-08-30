@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useState } from 'react';
-import { toast } from 'react-toastify';
 import _ from 'lodash';
 import AppSection from '@enums/AppSection';
 import { GameCard } from '@api/GameCardApi';
@@ -8,18 +7,24 @@ import usePurchaseCardMutation from '@hooks/mutations/usePurchaseCardMutation';
 import useSession from '@hooks/useSession';
 import useMyInventoryQuery from '@hooks/queries/useMyInventoryQuery';
 import CardsMarketplace from '@components/CardsMarketplace';
-import Typography from '@components/Typography';
 import BuyGameCardPopup from '@components/BuyGameCardPopup';
 import PageBody from '@components/PageBody';
-import Loader from '@components/Loader';
+import ButtonsToggle from '@components/ButtonsToggle';
+import Typography from '@components/Typography';
 import styles from './store.module.scss';
 
 export const handle = {
   backHref: '/',
-  appSection: AppSection.Home,
+  appSection: AppSection.Store,
+  background: {
+    image: '/images/store-page-background.png',
+    overlay: true,
+  },
 };
 
 const StorePage = () => {
+  const [selectedCategory, setSelectedCategory] = useState('cards');
+
   const [cardToObserve, setCardToObserve] = useState<GameCard | null>(null);
 
   const currentUser = useSession();
@@ -29,62 +34,68 @@ const StorePage = () => {
 
   const { mutateAsync: purchaseCard, status: purchaseCardStatus } = usePurchaseCardMutation();
 
-  const purchasedCardsPool = useMemo(() => {
-    return currentUserInventory ? _.keyBy(currentUserInventory?.purchasedCardIds) : null;
+  const purchasedGameCardsPool = useMemo(() => {
+    return currentUserInventory ? _.keyBy(currentUserInventory?.purchasedCardIds) : undefined;
   }, [currentUserInventory]);
 
-  const checkIfCardIsPurchased = useCallback(
-    (card: GameCard) => {
-      return !!purchasedCardsPool?.[card.id];
-    },
-    [purchasedCardsPool],
-  );
-
-  const handleCardClick = useCallback(
+  const handleGameCardClick = useCallback(
     (card: GameCard) => {
       setCardToObserve(card);
     },
     [setCardToObserve],
   );
 
-  const handleBuyCardClick = useCallback(async () => {
+  const handlePurchaseCard = useCallback(async () => {
     if (!cardToObserve) {
       return;
     }
 
     await purchaseCard(cardToObserve.id);
 
-    toast(`You have successfully purchased the card!`);
-
     setCardToObserve(null);
   }, [purchaseCard, cardToObserve]);
 
   return (
     <PageBody>
-      <Typography className={styles.storePageTitle} alignment="center" color="gradient1" variant="h1">
-        Store
-      </Typography>
-      {gameCards && purchasedCardsPool ? (
-        <CardsMarketplace
-          className={styles.marketplace}
-          gameCards={gameCards}
-          isCardPurchased={checkIfCardIsPurchased}
-          onCardClick={handleCardClick}
-        />
-      ) : (
-        <div className={styles.loaderContainer}>
-          <Loader />
+      <ButtonsToggle
+        onSwitch={(category) => setSelectedCategory(category)}
+        toggles={[
+          {
+            title: 'Cards',
+            id: 'cards',
+          },
+          {
+            title: 'Perks',
+            id: 'perks',
+          },
+        ]}
+        selectedId={selectedCategory}
+      />
+      {selectedCategory === 'cards' && (
+        <>
+          <CardsMarketplace
+            className={styles.cardsMarketplace}
+            gameCards={gameCards}
+            purchasedCardsPool={purchasedGameCardsPool}
+            onCardClick={handleGameCardClick}
+            onPurchaseCard={handlePurchaseCard}
+          />
+          <BuyGameCardPopup
+            isOpen={!!cardToObserve}
+            card={cardToObserve}
+            userBalance={currentUser?.coinsBalance ?? null}
+            onBuyCardClick={handlePurchaseCard}
+            isBuyInProgress={purchaseCardStatus === 'pending'}
+            isCardAlreadyPurchased={!!cardToObserve && !!purchasedGameCardsPool?.[cardToObserve.id]}
+            onClose={() => setCardToObserve(null)}
+          />
+        </>
+      )}
+      {selectedCategory === 'perks' && (
+        <div className={styles.comingSoonSection}>
+          <Typography variant="h2">Perks are coming soon!</Typography>
         </div>
       )}
-      <BuyGameCardPopup
-        isOpen
-        userBalance={currentUser?.coinsBalance ?? null}
-        onBuyCardClick={handleBuyCardClick}
-        isBuyInProgress={purchaseCardStatus === 'pending'}
-        isCardAlreadyPurchased={!!cardToObserve && checkIfCardIsPurchased(cardToObserve)}
-        onClose={() => setCardToObserve(null)}
-        card={cardToObserve}
-      />
     </PageBody>
   );
 };

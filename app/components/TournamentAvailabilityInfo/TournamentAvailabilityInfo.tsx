@@ -1,9 +1,8 @@
-import { useMemo } from 'react';
 import clsx from 'clsx';
 import { Tournament } from '@api/TournamentApi';
-import DateRangeView from '@components/DateRangeView';
-import { getDateFromUtcDay } from '@app/utils/date';
 import useTournamentStatus from '@hooks/useTournamentStatus';
+import TimeRemaining from '@components/TimeRemaining';
+import Typography from '@components/Typography';
 import styles from './TournamentAvailabilityInfo.module.scss';
 
 export interface TournamentAvailabilityInfoProps {
@@ -12,14 +11,6 @@ export interface TournamentAvailabilityInfoProps {
 }
 
 const TournamentAvailabilityInfo = ({ className, tournament }: TournamentAvailabilityInfoProps) => {
-  const tournamentStartDate = useMemo(() => {
-    return getDateFromUtcDay(tournament.startDay);
-  }, [tournament.startDay]);
-
-  const tournamentEndDate = useMemo(() => {
-    return getDateFromUtcDay(tournament.endDay);
-  }, [tournament.endDay]);
-
   const tournamentStatus = useTournamentStatus(tournament);
 
   if (!tournamentStatus) {
@@ -35,7 +26,21 @@ const TournamentAvailabilityInfo = ({ className, tournament }: TournamentAvailab
   return (
     <div className={clsx(styles.tournamentAvailabilityInfo, className)}>
       <div className={statusBadgeClassName}>{tournamentStatus}</div>
-      <DateRangeView fromDate={tournamentStartDate} toDate={tournamentEndDate} />
+      {tournamentStatus !== 'finished' && (
+        <TimeRemaining
+          unixTimestamp={tournamentStatus === 'upcoming' ? tournament.startTimestamp : tournament.endTimestamp}
+        >
+          {(remainingDays, remainingHours, remainingMinutes) => {
+            return (
+              <Typography variant="h6">
+                {tournamentStatus === 'upcoming'
+                  ? `Starts in ${remainingDays}d ${remainingHours}h ${remainingMinutes}m`
+                  : `Ends in ${remainingDays}d ${remainingHours}h ${remainingMinutes}m`}
+              </Typography>
+            );
+          }}
+        </TimeRemaining>
+      )}
     </div>
   );
 };

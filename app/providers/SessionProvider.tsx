@@ -1,10 +1,11 @@
 import { createContext, useMemo, ReactNode } from 'react';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
+import { mockTelegramEnv, parseInitData } from '@telegram-apps/sdk';
 import { User } from '@api/UserApi';
 import useCurrentUserQuery from '@hooks/queries/useCurrentUserQuery';
 import useSignInMutation from '@hooks/mutations/useSignInMutation';
 import useAsyncEffect from '@hooks/useAsyncEffect';
-import { mockTelegramEnv, parseInitData } from '@telegram-apps/sdk';
+import useStartParams from '@hooks/useStartParams';
 
 export interface SessionProviderProps {
   children: ReactNode;
@@ -53,6 +54,7 @@ if (typeof window !== 'undefined' && import.meta.env.MODE === 'development') {
     },
     initData: parseInitData(initDataRaw),
     initDataRaw,
+    startParam: 'referralId=66c9d81214a3fd58f9624969',
     version: '7.2',
     platform: 'tdesktop',
   });
@@ -65,12 +67,16 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
   const { mutateAsync: signIn } = useSignInMutation();
 
   const launchParams = useLaunchParams(true);
+  const startParams = useStartParams();
 
   useAsyncEffect(async () => {
     if (launchParams?.initDataRaw && currentUser === null) {
-      await signIn(launchParams.initDataRaw);
+      await signIn({
+        signInMessage: launchParams.initDataRaw,
+        referralId: startParams['referralId'],
+      });
     }
-  }, [launchParams, currentUser]);
+  }, [launchParams, startParams, currentUser]);
 
   const session = useMemo(() => {
     return { currentUser };

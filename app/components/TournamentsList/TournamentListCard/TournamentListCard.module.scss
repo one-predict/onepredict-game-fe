@@ -5,6 +5,11 @@
   border: 1px solid #8C8498;
   background-color: #08042D;
   border-radius: 12px;
+  overflow: hidden;
+
+  & * {
+    z-index: 1;
+  }
 }
 
 .tournamentAvailabilityInfo {
@@ -14,30 +19,47 @@
   right: 16px;
 }
 
-.prizePoolText {
-  margin: 28px 0 21px;
-  color: #10C600;
+.titleWithParticipantsContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  width: calc(100% - 104px);
+  min-height: 94px;
+  margin-top: 24px;
 }
 
-.aipickCoinImage {
-  position: absolute;
-  top: 70px;
-  right: 32px;
+.tournamentPrizeInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 16px;
 }
 
-.aipickImageShadow {
+.tournamentImage {
+  width: 94px;
+  height: 94px;
   position: absolute;
-  top: 80px;
-  right: 42px;
+  top: 64px;
+  right: 24px;
+  z-index: 2;
+}
+
+.tournamentImageShadow {
+  position: absolute;
+  top: 74px;
+  right: 46px;
   width: 72px;
   height: 72px;
+  z-index: 0;
   background: rgba(0, 0, 0, 0.25);
   border-radius: 50%;
-  box-shadow: 0 0 100px 40px #3a1f66;
+  box-shadow: 0 0 100px 50px #3a1f66;
 }
 
 .viewDetailsButton {
-  width: 50%;
+  width: fit-content;
   height: 33px;
   min-height: 33px;
+  font-size: 0.75rem;
 }

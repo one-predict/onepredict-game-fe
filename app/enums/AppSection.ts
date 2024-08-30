@@ -1,7 +1,7 @@
 enum AppSection {
   Home = 'home',
-  Portfolios = 'portfolios',
-  Tasks = 'tasks',
+  Store = 'store',
+  Rewards = 'rewards',
   Tournaments = 'tournaments',
 }
 

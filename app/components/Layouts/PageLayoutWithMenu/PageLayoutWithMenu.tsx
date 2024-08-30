@@ -1,19 +1,20 @@
 import { ReactNode } from 'react';
 import MenuTabBar from '@components/MenuTabBar';
-import { PageLayout } from '@components/Layouts';
+import { PageLayout, PageLayoutBackground } from '@components/Layouts';
 import PageHead from '@components/PageHead';
 import styles from './PageLayoutWithMenu.module.scss';
 
 interface PageLayoutWithMenuProps {
   children?: ReactNode;
+  background?: PageLayoutBackground;
 }
 
-const PageLayoutWithMenu = ({ children }: PageLayoutWithMenuProps) => {
+const PageLayoutWithMenu = ({ children, background }: PageLayoutWithMenuProps) => {
   return (
-    <PageLayout>
+    <PageLayout background={background}>
       <PageHead />
       <div className={styles.innerContainer}>{children}</div>
-      <MenuTabBar />
+      <MenuTabBar className={styles.menuTableBar} />
     </PageLayout>
   );
 };

@@ -1,8 +1,8 @@
 import { ReactNode, useEffect } from 'react';
 import clsx from 'clsx';
+import useCacheForTransition from '@hooks/useCacheForTransition';
 import Portal from '@components/Portal';
 import styles from './Popup.module.scss';
-import useCacheForTransition from '@hooks/useCacheForTransition';
 
 export interface PopupProps {
   isOpen: boolean;

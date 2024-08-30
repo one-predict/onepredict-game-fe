@@ -1,16 +1,20 @@
 import { ReactNode } from 'react';
-import Typography from '@components/Typography';
+import clsx from 'clsx';
+import Typography, { TypographyProps } from '@components/Typography';
 import styles from './LabeledContent.module.scss';
 
 export interface LabeledContentProps {
+  className?: string;
   title: string;
   children?: ReactNode;
+  row?: boolean;
+  labelVariant?: TypographyProps['variant'];
 }
 
-const LabeledContent = ({ children, title }: LabeledContentProps) => {
+const LabeledContent = ({ className, children, title, row, labelVariant = 'body2' }: LabeledContentProps) => {
   return (
-    <div className={styles.labeledContent}>
-      <Typography className={styles.labeledContentTitle} variant="body2">
+    <div className={clsx(row ? styles.rowLabeledContent : styles.labeledContentTitle, className)}>
+      <Typography className={styles.labeledContentTitle} variant={labelVariant}>
         {title}
       </Typography>
       {children}

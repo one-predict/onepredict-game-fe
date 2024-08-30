@@ -1,5 +1,5 @@
 import { ApiClient } from './ApiClient';
-import { TokenDirection } from '@api/PortfolioOfferApi';
+import { TokenDirection } from '@api/TokensOfferApi';
 
 export interface Portfolio {
   id: string;
@@ -22,21 +22,21 @@ export interface CreatePortfolioParams {
 }
 
 export interface PortfolioApi {
-  getUserPortfolios(offerIds: string[]): Promise<Portfolio[]>;
+  getMyPortfolios(offerIds: string[]): Promise<Portfolio[]>;
   createPortfolio(params: CreatePortfolioParams): Promise<Portfolio>;
 }
 
 export class HttpPortfolioApi implements PortfolioApi {
   public constructor(private client: ApiClient) {}
 
-  public getUserPortfolios(offerIds: string[]) {
+  public getMyPortfolios(offerIds: string[]) {
     const urlSearchParams = new URLSearchParams();
 
     offerIds.forEach((offerId) => {
       urlSearchParams.append('offerIds', offerId);
     });
 
-    return this.client.makeCall<Portfolio[]>(`/portfolios?${urlSearchParams}`, 'GET');
+    return this.client.makeCall<Portfolio[]>(`/portfolios/my?${urlSearchParams}`, 'GET');
   }
 
   public createPortfolio(params: CreatePortfolioParams) {
