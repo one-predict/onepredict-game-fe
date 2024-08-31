@@ -5,7 +5,7 @@ const useMyTournamentDeck = (tournamentId: string) => {
   const tournamentDeckApi = useTournamentDeckApi();
 
   return useQuery({
-    queryKey: ['tournament-decks', tournamentId, 'my'],
+    queryKey: ['tournament-decks', { tournamentId, my: true }],
     queryFn: () => tournamentDeckApi.getMyTournamentDeck(tournamentId),
   });
 };

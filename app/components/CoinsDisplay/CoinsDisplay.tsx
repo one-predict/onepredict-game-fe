@@ -1,11 +1,11 @@
 import Typography, { TypographyProps } from '@components/Typography';
-import styles from './AipickCoins.module.scss';
+import styles from './CoinsDisplay.module.scss';
 
-export interface AipickCoinsProps extends TypographyProps {
+export interface CoinsDisplayProps extends TypographyProps {
   coins: number;
 }
 
-const AipickCoins = ({ coins, ...typographyProps }: AipickCoinsProps) => {
+const CoinsDisplay = ({ coins, ...typographyProps }: CoinsDisplayProps) => {
   return (
     <div className={styles.priceSection}>
       <img src="/images/mini-aipick-coin.png" alt="mini-aipick-coin" />
@@ -14,4 +14,4 @@ const AipickCoins = ({ coins, ...typographyProps }: AipickCoinsProps) => {
   );
 };
 
-export default AipickCoins;
+export default CoinsDisplay;

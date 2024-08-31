@@ -5,7 +5,7 @@ const useTournamentLeaderboardQuery = (tournamentId: string) => {
   const tournamentApi = useTournamentApi();
 
   return useQuery({
-    queryKey: ['tournament-leaderboards', tournamentId],
+    queryKey: ['tournament-leaderboards', { tournamentId }],
     queryFn: async () => {
       return tournamentApi.getTournamentLeaderboard(tournamentId);
     },

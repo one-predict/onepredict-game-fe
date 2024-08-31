@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import clsx from 'clsx';
-import { TokensOffer } from '@api/TokensOfferApi';
+import { TokensOffersSeries } from '@api/TokensOfferApi';
 import { Portfolio, PortfolioSelectedToken } from '@api/PortfolioApi';
 import ButtonsToggle from '@components/ButtonsToggle';
 import Loader from '@components/Loader';
 import Typography from '@components/Typography';
-import TimeRemaining from '@components/TimeRemaining';
-import PortfolioCard from './PortfolioCard';
-import SubmitPortfolio from './SubmitPortfolio';
+import UpcomingOffer from './UpcomingOffer';
+import LiveOffer from './LiveOffer';
 import FinishedTokensOffersList from './FinishedTokensOffersList';
 import styles from './PortfoliosGame.module.scss';
 
@@ -15,7 +14,7 @@ export type OffersCategory = 'upcoming' | 'live' | 'finished';
 
 export interface PortfoliosGameProps {
   className?: string;
-  offers: TokensOffer[] | null;
+  offersSeries: TokensOffersSeries | null;
   portfolios: Record<string, Portfolio> | null;
   onPortfolioSubmit: (offerId: string, selectedTokens: PortfolioSelectedToken[]) => void;
   isPortfolioSubmitInProgress?: boolean;
@@ -23,7 +22,7 @@ export interface PortfoliosGameProps {
 
 const PortfoliosGame = ({
   className,
-  offers,
+  offersSeries,
   portfolios,
   onPortfolioSubmit,
   isPortfolioSubmitInProgress,
@@ -31,74 +30,33 @@ const PortfoliosGame = ({
   const [selectedCategory, setSelectedCategory] = useState<OffersCategory>('upcoming');
 
   const renderOffersCategory = () => {
-    if (!offers || !portfolios) {
-      return (
-        <div className={styles.loaderContainer}>
-          <Loader />
-        </div>
-      );
+    if (!offersSeries || !portfolios) {
+      return <Loader centered />;
     }
 
-    const [upcomingOffer, liveOffer, ...finishedOffers] = offers;
+    const { next: upcomingOffer, current: liveOffer, previous: finishedOffers } = offersSeries;
 
     if (selectedCategory === 'upcoming') {
-      const upcomingPortfolio = portfolios[upcomingOffer.id];
-
-      return upcomingPortfolio ? (
-        <div className={styles.upcomingPortfolio}>
-          <Typography variant="h1" color="gradient1">
-            Your choice:
-          </Typography>
-          <TimeRemaining unixTimestamp={upcomingOffer.timestamp}>
-            {(remainingDays, remainingHours, remainingMinutes) => {
-              return (
-                <Typography alignment="center" variant="body2">
-                  Live in {remainingDays}d {remainingHours}h {remainingMinutes}m
-                </Typography>
-              );
-            }}
-          </TimeRemaining>
-          <PortfolioCard className={styles.upcomingPortfolioCard} portfolio={upcomingPortfolio} />
-        </div>
-      ) : (
-        <SubmitPortfolio
-          onSubmit={onPortfolioSubmit}
-          isSubmitInProgress={isPortfolioSubmitInProgress}
-          offer={upcomingOffer}
+      return upcomingOffer ? (
+        <UpcomingOffer
+          upcomingOffer={upcomingOffer}
+          upcomingPortfolio={portfolios[upcomingOffer.id]}
+          onPortfolioSubmit={onPortfolioSubmit}
+          isPortfolioSubmitInProgress={isPortfolioSubmitInProgress}
         />
+      ) : (
+        <Typography variant="subtitle1" className={styles.noOfferAvailableText}>
+          No Upcoming Offers available.
+        </Typography>
       );
     }
 
     if (selectedCategory === 'live') {
-      const livePortfolio = portfolios[liveOffer.id];
-
-      return livePortfolio ? (
-        <div className={styles.livePortfolio}>
-          <Typography variant="h1" color="gradient1">
-            Your choice:
-          </Typography>
-          <TimeRemaining unixTimestamp={liveOffer.timestamp + liveOffer.durationInSeconds}>
-            {(remainingDays, remainingHours, remainingMinutes) => {
-              return (
-                <Typography alignment="center" variant="body2">
-                  Ends in {remainingDays}d {remainingHours}h {remainingMinutes}m
-                </Typography>
-              );
-            }}
-          </TimeRemaining>
-          <Typography
-            className={styles.livePortfolioChoiceDescription}
-            alignment="center"
-            color="secondary"
-            variant="subtitle2"
-          >
-            The results of your choice will be ready in few hours after your portfolio will be finished.
-          </Typography>
-          <PortfolioCard className={styles.livePortfolioCard} portfolio={livePortfolio} />
-        </div>
+      return liveOffer ? (
+        <LiveOffer liveOffer={liveOffer} livePortfolio={portfolios[liveOffer.id]} />
       ) : (
-        <Typography className={styles.noLivePortfolioTypography} variant="subtitle1">
-          You did not submit your portfolio
+        <Typography className={styles.noOfferAvailableText} variant="subtitle1">
+          No Live Offers available.
         </Typography>
       );
     }

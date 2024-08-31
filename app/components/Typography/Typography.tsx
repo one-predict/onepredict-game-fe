@@ -4,7 +4,7 @@ import styles from './Typography.module.scss';
 
 export interface TypographyProps {
   className?: string;
-  color?: 'primary' | 'secondary' | 'gradient1' | 'gradient2' | 'gray';
+  color?: 'primary' | 'secondary' | 'gradient1' | 'gradient2' | 'gray' | 'yellow';
   alignment?: 'left' | 'center' | 'right';
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subtitle1' | 'subtitle2' | 'body1' | 'body2';
   children?: React.ReactNode;

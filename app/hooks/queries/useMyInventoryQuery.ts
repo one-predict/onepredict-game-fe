@@ -5,7 +5,7 @@ const useMyInventoryQuery = () => {
   const userInventoryApi = useUserInventoryApi();
 
   return useQuery({
-    queryKey: ['inventories', 'my'],
+    queryKey: ['inventories', { my: true }],
     queryFn: () => userInventoryApi.getMyInventory(),
   });
 };

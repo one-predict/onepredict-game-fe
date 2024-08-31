@@ -30,7 +30,7 @@ const TournamentAvailabilityInfo = ({ className, tournament }: TournamentAvailab
         <TimeRemaining
           unixTimestamp={tournamentStatus === 'upcoming' ? tournament.startTimestamp : tournament.endTimestamp}
         >
-          {(remainingDays, remainingHours, remainingMinutes) => {
+          {({ remainingDays, remainingHours, remainingMinutes }) => {
             return (
               <Typography variant="h6">
                 {tournamentStatus === 'upcoming'

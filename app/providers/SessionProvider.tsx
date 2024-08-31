@@ -55,7 +55,7 @@ if (typeof window !== 'undefined' && import.meta.env.MODE === 'development') {
     initData: parseInitData(initDataRaw),
     initDataRaw,
     startParam: 'referralId=66c9d81214a3fd58f9624969',
-    version: '7.2',
+    version: '7.7',
     platform: 'tdesktop',
   });
 }

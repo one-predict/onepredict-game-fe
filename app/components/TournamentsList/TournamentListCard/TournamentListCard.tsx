@@ -3,7 +3,7 @@ import Button from '@components/Button';
 import Typography from '@components/Typography';
 import TournamentAvailabilityInfo from '@components/TournamentAvailabilityInfo';
 import LabeledContent from '@components/LabeledContent';
-import AipickCoins from '@components/AipickCoins';
+import CoinsDisplay from '@components/CoinsDisplay';
 import styles from './TournamentListCard.module.scss';
 
 export interface TournamentListCardProps {
@@ -29,10 +29,10 @@ const TournamentListCard = ({ tournament, onViewDetailsClick }: TournamentListCa
       <div className={styles.tournamentImageShadow} />
       <div className={styles.tournamentPrizeInfo}>
         <LabeledContent title="Prize Pool">
-          <AipickCoins variant="body2" coins={prizePool} />
+          <CoinsDisplay variant="body2" coins={prizePool} />
         </LabeledContent>
         <LabeledContent title="Entry Fee">
-          <AipickCoins variant="body2" coins={tournament.entryPrice} />
+          <CoinsDisplay variant="body2" coins={tournament.entryPrice} />
         </LabeledContent>
       </div>
       <Button className={styles.viewDetailsButton} onClick={() => onViewDetailsClick(tournament)}>

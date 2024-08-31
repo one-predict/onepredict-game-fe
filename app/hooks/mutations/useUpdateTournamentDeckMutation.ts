@@ -11,7 +11,7 @@ const useUpdateTournamentDeckMutation = () => {
 
   const handleMutationSuccess = useCallback(
     async (updatedDeck: TournamentDeck) => {
-      queryClient.setQueryData(['tournament-decks', updatedDeck.tournamentId, 'my'], updatedDeck);
+      queryClient.setQueryData(['tournament-decks', { tournamentId: updatedDeck.tournamentId, my: true }], updatedDeck);
 
       toast(`Your deck has been successfully updated.`);
     },

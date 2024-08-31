@@ -10,7 +10,7 @@ const usePurchaseCardMutation = () => {
   const queryClient = useQueryClient();
 
   const handleMutationSuccess = useCallback(async () => {
-    await queryClient.invalidateQueries({ queryKey: ['inventories', 'my'] });
+    await queryClient.invalidateQueries({ queryKey: ['inventories', { my: true }] });
     await queryClient.invalidateQueries({ queryKey: ['current-user'] });
 
     toast(`You have successfully purchased the card!`);

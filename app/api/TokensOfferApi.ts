@@ -11,20 +11,26 @@ export interface TokensOffer {
   tournamentId: string | null;
 }
 
+export interface TokensOffersSeries {
+  next: TokensOffer | null;
+  current: TokensOffer | null;
+  previous: TokensOffer[];
+}
+
 export interface TokensOfferApi {
-  getLatestTokensOffers(tournamentId: string | null): Promise<TokensOffer[]>;
+  getOffersSeries(tournamentId: string | null): Promise<TokensOffersSeries>;
 }
 
 export class HttpTokensOfferApi implements TokensOfferApi {
   public constructor(private client: ApiClient) {}
 
-  public getLatestTokensOffers(tournamentId: string | null) {
+  public getOffersSeries(tournamentId: string | null) {
     const urlSearchParams = new URLSearchParams();
 
     if (tournamentId) {
       urlSearchParams.set('tournamentId', tournamentId);
     }
 
-    return this.client.makeCall<TokensOffer[]>(`/tokens-offers/latest?${urlSearchParams}`, 'GET');
+    return this.client.makeCall<TokensOffersSeries>(`/tokens-offers/series?${urlSearchParams}`, 'GET');
   }
 }

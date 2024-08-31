@@ -1,0 +1,46 @@
+.menuSection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 150px;
+  overflow: hidden;
+  padding: 16px;
+  border: 1px solid #8C8498;
+  border-radius: 12px;
+  background: linear-gradient(90.82deg, rgba(44, 216, 213, 0.4) 0.53%, rgba(107, 141, 214, 0.4) 48.02%, rgba(142, 55, 215, 0.4) 99.47%);
+}
+
+.menuSectionHeader {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.menuSectionActionButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: 44px;
+  background: linear-gradient(111.04deg, rgba(161, 236, 223, 0.4) 0%, rgba(157, 188, 255, 0.4) 47.26%, rgba(204, 143, 255, 0.4) 98.45%);
+  padding: 12px 16px;
+  border: 1px solid #8C8498;
+  border-radius: 12px;
+}
+
+.menuSectionImage {
+  position: absolute;
+  width: 146px;
+  height: 146px;
+  opacity: 0.6;
+  right: -55px;
+}
+
+.menuSectionFooter {
+  margin-top: auto;
+  z-index: 2;
+}

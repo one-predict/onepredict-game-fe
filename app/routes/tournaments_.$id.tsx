@@ -1,8 +1,9 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate, useParams } from '@remix-run/react';
-import { GameCardId } from '@api/GameCardApi';
+import { GameCard, GameCardId } from '@api/GameCardApi';
 import { PortfolioSelectedToken } from '@api/PortfolioApi';
 import AppSection from '@enums/AppSection';
+import useOfferIdsFromSeries from '@hooks/useOfferIdsFromSeries';
 import useTournamentByIdQuery from '@hooks/queries/useTournamentByIdQuery';
 import useTournamentParticipationRankQuery from '@hooks/queries/useTournamentParticipationRankQuery';
 import useTournamentParticipationQuery from '@hooks/queries/useTournamentParticipationQuery';
@@ -13,7 +14,7 @@ import useMyInventoryQuery from '@hooks/queries/useMyInventoryQuery';
 import useMyTournamentDeck from '@hooks/queries/useMyTournamentDeck';
 import useGameCardsByIdsQuery from '@hooks/queries/useGameCardsByIdsQuery';
 import useUpdateTournamentDeckMutation from '@hooks/mutations/useUpdateTournamentDeckMutation';
-import useLatestTokensOffersQuery from '@hooks/queries/useLatestTokensOffersQuery';
+import useTokensOffersSeriesQuery from '@hooks/queries/useTokensOffersSeriesQuery';
 import useMyPortfoliosQuery from '@hooks/queries/useMyPortfoliosQuery';
 import useBackButton from '@hooks/useBackButton';
 import useJoinTournamentMutation from '@hooks/mutations/useJoinTournamentMutation';
@@ -27,6 +28,7 @@ import TournamentDetails from '@components/TournamentDetails';
 import DeckConfiguration from '@components/DeckConfiguration';
 import PortfoliosGame from '@components/PortfoliosGame';
 import FixedSlideView from '@components/FixedSlideView';
+import GameCardDetailsPopup from '@components/GameCardDetailsPopup';
 import styles from './tournament.module.scss';
 
 export const handle = {
@@ -45,6 +47,7 @@ const TournamentPage = () => {
 
   const [showDeckConfiguration, setShowDeckConfiguration] = useState(false);
   const [showPortfolios, setShowPortfolios] = useState(false);
+  const [cardToObserve, setCardToObserve] = useState<GameCard | null>(null);
 
   const currentUser = useSession();
 
@@ -58,9 +61,9 @@ const TournamentPage = () => {
 
   const tournamentStatus = useTournamentStatus(tournament ?? null);
 
-  const { data: tournamentOffers } = useLatestTokensOffersQuery(tournamentStatus !== 'live' ? tournamentId : undefined);
+  const { data: offersSeries } = useTokensOffersSeriesQuery(tournamentStatus !== 'live' ? tournamentId : undefined);
 
-  const tournamentOfferIds = useMemo(() => tournamentOffers?.map((offer) => offer.id), [tournamentOffers]);
+  const tournamentOfferIds = useOfferIdsFromSeries(offersSeries);
 
   const { data: portfolios } = useMyPortfoliosQuery(tournamentOfferIds);
 
@@ -91,13 +94,28 @@ const TournamentPage = () => {
     [showDeckConfiguration, showPortfolios],
   );
 
-  const handleJoinTournamentButtonClick = async () => {
+  const handleJoinTournamentButtonClick = useCallback(async () => {
     if (!tournament) {
       return;
     }
 
     await joinTournament(tournament.id);
-  };
+  }, [joinTournament, tournament]);
+
+  const handleConfigureDeckButtonClick = useCallback(() => {
+    setShowDeckConfiguration(true);
+  }, [setShowDeckConfiguration]);
+
+  const handlePortfoliosButtonClick = useCallback(() => {
+    setShowPortfolios(true);
+  }, [setShowPortfolios]);
+
+  const handleObserveCard = useCallback(
+    (card: GameCard) => {
+      setCardToObserve(card);
+    },
+    [setCardToObserve],
+  );
 
   const handleSaveDeckChanges = useCallback(
     async (cardIds: GameCardId[]) => {
@@ -145,15 +163,16 @@ const TournamentPage = () => {
           tournamentLeaderboard={tournamentLeaderboard}
           tournamentParticipation={tournamentParticipation}
           tournamentDeck={tournamentDeck}
-          tournamentOffers={tournamentOffers}
+          tournamentOffersSeries={offersSeries}
+          portfolios={portfolios}
           myInventory={myInventory}
           joinTournamentMutationStatus={joinTournamentMutationStatus}
           currentUser={currentUser}
           canJoinTournament={canJoinTournament}
           isTournamentJoiningInProgress={joinTournamentMutationStatus === 'pending'}
           onJoinTournamentButtonClick={handleJoinTournamentButtonClick}
-          onConfigureDeckButtonClick={() => setShowDeckConfiguration(true)}
-          onPortfoliosButtonClick={() => setShowPortfolios(true)}
+          onConfigureDeckButtonClick={handleConfigureDeckButtonClick}
+          onPortfoliosButtonClick={handlePortfoliosButtonClick}
         />
       ) : (
         <Loader centered />
@@ -166,6 +185,7 @@ const TournamentPage = () => {
             myCards={myCards}
             availableSlots={myInventory?.availableCardSlots}
             onSaveChanges={handleSaveDeckChanges}
+            onObserveCard={handleObserveCard}
             isDeckSaveInProgress={updateCardsDeckStatus === 'pending'}
           />
         )}
@@ -176,7 +196,7 @@ const TournamentPage = () => {
             </LabeledContent>
             <PortfoliosGame
               className={styles.portfoliosGame}
-              offers={tournamentOffers ?? null}
+              offersSeries={offersSeries ?? null}
               portfolios={portfolios ?? null}
               onPortfolioSubmit={handlePortfolioSubmit}
               isPortfolioSubmitInProgress={createPortfolioStatus === 'pending'}
@@ -184,6 +204,7 @@ const TournamentPage = () => {
           </>
         )}
       </FixedSlideView>
+      {showDeckConfiguration && <GameCardDetailsPopup card={cardToObserve} onClose={() => setCardToObserve(null)} />}
     </PageBody>
   );
 };

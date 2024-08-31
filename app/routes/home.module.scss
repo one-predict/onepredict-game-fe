@@ -1,4 +1,4 @@
-.buttons {
+.sections {
   display: flex;
   flex-direction: column;
   row-gap: 24px;
@@ -6,38 +6,22 @@
   margin-top: 24px;
 }
 
-.earnPointsButton {
+.classicChallengeOfferInfo {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 134px;
-  background: linear-gradient(to left, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
-  border-radius: 12px;
-
-  & > svg {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 24px;
-  }
+  column-gap: 6px;
 }
 
-.tournaments {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 134px;
-  background: linear-gradient(to left, #F9D423 0%, #FF4E50 100%);
-  border-radius: 12px;
+.portfolioAvailableNotification {
+  margin-left: auto;
+}
 
-  & > svg {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 24px;
-  }
+.tournamentSectionImage {
+  top: -10px;
+  width: unset;
+  height: 179px;
+  transform: rotateZ(23.47deg);
 }
 
 .portfoliosGame {

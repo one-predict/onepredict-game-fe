@@ -63,7 +63,7 @@ const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfoli
         Choose {MAX_TOKENS_PER_PORTFOLIO} coins you want to add to your portfolio
       </Typography>
       <TimeRemaining unixTimestamp={offer.timestamp}>
-        {(remainingDays, remainingHours, remainingMinutes) => {
+        {({ remainingDays, remainingHours, remainingMinutes }) => {
           return (
             <Typography color="secondary" alignment="center" variant="body2">
               Offer ends in {remainingDays}d {remainingHours}h {remainingMinutes}m

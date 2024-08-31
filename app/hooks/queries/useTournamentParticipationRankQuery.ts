@@ -5,7 +5,7 @@ const useTournamentParticipationRankQuery = (tournamentId: string) => {
   const tournamentApi = useTournamentApi();
 
   return useQuery({
-    queryKey: ['tournament-participation-ranks', tournamentId],
+    queryKey: ['tournament-participation-ranks', { tournamentId }],
     queryFn: async () => {
       return tournamentApi.getTournamentParticipationRank(tournamentId);
     },

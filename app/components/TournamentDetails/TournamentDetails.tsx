@@ -1,5 +1,6 @@
 import { UserInventory } from '@api/UserInventoryApi';
-import { TokensOffer } from '@api/TokensOfferApi';
+import { TokensOffersSeries } from '@api/TokensOfferApi';
+import { Portfolio } from '@api/PortfolioApi';
 import { Tournament, TournamentLeaderboard, TournamentParticipation } from '@api/TournamentApi';
 import { TournamentDeck } from '@api/TournamentDeck';
 import useTournamentStatus from '@hooks/useTournamentStatus';
@@ -9,7 +10,7 @@ import TournamentLeaderboardComponent from '@components/TournamentLeaderboard';
 import Loader from '@components/Loader';
 import LabeledContent from '@components/LabeledContent';
 import TournamentAvailabilityInfo from '@components/TournamentAvailabilityInfo';
-import AipickCoins from '@components/AipickCoins';
+import CoinsDisplay from '@components/CoinsDisplay';
 import DeckIcon from '@assets/icons/deck.svg?react';
 import PortfolioIcon from '@assets/icons/portfolio.svg?react';
 import styles from './TournamentDetails.module.scss';
@@ -19,7 +20,8 @@ export interface TournamentDetailsProps {
   tournamentParticipation: TournamentParticipation | null;
   tournamentLeaderboard: TournamentLeaderboard | undefined;
   tournamentDeck: TournamentDeck | null | undefined;
-  tournamentOffers: TokensOffer[] | undefined;
+  tournamentOffersSeries: TokensOffersSeries | undefined;
+  portfolios: Record<string, Portfolio> | undefined;
   myInventory: UserInventory | undefined;
   canJoinTournament?: boolean;
   isTournamentJoiningInProgress?: boolean;
@@ -34,7 +36,8 @@ const TournamentDetails = ({
   myInventory,
   tournamentDeck,
   tournamentParticipation,
-  tournamentOffers,
+  tournamentOffersSeries,
+  portfolios,
   canJoinTournament,
   isTournamentJoiningInProgress,
   onJoinTournamentButtonClick,
@@ -55,7 +58,7 @@ const TournamentDetails = ({
     return (
       <div className={styles.tournamentDeckSection}>
         {myInventory.availableCardSlots > tournamentDeck.cardIds.length && (
-          <Typography variant="body2">
+          <Typography color="yellow" variant="body2">
             You have {myInventory.availableCardSlots - tournamentDeck.cardIds.length} free slots in your deck!
           </Typography>
         )}
@@ -74,15 +77,19 @@ const TournamentDetails = ({
       return null;
     }
 
-    if (!tournamentOffers) {
+    if (!tournamentOffersSeries || !portfolios) {
       return <Loader className={styles.sectionLoader} centered />;
     }
 
-    const [upcomingOffer] = tournamentOffers;
+    const upcomingOffer = tournamentOffersSeries.next;
 
     return (
       <div className={styles.portfoliosSection}>
-        {upcomingOffer && <Typography variant="body2">You have an available portfolio to submit!</Typography>}
+        {upcomingOffer && !portfolios[upcomingOffer.id] && (
+          <Typography color="yellow" variant="body2">
+            You have an available portfolio to submit!
+          </Typography>
+        )}
         <div onClick={onPortfoliosButtonClick} className={styles.actionButton}>
           <PortfolioIcon />
           <Typography variant="h4" color="primary">
@@ -132,9 +139,9 @@ const TournamentDetails = ({
       )}
       <div className={styles.tournamentPrizeInfo}>
         <LabeledContent title="Prize Pool">
-          <AipickCoins
+          <CoinsDisplay
             coins={tournament.participantsCount * tournament.entryPrice + tournament.staticPrizePool}
-          ></AipickCoins>
+          ></CoinsDisplay>
         </LabeledContent>
         <LabeledContent title="Participants">
           <Typography alignment="right" variant="body2">

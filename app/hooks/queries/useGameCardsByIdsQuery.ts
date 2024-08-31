@@ -6,7 +6,7 @@ const useGameCardsByIdsQuery = (ids: GameCardId[]) => {
   const gameCardApi = useGameCardApi();
 
   return useQuery({
-    queryKey: ['game-cards', ids],
+    queryKey: ['game-cards', { ids }],
     queryFn: () => gameCardApi.getCardsByIds(ids),
     enabled: ids.length > 0,
     placeholderData: ids.length ? undefined : [],

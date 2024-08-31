@@ -7,7 +7,6 @@ import { TournamentDeck } from '@api/TournamentDeck';
 import Loader from '@components/Loader';
 import Typography from '@components/Typography';
 import GameCardsGrid from '@components/GameCardsGrid';
-import GameCardDetailsPopup from '@components/GameCardDetailsPopup';
 import Button from '@components/Button';
 import DeckConfigurationCard from './DeckConfigurationCard';
 import DeckConfigurationButton from './DeckConfigurationButton';
@@ -18,6 +17,7 @@ export interface DeckConfigurationProps {
   myDeck: TournamentDeck | null | undefined;
   myCards: Array<GameCard> | undefined;
   availableSlots: number | undefined;
+  onObserveCard: (card: GameCard) => void;
   onSaveChanges: (cardIds: GameCardId[]) => void;
   isDeckSaveInProgress?: boolean;
 }
@@ -28,9 +28,9 @@ const DeckConfiguration = ({
   availableSlots,
   myCards,
   onSaveChanges,
+  onObserveCard,
   isDeckSaveInProgress,
 }: DeckConfigurationProps) => {
-  const [cardToObserve, setCardToObserve] = useState<GameCard | null>(null);
   const [isCardSelectingInProgress, setIsCardSelectingInProgress] = useState(false);
 
   const [deckConfiguration, setDeckConfiguration] = useState<
@@ -79,7 +79,7 @@ const DeckConfiguration = ({
   const handleCardClick = useCallback(
     (card: GameCard) => {
       if (!isCardSelectingInProgress) {
-        setCardToObserve(card);
+        onObserveCard(card);
 
         return;
       }
@@ -96,7 +96,7 @@ const DeckConfiguration = ({
     },
     [
       isCardSelectingInProgress,
-      setCardToObserve,
+      onObserveCard,
       setDeckConfiguration,
       setIsCardSelectingInProgress,
       checkCardUnavailable,
@@ -199,7 +199,6 @@ const DeckConfiguration = ({
           Save Changes
         </Button>
       )}
-      <GameCardDetailsPopup isOpen card={cardToObserve} onClose={() => setCardToObserve(null)} />
     </div>
   );
 };

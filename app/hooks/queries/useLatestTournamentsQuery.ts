@@ -6,7 +6,7 @@ const useLatestTournamentsQuery = (tournamentStatus?: TournamentStatus) => {
   const tournamentApi = useTournamentApi();
 
   return useQuery({
-    queryKey: ['tournaments', tournamentStatus],
+    queryKey: ['tournaments', { status: tournamentStatus }],
     queryFn: () => tournamentApi.getLatestTournaments(tournamentStatus),
   });
 };

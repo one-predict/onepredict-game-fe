@@ -4,7 +4,7 @@ import { PopupProps } from '@components/Popup';
 import Popup from '@components/Popup';
 import GameCardDetails from '@components/GameCardDetails';
 import Button from '@components/Button';
-import AipickCoins from '@components/AipickCoins';
+import CoinsDisplay from '@components/CoinsDisplay';
 import styles from './BuyGameCardPopup.module.scss';
 
 export interface BuyGameCardPopupProps extends Omit<PopupProps, 'children'> {
@@ -38,7 +38,7 @@ const BuyGameCardPopup = ({
         <>
           <GameCardDetails card={card} />
           <div className={styles.buySection}>
-            <AipickCoins coins={card.price} />
+            <CoinsDisplay coins={card.price} />
             <Button
               disabled={isCardAlreadyPurchased || userBalance < card.price}
               loading={isBuyInProgress}
