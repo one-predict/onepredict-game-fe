@@ -6,3 +6,113 @@
   width: 100%;
   height: 100%;
 }
+
+.referalsContainer {
+  display: flex;
+  flex-direction: column;
+  padding-top: 16px;
+  width: 100%;
+}
+
+.referalsCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #8C8498;
+  border-radius: 12px;
+  padding: 16px;
+  width: 100%;
+  background: radial-gradient(50% 50% at 70%, #351A55 0%, #190A31 100%)
+}
+
+.referalsCardDescription {
+  display: flex;
+  flex-direction: column;
+}
+
+.referalsCardButtonContainer {
+  padding-top: 16px;
+  width: 100%;
+}
+
+.referalsCardButton {
+  padding: 6.5px;
+  min-height: 20px;
+  font-family: Orbitron;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+.friendsContainer {
+  padding-top: 32px;
+}
+
+.greenText {
+  color: #10C600;
+}
+
+.whiteText {
+  color: white
+}
+
+.friendsList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #8C8498;
+  border-radius: 12px;
+  width: 100%;
+  background: radial-gradient(50% 50% at 70%, #3E216A 0%, #190A31 100%);
+}
+
+.friendsTitle {
+  padding-bottom: 16px;
+}
+
+.listHeaders {
+  padding: 11px 16px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid #8C8498;
+}
+
+.rowsContainer {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 16px;
+  display: flex;
+  width: 100%;
+}
+
+.listRow {
+  display: flex;
+  padding: 11px 0px;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid #6DA2CE;
+}
+
+.listRow:last-child {
+  border: none;
+}
+
+.username {
+  width: 40%
+}
+
+.points {
+  text-align: center;
+  width: 30%
+}
+
+.invited {
+  text-align: center;
+  width: 30%
+}
