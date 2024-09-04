@@ -8,6 +8,7 @@ import styles from './rewards.module.scss';
 import Button from '@app/components/Button';
 import useCurrentUserReferalsQuery from '@app/hooks/queries/useCurrentUserReferalsQuery';
 import useSession from '@app/hooks/useSession';
+import { getReferalLink } from '@app/utils/telegram';
 
 type RewardsCategory = 'tasks' | 'referrals';
 type FriendData = {
@@ -50,7 +51,10 @@ const RewardsPage = () => {
   )
 
   const inviteFriend = () => {
-    window.parent.postMessage(JSON.stringify({ eventType: "web_app_open_invoice", eventData: currentUser?.id }));
+    const botName = import.meta.env.VITE_BOT_NAME
+    const appName = import.meta.env.VITE_APP_NAME
+    const link = getReferalLink(currentUser?.id, botName, appName)
+    navigator.clipboard.writeText(link)
   }
 
   return (
@@ -82,7 +86,7 @@ const RewardsPage = () => {
               <Typography variant="subtitle2" color="gray">Get <span className={styles.greenText}>1 card</span> as a gift for each friend.</Typography>
             </div>
             <div className={styles.referalsCardButtonContainer}>
-              <Button disabled={!currentUser} className={styles.referalsCardButton} onClick={inviteFriend}>Invite Friends</Button>
+              <Button disabled={!currentUser} className={styles.referalsCardButton} onClick={inviteFriend}>Copy referal link to clipboard</Button>
             </div>
           </div>
 
