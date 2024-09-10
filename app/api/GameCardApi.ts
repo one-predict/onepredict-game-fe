@@ -1,6 +1,10 @@
 import { ApiClient } from './ApiClient';
 
-export enum GameCardId {}
+export enum GameCardId {
+  CommonBearRead = 'common_bear_raid',
+  CommonStopLoss = 'common_stop_loss',
+  CommonBullaRun = 'common_bulla_run',
+}
 
 export enum GameCardRarity {
   Common = 'common',

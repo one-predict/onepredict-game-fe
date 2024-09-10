@@ -1,7 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import _ from 'lodash';
 import { useNavigate, useParams } from '@remix-run/react';
-import { GameCard, GameCardId } from '@api/GameCardApi';
-import { PortfolioSelectedToken } from '@api/PortfolioApi';
+import { GameCard } from '@api/GameCardApi';
+import { Portfolio, PortfolioSelectedToken } from '@api/PortfolioApi';
 import AppSection from '@enums/AppSection';
 import useOfferIdsFromSeries from '@hooks/useOfferIdsFromSeries';
 import useTournamentByIdQuery from '@hooks/queries/useTournamentByIdQuery';
@@ -19,6 +20,7 @@ import useMyPortfoliosQuery from '@hooks/queries/useMyPortfoliosQuery';
 import useBackButton from '@hooks/useBackButton';
 import useJoinTournamentMutation from '@hooks/mutations/useJoinTournamentMutation';
 import useCreatePortfolioMutation from '@hooks/mutations/useCreatePortfolioMutation';
+import useApplyCardsToPortfolioMutation from '@hooks/mutations/useApplyCardsToPortfolioMutation';
 import PageBody from '@components/PageBody';
 import Typography from '@components/Typography';
 import Loader from '@components/Loader';
@@ -29,6 +31,7 @@ import DeckConfiguration from '@components/DeckConfiguration';
 import PortfoliosGame from '@components/PortfoliosGame';
 import FixedSlideView from '@components/FixedSlideView';
 import GameCardDetailsPopup from '@components/GameCardDetailsPopup';
+import PortfolioCardsStackConfiguration from '@components/PortfolioCardsStackConfiguration';
 import styles from './tournament.module.scss';
 
 export const handle = {
@@ -47,6 +50,7 @@ const TournamentPage = () => {
 
   const [showDeckConfiguration, setShowDeckConfiguration] = useState(false);
   const [showPortfolios, setShowPortfolios] = useState(false);
+  const [portfolioToApplyCards, setPortfolioToApplyCards] = useState<Portfolio | null>(null);
   const [cardToObserve, setCardToObserve] = useState<GameCard | null>(null);
 
   const currentUser = useSession();
@@ -59,9 +63,11 @@ const TournamentPage = () => {
   const { data: tournamentDeck } = useMyTournamentDeck(tournamentId || '');
   const { data: myCards } = useGameCardsByIdsQuery(myInventory?.purchasedCardIds || []);
 
+  const myCardsPool = useMemo(() => (myCards ? _.keyBy(myCards, 'id') : undefined), [myCards]);
+
   const tournamentStatus = useTournamentStatus(tournament ?? null);
 
-  const { data: offersSeries } = useTokensOffersSeriesQuery(tournamentStatus !== 'live' ? tournamentId : undefined);
+  const { data: offersSeries } = useTokensOffersSeriesQuery(tournamentStatus === 'live' ? tournamentId : undefined);
 
   const tournamentOfferIds = useOfferIdsFromSeries(offersSeries);
 
@@ -70,6 +76,8 @@ const TournamentPage = () => {
   const { mutateAsync: joinTournament, status: joinTournamentMutationStatus } = useJoinTournamentMutation();
   const { mutateAsync: updateCardsDeck, status: updateCardsDeckStatus } = useUpdateTournamentDeckMutation();
   const { mutateAsync: createPortfolio, status: createPortfolioStatus } = useCreatePortfolioMutation();
+  const { mutateAsync: applyCardsToPortfolio, status: applyCardsToPortfolioStatus } =
+    useApplyCardsToPortfolioMutation();
 
   const canJoinTournament =
     tournamentStatus === 'upcoming' && !!currentUser && currentUser.coinsBalance > tournament?.entryPrice;
@@ -79,6 +87,14 @@ const TournamentPage = () => {
     () => {
       if (showDeckConfiguration) {
         setShowDeckConfiguration(false);
+        setCardToObserve(null);
+
+        return;
+      }
+
+      if (portfolioToApplyCards) {
+        setPortfolioToApplyCards(null);
+        setCardToObserve(null);
 
         return;
       }
@@ -91,7 +107,7 @@ const TournamentPage = () => {
 
       navigate('/tournaments');
     },
-    [showDeckConfiguration, showPortfolios],
+    [showDeckConfiguration, showPortfolios, portfolioToApplyCards],
   );
 
   const handleJoinTournamentButtonClick = useCallback(async () => {
@@ -118,14 +134,27 @@ const TournamentPage = () => {
   );
 
   const handleSaveDeckChanges = useCallback(
-    async (cardIds: GameCardId[]) => {
+    async (cardsStack: Record<string, number>) => {
       if (!tournamentDeck) {
         return;
       }
 
-      await updateCardsDeck({ id: tournamentDeck.id, cardIds });
+      await updateCardsDeck({ id: tournamentDeck.id, cardsStack });
     },
     [tournamentDeck, updateCardsDeck],
+  );
+
+  const handleApplyCardsToPortfolio = useCallback(
+    async (cardsStack: Record<string, number>) => {
+      if (!portfolioToApplyCards) {
+        return;
+      }
+
+      await applyCardsToPortfolio({ id: portfolioToApplyCards.id, cardsStack });
+
+      setPortfolioToApplyCards(null);
+    },
+    [portfolioToApplyCards, applyCardsToPortfolio],
   );
 
   const handlePortfolioSubmit = useCallback(
@@ -182,11 +211,11 @@ const TournamentPage = () => {
           <DeckConfiguration
             className={styles.deckConfiguration}
             myDeck={tournamentDeck}
-            myCards={myCards}
+            myCardsPool={myCardsPool}
             availableSlots={myInventory?.availableCardSlots}
             onSaveChanges={handleSaveDeckChanges}
             onObserveCard={handleObserveCard}
-            isDeckSaveInProgress={updateCardsDeckStatus === 'pending'}
+            isSaveInProgress={updateCardsDeckStatus === 'pending'}
           />
         )}
         {showPortfolios && (
@@ -200,11 +229,26 @@ const TournamentPage = () => {
               portfolios={portfolios ?? null}
               onPortfolioSubmit={handlePortfolioSubmit}
               isPortfolioSubmitInProgress={createPortfolioStatus === 'pending'}
+              onEditPortfolioCards={(portfolio) => setPortfolioToApplyCards(portfolio)}
             />
           </>
         )}
       </FixedSlideView>
-      {showDeckConfiguration && <GameCardDetailsPopup card={cardToObserve} onClose={() => setCardToObserve(null)} />}
+      <FixedSlideView visible={!!portfolioToApplyCards}>
+        {portfolioToApplyCards && (
+          <PortfolioCardsStackConfiguration
+            portfolio={portfolioToApplyCards}
+            deck={tournamentDeck}
+            tournament={tournament}
+            cardsPool={myCardsPool}
+            availableSlots={myInventory?.availablePortfolioCardSlots}
+            onObserveCard={handleObserveCard}
+            onSaveChanges={handleApplyCardsToPortfolio}
+            isSaveInProgress={applyCardsToPortfolioStatus === 'pending'}
+          />
+        )}
+      </FixedSlideView>
+      <GameCardDetailsPopup card={cardToObserve} onClose={() => setCardToObserve(null)} />
     </PageBody>
   );
 };

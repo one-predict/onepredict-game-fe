@@ -7,7 +7,7 @@ import utcPlugin from 'dayjs/plugin/utc';
 import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { toast, ToastContainer } from 'react-toastify';
 import { RestApiClient } from '@api/ApiClient';
-import { ApiProvider, IApiProviderValue } from '@providers/ApiProvider';
+import { ApiProvider, ApiProviderValue } from '@providers/ApiProvider';
 import { HttpAuthApi } from '@api/AuthApi';
 import { HttpUserApi } from '@api/UserApi';
 import { HttpPortfolioApi } from '@api/PortfolioApi';
@@ -17,6 +17,7 @@ import { HttpGameCardApi } from '@api/GameCardApi';
 import { HttpUserInventoryApi } from '@api/UserInventoryApi';
 import { HttpTournamentDeckApi } from '@api/TournamentDeck';
 import { HttpGameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
+import { HttpCoinsPricingInfoApi } from '@api/CoinsPricingInfoApi';
 import { PageLayoutWithMenu } from '@components/Layouts';
 import LoadingScreen from '@components/LoadingScreen';
 import AuthorizedSection from '@components/AuthorizedSection';
@@ -83,7 +84,7 @@ const App = () => {
     });
   }, []);
 
-  const services: IApiProviderValue = useMemo(() => {
+  const services: ApiProviderValue = useMemo(() => {
     const apiClient = new RestApiClient(import.meta.env.VITE_API_URL);
 
     return {
@@ -96,6 +97,7 @@ const App = () => {
       userInventoryApi: new HttpUserInventoryApi(apiClient),
       tournamentDeckApi: new HttpTournamentDeckApi(apiClient),
       gameCardsMarketplaceApi: new HttpGameCardsMarketplaceApi(apiClient),
+      coinsPricingInfoApi: new HttpCoinsPricingInfoApi(apiClient),
     };
   }, []);
 

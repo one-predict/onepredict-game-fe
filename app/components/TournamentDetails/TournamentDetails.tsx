@@ -57,9 +57,9 @@ const TournamentDetails = ({
 
     return (
       <div className={styles.tournamentDeckSection}>
-        {myInventory.availableCardSlots > tournamentDeck.cardIds.length && (
+        {myInventory.availableCardSlots > tournamentDeck.totalDeckSize && (
           <Typography color="yellow" variant="body2">
-            You have {myInventory.availableCardSlots - tournamentDeck.cardIds.length} free slots in your deck!
+            You have {myInventory.availableCardSlots - tournamentDeck.totalDeckSize} free slots in your deck!
           </Typography>
         )}
         <div onClick={onConfigureDeckButtonClick} className={styles.actionButton}>

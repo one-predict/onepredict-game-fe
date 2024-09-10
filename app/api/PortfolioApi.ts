@@ -5,8 +5,11 @@ export interface Portfolio {
   id: string;
   userId: string;
   offerId: string;
+  interval: [number, number];
   createdAt: Date;
   selectedTokens: PortfolioSelectedToken[];
+  appliedCardsStack: Record<string, number>;
+  tournamentId: string | null;
   earnedCoins: number;
   isAwarded: boolean;
 }
@@ -24,6 +27,7 @@ export interface CreatePortfolioParams {
 export interface PortfolioApi {
   getMyPortfolios(offerIds: string[]): Promise<Portfolio[]>;
   createPortfolio(params: CreatePortfolioParams): Promise<Portfolio>;
+  applyGameCards(id: string, cardsStack: Record<string, number>): Promise<Portfolio>;
 }
 
 export class HttpPortfolioApi implements PortfolioApi {
@@ -41,5 +45,9 @@ export class HttpPortfolioApi implements PortfolioApi {
 
   public createPortfolio(params: CreatePortfolioParams) {
     return this.client.makeCall<Portfolio>(`/portfolios`, 'POST', params);
+  }
+
+  public applyGameCards(id: string, cardsStack: Record<string, number>) {
+    return this.client.makeCall<Portfolio>(`/portfolios/${id}/cards`, 'PUT', { cardsStack });
   }
 }

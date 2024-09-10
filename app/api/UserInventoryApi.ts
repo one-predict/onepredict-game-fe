@@ -4,6 +4,7 @@ import { GameCardId } from '@api/GameCardApi';
 export interface UserInventory {
   purchasedCardIds: GameCardId[];
   availableCardSlots: number;
+  availablePortfolioCardSlots: number;
 }
 
 export interface UserInventoryApi {

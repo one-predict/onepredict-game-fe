@@ -17,6 +17,7 @@ export interface PortfoliosGameProps {
   offersSeries: TokensOffersSeries | null;
   portfolios: Record<string, Portfolio> | null;
   onPortfolioSubmit: (offerId: string, selectedTokens: PortfolioSelectedToken[]) => void;
+  onEditPortfolioCards?: (portfolio: Portfolio) => void;
   isPortfolioSubmitInProgress?: boolean;
 }
 
@@ -25,6 +26,7 @@ const PortfoliosGame = ({
   offersSeries,
   portfolios,
   onPortfolioSubmit,
+  onEditPortfolioCards,
   isPortfolioSubmitInProgress,
 }: PortfoliosGameProps) => {
   const [selectedCategory, setSelectedCategory] = useState<OffersCategory>('upcoming');
@@ -42,6 +44,7 @@ const PortfoliosGame = ({
           upcomingOffer={upcomingOffer}
           upcomingPortfolio={portfolios[upcomingOffer.id]}
           onPortfolioSubmit={onPortfolioSubmit}
+          onEditPortfolioCards={onEditPortfolioCards}
           isPortfolioSubmitInProgress={isPortfolioSubmitInProgress}
         />
       ) : (

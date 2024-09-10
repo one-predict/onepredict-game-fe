@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { GameCard } from '@api/GameCardApi';
+import { GameCard, GameCardId } from '@api/GameCardApi';
 import GameCardPreview from '@components/GameCardPreview';
+import Typography from '@components/Typography';
 import TrashIcon from '@assets/icons/trash.svg?react';
-import styles from './DeckConfigurationCard.module.scss';
+import styles from './StackConfigurationCardPreview.module.scss';
 
-export interface DeckConfigurationCardProps {
-  deckItemId: string;
+export interface StackConfigurationCardPreviewProps {
   card: GameCard;
-  cardIndex: number;
-  onRemoveCardButtonClick: (deckItemId: string) => void;
+  quantity: number;
+  onRemoveCardButtonClick: (cardId: GameCardId) => void;
 }
 
 const HIDE_REMOVE_CARD_OVERLAY_TIMEOUT = 5000;
 
-const DeckConfigurationCard = ({ card, onRemoveCardButtonClick, deckItemId }: DeckConfigurationCardProps) => {
+const StackConfigurationCardPreview = ({
+  card,
+  onRemoveCardButtonClick,
+  quantity,
+}: StackConfigurationCardPreviewProps) => {
   const [showRemoveCardOverlay, setShowRemoveCardOverlay] = useState(false);
 
   useEffect(() => {
@@ -30,12 +34,20 @@ const DeckConfigurationCard = ({ card, onRemoveCardButtonClick, deckItemId }: De
   };
 
   const handleTrashIconClick = () => {
-    onRemoveCardButtonClick(deckItemId);
+    onRemoveCardButtonClick(card.id);
   };
 
   return (
-    <div className={styles.deckConfigurationCardContainer}>
-      <GameCardPreview onClick={handleCardPreviewClick} className={styles.gameCardPreview} card={card} size="small" />
+    <div className={styles.stackConfigurationCardContainer}>
+      <GameCardPreview
+        onClick={handleCardPreviewClick}
+        card={card}
+        previewFooter={
+          <div className={styles.gameCardPreviewFooter}>
+            <Typography variant="h6">x{quantity}</Typography>
+          </div>
+        }
+      />
       <div className={clsx(styles.removeCardOverlay, showRemoveCardOverlay && styles.visibleRemoveCardOverlay)}>
         <TrashIcon onClick={handleTrashIconClick} />
       </div>
@@ -43,4 +55,4 @@ const DeckConfigurationCard = ({ card, onRemoveCardButtonClick, deckItemId }: De
   );
 };
 
-export default DeckConfigurationCard;
+export default StackConfigurationCardPreview;

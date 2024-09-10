@@ -1,15 +1,17 @@
 import { ApiClient } from './ApiClient';
-import { GameCardId } from '@api/GameCardApi';
 
 export interface TournamentDeck {
   id: string;
   tournamentId: string;
   userId: string;
-  cardIds: GameCardId[];
+  totalDeckSize: number;
+  cardsStack: Record<string, number>;
+  usedCardsStackByRound: Record<number, Record<string, number>>;
+  allUsedCardsStack: Record<string, number>;
 }
 
 export interface UpdateTournamentDeckParams {
-  cardIds?: GameCardId[];
+  cardsStack?: Record<string, number>;
 }
 
 export interface TournamentDeckApi {

@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import _ from 'lodash';
 import clsx from 'clsx';
 import { TokenDirection } from '@api/TokensOfferApi';
+import TokenImage from '@components/TokenImage';
 import BoldArrow from '@assets//icons/bold-arrow.svg?react';
-import { tokensLogoSrcMap } from '@app/data/tokens';
 import { PortfolioSelectedToken } from '@api/PortfolioApi';
 import styles from './TokensCard.module.scss';
 
@@ -29,7 +29,6 @@ const TokensCard = ({
   return (
     <div className={clsx(styles.tokensCard, className)}>
       {availableTokens.map((token) => {
-        const tokenImageSrc = tokensLogoSrcMap[token];
         const isTokenSelected = selectedTokensMap[token];
         const tokenDirection = selectedTokensMap[token]?.direction;
 
@@ -50,7 +49,7 @@ const TokensCard = ({
               </div>
             )}
             <div onClick={() => onTokenClick?.(token)} className={styles.tokenInformation}>
-              <img className={styles.tokenImage} src={tokenImageSrc} alt={`${token} token`} />
+              <TokenImage className={styles.tokenImage} token={token} />
               {token}
             </div>
             {isTokenSelected && (

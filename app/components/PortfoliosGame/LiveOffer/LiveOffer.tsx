@@ -18,7 +18,7 @@ const LiveOffer = ({ livePortfolio, liveOffer }: LiveOfferProps) => {
       <TimeRemaining unixTimestamp={liveOffer.timestamp + liveOffer.durationInSeconds}>
         {({ remainingDays, remainingHours, remainingMinutes }) => {
           return (
-            <Typography alignment="center" variant="body2">
+            <Typography color="yellow" alignment="center" variant="body2">
               Ends in {remainingDays}d {remainingHours}h {remainingMinutes}m
             </Typography>
           );

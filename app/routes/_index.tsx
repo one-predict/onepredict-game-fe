@@ -63,27 +63,29 @@ const HomePage = () => {
 
                   return (
                     <>
-                      {portfolios && <div className={styles.classicChallengeOfferInfo}>
-                        <Typography variant="subtitle2">
-                          {isPortfolioSubmitted ? 'Next Offer:' : 'Offer Ends In:'}
-                        </Typography>
-                        {absoluteRemainingSeconds > 0 ? (
-                          <Typography variant="h6">
-                            {remainingHours}h {remainingMinutes}m
+                      {portfolios && (
+                        <div className={styles.classicChallengeOfferInfo}>
+                          <Typography variant="subtitle2">
+                            {isPortfolioSubmitted ? 'Next Offer:' : 'Offer Ends In:'}
                           </Typography>
-                        ) : (
-                          <Typography variant="h6">Available Now</Typography>
-                        )}
-                        {!isPortfolioSubmitted && (
-                          <Typography
-                            className={styles.portfolioAvailableNotification}
-                            variant="subtitle2"
-                            color="yellow"
-                          >
-                            Portfolio Available
-                          </Typography>
-                        )}
-                      </div>}
+                          {absoluteRemainingSeconds > 0 ? (
+                            <Typography variant="h6">
+                              {remainingHours}h {remainingMinutes}m
+                            </Typography>
+                          ) : (
+                            <Typography variant="h6">Available Now</Typography>
+                          )}
+                          {!isPortfolioSubmitted && (
+                            <Typography
+                              className={styles.portfolioAvailableNotification}
+                              variant="subtitle2"
+                              color="yellow"
+                            >
+                              Portfolio Available
+                            </Typography>
+                          )}
+                        </div>
+                      )}
                       <LinearProgress progress={progress} />
                     </>
                   );

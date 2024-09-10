@@ -1,0 +1,25 @@
+.stackCardsPreview {
+  display: flex;
+  flex-direction: row;
+  overflow-y: auto;
+  padding: 16px;
+  column-gap: 16px;
+  width: 100%;
+}
+
+.gameCardPreview {
+  width: 116px;
+  flex-shrink: 0;
+}
+
+.gameCardPreviewFooter {
+  display: flex;
+  padding: 2px 16px;
+  background-color: #190A31;
+  border: 1.5px solid #8C849866;
+  border-radius: 12px;
+}
+
+.noCardsText {
+  margin: auto;
+}

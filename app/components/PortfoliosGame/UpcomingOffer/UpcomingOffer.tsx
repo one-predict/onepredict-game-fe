@@ -10,6 +10,7 @@ export interface UpcomingOfferProps {
   upcomingOffer: TokensOffer;
   upcomingPortfolio: Portfolio | null;
   onPortfolioSubmit: (offerId: string, selectedTokens: PortfolioSelectedToken[]) => void;
+  onEditPortfolioCards?: (portfolio: Portfolio) => void;
   isPortfolioSubmitInProgress?: boolean;
 }
 
@@ -17,6 +18,7 @@ const UpcomingOffer = ({
   upcomingPortfolio,
   upcomingOffer,
   onPortfolioSubmit,
+  onEditPortfolioCards,
   isPortfolioSubmitInProgress,
 }: UpcomingOfferProps) => {
   return upcomingPortfolio ? (
@@ -27,13 +29,17 @@ const UpcomingOffer = ({
       <TimeRemaining unixTimestamp={upcomingOffer.timestamp}>
         {({ remainingDays, remainingHours, remainingMinutes }) => {
           return (
-            <Typography alignment="center" variant="body2">
+            <Typography alignment="center" variant="body2" color="yellow">
               Live in {remainingDays}d {remainingHours}h {remainingMinutes}m
             </Typography>
           );
         }}
       </TimeRemaining>
-      <PortfolioCard className={styles.upcomingPortfolioCard} portfolio={upcomingPortfolio} />
+      <PortfolioCard
+        className={styles.upcomingPortfolioCard}
+        onEditPortfolioCards={onEditPortfolioCards}
+        portfolio={upcomingPortfolio}
+      />
     </div>
   ) : (
     <SubmitPortfolio

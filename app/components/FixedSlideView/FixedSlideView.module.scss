@@ -19,5 +19,5 @@ $pageMenuSize: 77px;
 .visibleFixedSlideView {
   @extend .fixedSlideView;
 
-  transform: translateY(0);
+  transform: none;
 }

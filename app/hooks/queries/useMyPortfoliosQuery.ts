@@ -19,7 +19,6 @@ const useMyPortfoliosQuery = (offerIds?: string[]) => {
           return _.keyBy(myPortfolios, 'offerId');
         }
       : skipToken,
-    enabled: !!offerIds,
   });
 };
 

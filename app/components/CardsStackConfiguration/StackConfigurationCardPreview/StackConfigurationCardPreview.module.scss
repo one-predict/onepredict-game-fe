@@ -1,13 +1,9 @@
-.deckConfigurationCardContainer {
+.stackConfigurationCardContainer {
   position: relative;
   width: 168px;
   height: 168px;
   flex: 0 0 auto;
   border-radius: 12px;
-}
-
-.gameCardPreview {
-  box-shadow: none;
 }
 
 .removeCardOverlay {
@@ -27,10 +23,18 @@
   pointer-events: none;
 
   & > svg {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     fill: #FFFFFF;
   }
+}
+
+.gameCardPreviewFooter {
+  display: flex;
+  padding: 2px 16px;
+  background-color: #190A31;
+  border: 1.5px solid #8C849866;
+  border-radius: 12px;
 }
 
 .visibleRemoveCardOverlay {

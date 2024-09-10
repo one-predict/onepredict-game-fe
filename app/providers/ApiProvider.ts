@@ -8,8 +8,9 @@ import { GameCardApi } from '@api/GameCardApi';
 import { UserInventoryApi } from '@api/UserInventoryApi';
 import { TournamentDeckApi } from '@api/TournamentDeck';
 import { GameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
+import { CoinsPricingInfoApi } from '@api/CoinsPricingInfoApi';
 
-export interface IApiProviderValue {
+export interface ApiProviderValue {
   authApi: AuthApi;
   userApi: UserApi;
   portfolioApi: PortfolioApi;
@@ -19,6 +20,7 @@ export interface IApiProviderValue {
   userInventoryApi: UserInventoryApi;
   tournamentDeckApi: TournamentDeckApi;
   gameCardsMarketplaceApi: GameCardsMarketplaceApi;
+  coinsPricingInfoApi: CoinsPricingInfoApi;
 }
 
 export type Services =
@@ -30,11 +32,12 @@ export type Services =
   | GameCardApi
   | UserInventoryApi
   | TournamentDeckApi
-  | GameCardsMarketplaceApi;
+  | GameCardsMarketplaceApi
+  | CoinsPricingInfoApi;
 
-const ApiContext = createContext<IApiProviderValue>({} as IApiProviderValue);
+const ApiContext = createContext<ApiProviderValue>({} as ApiProviderValue);
 
-const createServiceHook = <ServiceType extends Services>(serviceName: keyof IApiProviderValue) => {
+const createServiceHook = <ServiceType extends Services>(serviceName: keyof ApiProviderValue) => {
   return () => {
     const services = useContext(ApiContext);
 
@@ -51,5 +54,6 @@ export const useGameCardApi = createServiceHook<GameCardApi>('gameCardApi');
 export const useUserInventoryApi = createServiceHook<UserInventoryApi>('userInventoryApi');
 export const useGameCardsMarketplaceApi = createServiceHook<GameCardsMarketplaceApi>('gameCardsMarketplaceApi');
 export const useTournamentDeckApi = createServiceHook<TournamentDeckApi>('tournamentDeckApi');
+export const useCoinsPricingInfoApi = createServiceHook<CoinsPricingInfoApi>('coinsPricingInfoApi');
 
 export const ApiProvider = ApiContext.Provider;

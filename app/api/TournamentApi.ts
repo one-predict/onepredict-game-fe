@@ -15,6 +15,7 @@ export interface Tournament {
   participantsCount: number;
   startTimestamp: number;
   endTimestamp: number;
+  roundDurationInSeconds: number;
   imageUrl?: string;
 }
 

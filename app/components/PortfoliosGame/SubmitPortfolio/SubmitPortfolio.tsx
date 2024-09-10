@@ -1,10 +1,16 @@
 import { useCallback, useState } from 'react';
+import TokenType from '@enums/TokenType';
 import { TokensOffer, TokenDirection } from '@api/TokensOfferApi';
+import useCoinsPricingInfoQuery from '@hooks/queries/useCoinsPricingInfoQuery';
 import { PortfolioSelectedToken } from '@api/PortfolioApi';
 import { SubmitButton } from '@components/Button';
 import Typography from '@components/Typography';
 import TokensCard from '@components/PortfoliosGame/TokensCard';
 import TimeRemaining from '@components/TimeRemaining';
+import Popup from '@components/Popup';
+import TokensPricingInfo from '@components/TokensPricingInfo';
+import Loader from "@components/Loader";
+import DollarIcon from '@assets/icons/dollar.svg?react';
 import styles from './SubmitPortfolio.module.scss';
 
 export interface SubmitPortfolioProps {
@@ -17,6 +23,9 @@ const MAX_TOKENS_PER_PORTFOLIO = 6;
 
 const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfolioProps) => {
   const [selectedTokens, setSelectedTokens] = useState<PortfolioSelectedToken[]>([]);
+  const [showPricingInfo, setShowPricingInfo] = useState(false);
+
+  const { data: pricingInfo } = useCoinsPricingInfoQuery();
 
   const handleTokenClick = useCallback(
     (token: string) => {
@@ -65,12 +74,16 @@ const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfoli
       <TimeRemaining unixTimestamp={offer.timestamp}>
         {({ remainingDays, remainingHours, remainingMinutes }) => {
           return (
-            <Typography color="secondary" alignment="center" variant="body2">
+            <Typography color="yellow" alignment="center" variant="body2">
               Offer ends in {remainingDays}d {remainingHours}h {remainingMinutes}m
             </Typography>
           );
         }}
       </TimeRemaining>
+      <div onClick={() => setShowPricingInfo(true)} className={styles.pricesSection}>
+        <Typography variant="h6">Prices</Typography>
+        <DollarIcon className={styles.dollarIcon} />
+      </div>
       <TokensCard
         className={styles.chooseTokensCard}
         availableTokens={offer.tokens}
@@ -85,6 +98,20 @@ const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfoli
       >
         Submit
       </SubmitButton>
+      <Popup isOpen={showPricingInfo} onClose={() => setShowPricingInfo(false)}>
+        <Typography variant="h1" color="primary">
+          Tokens Info
+        </Typography>
+        {pricingInfo ? (
+          <TokensPricingInfo
+            className={styles.tokensPricingInfo}
+            tokens={offer.tokens as TokenType[]}
+            info={pricingInfo}
+          />
+        ) : (
+          <Loader centered />
+        )}
+      </Popup>
     </div>
   );
 };

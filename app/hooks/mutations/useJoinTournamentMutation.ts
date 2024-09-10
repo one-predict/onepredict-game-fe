@@ -10,12 +10,14 @@ const useJoinTournamentMutation = () => {
 
   const handleMutationSuccess = useCallback(
     async (_result: void, tournamentId: string) => {
-      await queryClient.invalidateQueries({ queryKey: ['tournament-participations', { tournamentId }] });
-      await queryClient.invalidateQueries({ queryKey: ['tournament-participation-ranks', { tournamentId }] });
-      await queryClient.invalidateQueries({ queryKey: ['tournament-leaderboards', { tournamentId }] });
-      await queryClient.invalidateQueries({ queryKey: ['tournaments', tournamentId] });
-      await queryClient.invalidateQueries({ queryKey: ['current-user'] });
-      await queryClient.invalidateQueries({ queryKey: ['tournament-decks', { tournamentId, my: true }] });
+      await Promise.all([
+        await queryClient.invalidateQueries({ queryKey: ['tournament-participations', { tournamentId }] }),
+        await queryClient.invalidateQueries({ queryKey: ['tournament-participation-ranks', { tournamentId }] }),
+        await queryClient.invalidateQueries({ queryKey: ['tournament-leaderboards', { tournamentId }] }),
+        await queryClient.invalidateQueries({ queryKey: ['tournaments', tournamentId] }),
+        await queryClient.invalidateQueries({ queryKey: ['current-user'] }),
+        await queryClient.invalidateQueries({ queryKey: ['tournament-decks', { tournamentId, my: true }] }),
+      ]);
 
       toast(`You have successfully joined the tournament!`);
     },

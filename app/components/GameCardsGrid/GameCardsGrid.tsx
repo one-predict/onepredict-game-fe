@@ -8,7 +8,10 @@ export interface GameCardsGridProps {
   className?: string;
   previewCardClassName?: string | ((card: GameCard) => string);
   gameCards: GameCard[];
+  isEffectAllowed?: (card: GameCard) => boolean;
   onCardClick?: (card: GameCard) => void;
+  onCardInfoIconClick?: (card: GameCard) => void;
+  renderPreviewCardOverlay?: (card: GameCard) => ReactNode;
   renderPreviewCardFooter?: (card: GameCard) => ReactNode;
 }
 
@@ -17,6 +20,9 @@ const GameCardsGrid = ({
   previewCardClassName,
   gameCards,
   onCardClick,
+  onCardInfoIconClick,
+  isEffectAllowed,
+  renderPreviewCardOverlay,
   renderPreviewCardFooter,
 }: GameCardsGridProps) => {
   return (
@@ -31,7 +37,9 @@ const GameCardsGrid = ({
             card={gameCard}
             className={gameCardPreviewClassName}
             onClick={onCardClick}
-            size="small"
+            allowEffect={isEffectAllowed?.(gameCard)}
+            onInfoIconClick={onCardInfoIconClick}
+            overlay={renderPreviewCardOverlay?.(gameCard)}
             previewFooter={renderPreviewCardFooter?.(gameCard)}
           />
         );
