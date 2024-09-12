@@ -1,27 +1,39 @@
 .tokensPricingInfoContainer {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  gap: 10px;
   align-self: self-start;
   width: 100%;
   row-gap: 16px;
 }
 
 .tokenName {
-  margin-bottom: 4px;
+  margin: 5px 0px;
+  font-family: Orbitron;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15.05px;
+  text-align: center;
 }
 
 .singleTokenPricingInfo {
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   border: 1px solid #8C8498;
+  height: 100px;
+  width: 100px;
   border-radius: 12px;
-  padding: 8px;
+  overflow: hidden;
   background-color: rgba(255, 255, 255, 0.1019607843);
 }
 
 .logoContainer {
-  width: 25%;
+  width: 5%;
+  padding-top: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,11 +44,31 @@
 .pricingLine {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
+  height: 0px;
+  position: relative;
+  top: 4px;
+  width: 100%;
   column-gap: 8px;
+  font-family: Orbitron;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: -0.02em;
+  text-align: center;
 }
 
 .lastUpdated {
   right: 8px;
   position: absolute;
+}
+
+.tokenImage {
+  width: 24px;
+  height: 24px;
+}
+
+.tokenChartImage {
+  width: 100%;
 }
