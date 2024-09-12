@@ -15,15 +15,15 @@ export interface User {
 
 export type Referal = User & {
   referalsCount: number;
-}
+};
 export interface UserApi {
   getCurrentUser(): Promise<User | null>;
-  getCurrentUserReferals(): Promise<Referal[]>
+  getCurrentUserReferals(): Promise<Referal[]>;
   finishOnboarding(): Promise<void>;
 }
 
 export class HttpUserApi implements UserApi {
-  public constructor(private client: ApiClient) { }
+  public constructor(private client: ApiClient) {}
 
   public async getCurrentUser() {
     const data = await this.client.makeCall<{ user: User | null }>('/users/current-user', 'GET');

@@ -5,7 +5,6 @@ import { User } from '@api/UserApi';
 import useCurrentUserQuery from '@hooks/queries/useCurrentUserQuery';
 import useSignInMutation from '@hooks/mutations/useSignInMutation';
 import useAsyncEffect from '@hooks/useAsyncEffect';
-import useStartParams from '@hooks/useStartParams';
 
 export interface SessionProviderProps {
   children: ReactNode;
@@ -54,7 +53,7 @@ if (typeof window !== 'undefined' && import.meta.env.MODE === 'development') {
     },
     initData: parseInitData(initDataRaw),
     initDataRaw,
-    startParam: 'referralId=66c9d81214a3fd58f9624969',
+    startParam: '66c9d81214a3fd58f9624969',
     version: '7.7',
     platform: 'tdesktop',
   });
@@ -67,16 +66,15 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
   const { mutateAsync: signIn } = useSignInMutation();
 
   const launchParams = useLaunchParams(true);
-  const startParams = useStartParams();
 
   useAsyncEffect(async () => {
     if (launchParams?.initDataRaw && currentUser === null) {
       await signIn({
         signInMessage: launchParams.initDataRaw,
-        referralId: startParams['referralId'],
+        referralId: launchParams.startParam || undefined,
       });
     }
-  }, [launchParams, startParams, currentUser]);
+  }, [launchParams, currentUser]);
 
   const session = useMemo(() => {
     return { currentUser };
