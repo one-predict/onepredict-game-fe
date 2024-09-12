@@ -9,7 +9,7 @@ import TokensCard from '@components/PortfoliosGame/TokensCard';
 import TimeRemaining from '@components/TimeRemaining';
 import Popup from '@components/Popup';
 import TokensPricingInfo from '@components/TokensPricingInfo';
-import Loader from "@components/Loader";
+import Loader from '@components/Loader';
 import DollarIcon from '@assets/icons/dollar.svg?react';
 import styles from './SubmitPortfolio.module.scss';
 

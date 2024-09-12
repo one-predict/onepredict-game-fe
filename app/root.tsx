@@ -18,6 +18,7 @@ import { HttpUserInventoryApi } from '@api/UserInventoryApi';
 import { HttpTournamentDeckApi } from '@api/TournamentDeck';
 import { HttpGameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
 import { HttpCoinsPricingInfoApi } from '@api/CoinsPricingInfoApi';
+import { HttpReferralApi } from '@api/ReferralApi';
 import { PageLayoutWithMenu } from '@components/Layouts';
 import LoadingScreen from '@components/LoadingScreen';
 import AuthorizedSection from '@components/AuthorizedSection';
@@ -98,6 +99,7 @@ const App = () => {
       tournamentDeckApi: new HttpTournamentDeckApi(apiClient),
       gameCardsMarketplaceApi: new HttpGameCardsMarketplaceApi(apiClient),
       coinsPricingInfoApi: new HttpCoinsPricingInfoApi(apiClient),
+      referralApi: new HttpReferralApi(apiClient),
     };
   }, []);
 

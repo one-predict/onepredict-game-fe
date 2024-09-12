@@ -6,3 +6,63 @@
   width: 100%;
   height: 100%;
 }
+
+.referralsSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.inviteFriendsCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid #8C8498;
+  border-radius: 12px;
+  padding: 16px;
+  background: radial-gradient(50% 50% at 70%, #351A55 0%, #190A31 100%);
+}
+
+.inviteFriendsButtonsContainer {
+  display: flex;
+  flex-direction: row;
+  column-gap: 8px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.copyButton {
+  width: 20%;
+
+  & > svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.referralsCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #8C849866;
+  border-radius: 12px;
+  min-height: 150px;
+  background: radial-gradient(50% 50% at 70%, #351A55 0%, #190A31 100%);
+  margin-top: 8px;
+  padding: 16px;
+}
+
+.yourFriendsLabeledContent {
+  margin-top: 24px;
+}
+
+.greenText {
+  color: #10C600;
+}
+
+.myReferralsLoader {
+  margin-top: 64px;
+}

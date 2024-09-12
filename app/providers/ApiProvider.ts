@@ -9,6 +9,7 @@ import { UserInventoryApi } from '@api/UserInventoryApi';
 import { TournamentDeckApi } from '@api/TournamentDeck';
 import { GameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
 import { CoinsPricingInfoApi } from '@api/CoinsPricingInfoApi';
+import { ReferralApi } from '@api/ReferralApi';
 
 export interface ApiProviderValue {
   authApi: AuthApi;
@@ -21,6 +22,7 @@ export interface ApiProviderValue {
   tournamentDeckApi: TournamentDeckApi;
   gameCardsMarketplaceApi: GameCardsMarketplaceApi;
   coinsPricingInfoApi: CoinsPricingInfoApi;
+  referralApi: ReferralApi;
 }
 
 export type Services =
@@ -33,7 +35,8 @@ export type Services =
   | UserInventoryApi
   | TournamentDeckApi
   | GameCardsMarketplaceApi
-  | CoinsPricingInfoApi;
+  | CoinsPricingInfoApi
+  | ReferralApi;
 
 const ApiContext = createContext<ApiProviderValue>({} as ApiProviderValue);
 
@@ -55,5 +58,6 @@ export const useUserInventoryApi = createServiceHook<UserInventoryApi>('userInve
 export const useGameCardsMarketplaceApi = createServiceHook<GameCardsMarketplaceApi>('gameCardsMarketplaceApi');
 export const useTournamentDeckApi = createServiceHook<TournamentDeckApi>('tournamentDeckApi');
 export const useCoinsPricingInfoApi = createServiceHook<CoinsPricingInfoApi>('coinsPricingInfoApi');
+export const useReferralApi = createServiceHook<ReferralApi>('referralApi');
 
 export const ApiProvider = ApiContext.Provider;
