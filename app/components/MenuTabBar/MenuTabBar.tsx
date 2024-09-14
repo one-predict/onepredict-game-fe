@@ -65,7 +65,7 @@ const MenuTabBar = ({ className }: MenuTabProps) => {
             onClick={() => navigate(item.link)}
           >
             {item.icon}
-            <Typography className={styles.menuSectionTitle} variant="body2" key={index}>
+            <Typography className={styles.menuSectionTitle} color="gray" variant="body2" key={index}>
               {item.title}
             </Typography>
           </div>

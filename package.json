@@ -1,5 +1,5 @@
 {
-  "name": "aipick-game-fe",
+  "name": "one-predict-fe",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -10,6 +10,7 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "dependencies": {
+    "@lueton/react-sparklines": "^2.0.0",
     "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/drawing_utils": "^0.3.1675466124",
     "@mediapipe/hands": "^0.4.1675469240",
@@ -30,7 +31,8 @@
     "react-collapse": "^5.1.1",
     "react-dom": "18.3.0-canary-ea17cc18f-20230807",
     "react-toastify": "^10.0.5",
-    "react-webcam": "^7.2.0"
+    "react-webcam": "^7.2.0",
+    "use-resize-observer": "^9.1.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.11.0",

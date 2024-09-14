@@ -19,6 +19,7 @@ import { HttpTournamentDeckApi } from '@api/TournamentDeck';
 import { HttpGameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
 import { HttpCoinsPricingInfoApi } from '@api/CoinsPricingInfoApi';
 import { HttpReferralApi } from '@api/ReferralApi';
+import { HttpCoinsHistoryApi } from '@api/CoinsHistoryApi';
 import { PageLayoutWithMenu } from '@components/Layouts';
 import LoadingScreen from '@components/LoadingScreen';
 import AuthorizedSection from '@components/AuthorizedSection';
@@ -40,7 +41,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>AiPick Game</title>
+        <title>OnePredict Telegram Game</title>
         <Meta />
         <Links />
       </head>
@@ -100,6 +101,7 @@ const App = () => {
       gameCardsMarketplaceApi: new HttpGameCardsMarketplaceApi(apiClient),
       coinsPricingInfoApi: new HttpCoinsPricingInfoApi(apiClient),
       referralApi: new HttpReferralApi(apiClient),
+      coinsHistoryApi: new HttpCoinsHistoryApi(apiClient),
     };
   }, []);
 

@@ -1,8 +1,16 @@
 .tokensCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tokensGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   width: 100%;
+
 }
 
 .token {
@@ -11,11 +19,23 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid #8C8498;
-  border-radius: 12px;
-  background-color: #FFFFFF1A;
-  box-sizing: border-box;
+  background-color: transparent;
+  perspective: 1000px;
   aspect-ratio: 1/1;
+}
+
+.tokenInnerWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flippedTokenInnerWrapper {
+  @extend .tokenInnerWrapper;
+
+  transform: rotateY(180deg);
 }
 
 .directionButton {
@@ -116,11 +136,18 @@
   }
 }
 
-.tokenImage {
+.tokenFrontImage {
   width: 48%;
   aspect-ratio: 1/1;
   border-radius: 50%;
   margin-bottom: 4px;
+}
+
+.tokenBackImage {
+  @extend .tokenFrontImage;
+
+  width: 20%;
+  margin-top: 8px;
 }
 
 .tokenInformation {
@@ -137,10 +164,39 @@
   text-transform: uppercase;
 }
 
-.selectedToken {
+.tokenSide {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border: 1px solid #8C8498;
+  border-radius: 12px;
+  background-color: #FFFFFF1A;
+}
+
+.tokenBack {
+  @extend .tokenSide;
+
+  justify-content: flex-start;
+  transform: rotateY(180deg);
+  overflow: hidden;
+}
+
+.tokenFront {
+  @extend .tokenSide;
+}
+
+.selectedTokenFront {
+  @extend .tokenFront;
+
   border: 0;
 
-  .tokenImage {
+  .tokenFrontImage {
     width: 24%;
     aspect-ratio: 1/1;
   }
@@ -163,4 +219,29 @@
     line-height: 0.75rem;
     border-radius: 100px;
   }
+}
+
+.pricingSwitch {
+  position: absolute;
+  top: -32px;
+  right: 0;
+}
+
+.sparklinesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 40%;
+  width: 100%;
+  padding-bottom: 2px;
+}
+
+.coinsHistoryPeriodInformation {
+  position: absolute;
+  top: -24px;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  column-gap: 4px;
 }

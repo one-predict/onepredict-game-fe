@@ -10,6 +10,7 @@ import ColoredPoints from '@components/ColoredPoints';
 import ExpandIcon from '@assets/icons/expand.svg?react';
 import CrossIcon from '@assets/icons/cross.svg?react';
 import styles from './FinishedTokensOfferCard.module.scss';
+import { getDateFromUnixTimestamp } from '@utils/date';
 
 export interface FinishedTokensOfferCardProps {
   offer: TokensOffer;
@@ -27,7 +28,7 @@ const getNoResultsText = (portfolio: Portfolio | null) => {
 const FinishedTokensOfferCard = ({ offer, portfolio }: FinishedTokensOfferCardProps) => {
   const [expanded, setExpanded] = useState<boolean>(false);
 
-  const formattedDate = dayjs(offer.date).format('YYYY-MM-DD');
+  const formattedDate = dayjs(getDateFromUnixTimestamp(offer.timestamp)).format('YYYY-MM-DD HH:mm');
 
   return (
     <div

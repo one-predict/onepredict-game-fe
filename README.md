@@ -1,1 +1,1 @@
-# Aipick Game Frontend
+# OnePredict Telegram Game Frontend
