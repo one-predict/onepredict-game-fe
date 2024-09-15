@@ -10,6 +10,7 @@ export interface Portfolio {
   selectedTokens: PortfolioSelectedToken[];
   appliedCardsStack: Record<string, number>;
   tournamentId: string | null;
+  points: number;
   earnedCoins: number;
   isAwarded: boolean;
 }

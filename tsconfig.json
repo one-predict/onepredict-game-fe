@@ -31,7 +31,8 @@
       "@enums/*": ["./app/enums/*"],
       "@components/*": ["./app/components/*"],
       "@tap-video-game/*": ["./app/tap-video-game/*"],
-      "@utils/*": ["./app/utils/*"]
+      "@utils/*": ["./app/utils/*"],
+      "@constants/*": ["./app/constants/*"]
     },
     // Vite takes care of building everything, not tsc.
     "noEmit": true

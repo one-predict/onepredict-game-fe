@@ -6,5 +6,5 @@ export const generateReferralLink = (userId: string) => {
 };
 
 export const generateShareLink = (userId: string) => {
-  return `https://t.me/share/url?url=${generateReferralLink(userId)}&text=${encodeURIComponent('Try to beat my score in AiPick!')}`;
+  return `https://t.me/share/url?url=${generateReferralLink(userId)}&text=${encodeURIComponent('Try to beat my score in OnePredict!')}`;
 };

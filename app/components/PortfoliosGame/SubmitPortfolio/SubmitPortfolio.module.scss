@@ -7,14 +7,20 @@
   margin-top: 16px;
 }
 
+.submitButton {
+  position: fixed;
+  bottom: 100px;
+  width: calc(100% - 32px);
+}
+
 .offerAvailabilityInfo {
   margin-top: 16px;
 }
 
 .chooseTokensCard {
-  margin: 48px 0 24px;
+  margin: 48px 0 72px;
 }
 
 .submitPortfolioDescription {
-  width: 238px;
+  margin-bottom: 8px;
 }

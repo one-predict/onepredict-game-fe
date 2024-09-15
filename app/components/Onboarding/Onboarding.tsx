@@ -48,7 +48,7 @@ const Onboarding = ({ onBoardingComplete }: OnboardingProps) => {
   return (
     <div className={styles.onboarding}>
       <div className={styles.onboardingPanel}>
-        <img className={styles.coinImage} src="/images/aipick-coin.png" alt="Aipick Logo" />
+        <img className={styles.coinImage} src="/images/token.png" alt="Logo" />
         <Typography variant="body2" color="primary" onClick={onBoardingComplete}>
           Skip
         </Typography>

@@ -1,10 +1,11 @@
 import { OnboardingSlideData } from './OnboardingSlide';
+import { TOKEN_NAME } from '@constants/token';
 
 const onboardingSlides: OnboardingSlideData[] = [
   {
     title: 'Create your portfolio',
     description: `Select 6 tokens you believe will perform well in the next 24 hours. 
-Track their performance and earn AiPick points every day!`,
+Track their performance and earn ${TOKEN_NAME} every day!`,
     image: {
       src: '/images/onboarding/onboarding-1.png',
       height: 300,
@@ -13,7 +14,7 @@ Track their performance and earn AiPick points every day!`,
   },
   {
     title: 'Apply for Tournaments',
-    description: `Compete in thrilling tournaments and climb the ranks. Win maximum AiPick from the prize pool.`,
+    description: `Compete in thrilling tournaments and climb the ranks. Win maximum ${TOKEN_NAME} from the prize pool.`,
     image: {
       src: '/images/onboarding/onboarding-2.png',
       height: 300,

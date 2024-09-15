@@ -14,6 +14,7 @@ import Loader from '@components/Loader';
 import LabeledContent from '@components/LabeledContent';
 import CopyIcon from '@assets/icons/copy.svg?react';
 import { generateReferralLink, generateShareLink } from '@app/utils/telegram';
+import { TOKEN_NAME } from '@constants/token';
 import styles from './rewards.module.scss';
 
 type RewardsCategory = 'tasks' | 'referrals';
@@ -99,7 +100,7 @@ const RewardsPage = () => {
             <Typography variant="subtitle2" color="gray">
               Your friend and you will get{' '}
               <Typography variant="subtitle2" tag="span" color="green">
-                500 AIP
+                500 {TOKEN_NAME}
               </Typography>
               .
             </Typography>

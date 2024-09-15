@@ -9,8 +9,9 @@ import PortfolioCard from '@components/PortfoliosGame/PortfolioCard';
 import ColoredPoints from '@components/ColoredPoints';
 import ExpandIcon from '@assets/icons/expand.svg?react';
 import CrossIcon from '@assets/icons/cross.svg?react';
-import styles from './FinishedTokensOfferCard.module.scss';
 import { getDateFromUnixTimestamp } from '@utils/date';
+import styles from './FinishedTokensOfferCard.module.scss';
+import CoinsDisplay from '@components/CoinsDisplay';
 
 export interface FinishedTokensOfferCardProps {
   offer: TokensOffer;
@@ -44,9 +45,16 @@ const FinishedTokensOfferCard = ({ offer, portfolio }: FinishedTokensOfferCardPr
       <Typography className={styles.offerDate} variant="subtitle2">
         {formattedDate}
       </Typography>
-      {portfolio && portfolio.isAwarded && portfolio.earnedCoins ? (
+      {portfolio && portfolio.isAwarded ? (
         <>
-          <ColoredPoints points={portfolio.earnedCoins} />
+          <div className={styles.prizeSection}>
+            <ColoredPoints points={portfolio.points} />
+            <CoinsDisplay
+              containerClassName={styles.earnedCoinsDisplay}
+              postfix="earned."
+              coins={portfolio.earnedCoins}
+            />
+          </div>
           <Collapse theme={{ collapse: styles.collapseContainer, content: styles.collapseContent }} isOpened={expanded}>
             <PortfolioCard portfolio={portfolio} />
           </Collapse>

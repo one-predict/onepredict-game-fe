@@ -1,15 +1,21 @@
+import clsx from 'clsx';
 import Typography, { TypographyProps } from '@components/Typography';
 import styles from './CoinsDisplay.module.scss';
 
 export interface CoinsDisplayProps extends TypographyProps {
   coins: number;
+  postfix?: string;
+  containerClassName?: string;
 }
 
-const CoinsDisplay = ({ coins, ...typographyProps }: CoinsDisplayProps) => {
+const CoinsDisplay = ({ containerClassName, coins, postfix, ...typographyProps }: CoinsDisplayProps) => {
   return (
-    <div className={styles.priceSection}>
-      <img src="/images/mini-aipick-coin.png" alt="mini-aipick-coin" />
-      <Typography {...typographyProps}>{coins}</Typography>
+    <div className={clsx(styles.coinsDisplay, containerClassName)}>
+      <img src="/images/token.png" alt="token-image" />
+      <Typography {...typographyProps}>
+        {coins}
+        {postfix ? ` ${postfix}` : ''}
+      </Typography>
     </div>
   );
 };

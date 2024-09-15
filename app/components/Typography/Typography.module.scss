@@ -18,6 +18,10 @@
   color: #10C600;
 }
 
+.color-red {
+  color: #D60000;
+}
+
 .color-gradient1 {
   background: linear-gradient(to right, #2CD8D5 0%, #6B8DD6 48%, #8E37D7 100%);
   -webkit-background-clip: text;
@@ -90,4 +94,8 @@
 .variant-body2 {
   font-size: 0.875rem;
   font-weight: 400;
+}
+
+.uppercase {
+  text-transform: uppercase;
 }

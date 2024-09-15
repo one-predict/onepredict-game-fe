@@ -32,6 +32,16 @@
   width: 100%;
 }
 
+.prizeSection {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+}
+
+.earnedCoinsDisplay {
+  margin-bottom: 2px;
+}
+
 .toggleIconContainer {
   position: absolute;
   right: 16px;

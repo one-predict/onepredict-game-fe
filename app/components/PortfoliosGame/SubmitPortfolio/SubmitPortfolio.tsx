@@ -60,10 +60,18 @@ const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfoli
   return (
     <div className={styles.submitPortfolioContainer}>
       <Typography color="gradient1" variant="h1">
-        Make your choice
+        Pick {MAX_TOKENS_PER_PORTFOLIO} Tokens
       </Typography>
       <Typography alignment="center" className={styles.submitPortfolioDescription} variant="body1">
-        Choose {MAX_TOKENS_PER_PORTFOLIO} coins you want to add to your portfolio
+        Select if token will go{' '}
+        <Typography color="green" uppercase tag="span">
+          Up
+        </Typography>{' '}
+        or{' '}
+        <Typography uppercase color="red" tag="span">
+          Down
+        </Typography>
+        !
       </Typography>
       <TimeRemaining unixTimestamp={offer.timestamp}>
         {({ remainingDays, remainingHours, remainingMinutes }) => {
@@ -82,13 +90,15 @@ const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfoli
         onTokenDirectionSelect={handleTokenDirectionSelect}
         coinsHistoricalRecords={coinsHistoricalRecords}
       />
-      <SubmitButton
-        disabled={selectedTokens.length !== MAX_TOKENS_PER_PORTFOLIO}
-        onClick={() => onSubmit(offer.id, selectedTokens)}
-        loading={isSubmitInProgress}
-      >
-        Submit
-      </SubmitButton>
+      {selectedTokens.length === MAX_TOKENS_PER_PORTFOLIO && (
+        <SubmitButton
+          className={styles.submitButton}
+          onClick={() => onSubmit(offer.id, selectedTokens)}
+          loading={isSubmitInProgress}
+        >
+          Submit
+        </SubmitButton>
+      )}
     </div>
   );
 };

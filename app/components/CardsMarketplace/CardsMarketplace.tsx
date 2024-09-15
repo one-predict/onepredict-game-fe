@@ -2,6 +2,7 @@ import { GameCard } from '@api/GameCardApi';
 import Typography from '@components/Typography';
 import GameCardsGrid from '@components/GameCardsGrid';
 import Loader from '@components/Loader';
+import CoinsDisplay from '@components/CoinsDisplay';
 import styles from './CardsMarketplace.module.scss';
 
 export interface CardsMarketplaceProps {
@@ -28,12 +29,7 @@ const CardsMarketplace = ({ gameCards, purchasedCardsPool, onCardClick, classNam
               Purchased
             </Typography>
           ) : (
-            <>
-              <img src="/images/mini-aipick-coin.png" alt="mini-aipick-coin" />
-              <Typography variant="h5" color="primary">
-                {card.price}
-              </Typography>
-            </>
+            <CoinsDisplay coins={card.price} />
           )}
         </div>
       )}
