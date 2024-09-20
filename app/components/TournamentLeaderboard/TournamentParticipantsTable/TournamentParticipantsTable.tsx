@@ -9,16 +9,16 @@ export interface TournamentParticipantsTableProps {
 
 const TOURNAMENTS_TABLE_CELLS = [
   {
+    title: 'Rank',
+    width: 20,
+  },
+  {
     title: 'Username',
-    width: 40,
+    width: 60,
   },
   {
     title: 'Points',
-    width: 35,
-  },
-  {
-    title: 'Rank',
-    width: 25,
+    width: 20,
   },
 ];
 
@@ -40,6 +40,7 @@ const TournamentParticipantsTable = ({ className, rankedParticipants }: Tourname
       cells={TOURNAMENTS_TABLE_CELLS}
       items={rankedParticipants}
       renderRow={renderRow}
+      withoutTableHead={true}
     />
   );
 };
