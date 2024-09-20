@@ -1,6 +1,7 @@
 import Typography from '@components/Typography';
 import TournamentParticipantsTable from './TournamentParticipantsTable';
 import styles from './TournamentLeaderboard.module.scss';
+import TournamentWinners from './TournamentWinners';
 
 export interface TournamentLeaderboardProps {
   rankedParticipants: Array<{
@@ -18,7 +19,10 @@ const TournamentLeaderboard = ({ rankedParticipants }: TournamentLeaderboardProp
         Leaderboard
       </Typography>
       {rankedParticipants.length ? (
-        <TournamentParticipantsTable className={styles.participantsTable} rankedParticipants={rankedParticipants} />
+        <>
+          <TournamentWinners rankedParticipants={rankedParticipants}></TournamentWinners>
+          <TournamentParticipantsTable className={styles.participantsTable} rankedParticipants={rankedParticipants} />
+        </>
       ) : (
         <Typography className={styles.noParticipantsText} alignment="center" color="gradient2" variant="h4">
           No participants yet!
