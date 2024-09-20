@@ -32,7 +32,7 @@ const Button = ({ children, disabled, className, onClick, loading }: ButtonProps
       onClick={handleButtonClick}
       disabled={disabled}
     >
-      {loading ? <ButtonLoader /> : children}
+      <span>{loading ? <ButtonLoader /> : children}</span>
     </button>
   );
 };

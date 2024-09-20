@@ -4,9 +4,9 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  background: linear-gradient(111.04deg, #22B2B0 0%, #5873B5 47.26%, #742AAE 98.45%);
-  border: 1px solid #8C8498;
-  box-shadow: 0 4px 10px 0 #8B46AB99;
+  background: linear-gradient(111.04deg, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
+  border: none;
+  box-shadow: 0 4px 16px 0 #8B46AB66;
   border-radius: 12px;
   color: #FFFFFF;
   padding: 4px 10px;
@@ -19,17 +19,49 @@
   text-transform: uppercase;
 
   &:not(:disabled):hover {
-    background: linear-gradient(111.04deg, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
-  }
-
-  &:focus-visible, &:focus {
-    border: 1px solid #FFFFFF;
+    &::after {
+      width: 100%;
+    }
   }
 
   &:disabled {
     cursor: default;
     opacity: 40%;
+    box-shadow: none;
   }
+
+  & > span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    z-index: 1;
+  }
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  left: 1px;
+  background: linear-gradient(90.82deg, #3E7D7F 0.53%, #565F7F 48.02%, #614380 99.47%);
+  border-radius: 12px;
+}
+
+.button:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(111.04deg, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
+  transition: width 0.4s ease;
+  border-radius: 12px;
+  z-index: 0;
 }
 
 .loadingButton {
