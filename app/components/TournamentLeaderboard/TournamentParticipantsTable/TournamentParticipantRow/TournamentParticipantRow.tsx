@@ -16,9 +16,7 @@ const TournamentParticipantRow = ({ rowCellWidthConfig, participant, index }: To
     <TableRow cellWidthConfig={rowCellWidthConfig}>
       <TableBodyCell
         className={styles.prizePlace}
-        beforeOverflowedContent={
-          <CupIcon className={styles.cupIcon} />
-        }
+        beforeOverflowedContent={<CupIcon className={styles.cupIcon} />}
         overflowed
       >
         {index + 1}
@@ -38,9 +36,7 @@ const TournamentParticipantRow = ({ rowCellWidthConfig, participant, index }: To
       </TableBodyCell>
       <TableBodyCell
         className={styles.pointsText}
-        beforeOverflowedContent={
-          <img src={"/images/token.png"} className={styles.pointsImg}></img>
-        }
+        beforeOverflowedContent={<img src={'/images/token.png'} className={styles.pointsImg}></img>}
         overflowed
       >
         {

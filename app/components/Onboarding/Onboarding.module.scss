@@ -9,9 +9,12 @@
 .onboardingPanel {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   height: 80px;
   padding: 8px 16px 16px 8px;
+}
+
+.skipButton {
+  margin-left: auto;
 }
 
 .sliderContainer {
