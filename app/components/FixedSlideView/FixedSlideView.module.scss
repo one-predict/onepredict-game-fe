@@ -16,6 +16,13 @@ $pageMenuSize: 77px;
   transition: transform 0.5s;
 }
 
+.fullScreenFixedSlideView {
+  top: 0;
+  height: 100%;
+  transform: translateY(100%);
+  z-index: 100000;
+}
+
 .visibleFixedSlideView {
   @extend .fixedSlideView;
 

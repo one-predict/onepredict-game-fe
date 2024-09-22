@@ -1,13 +1,13 @@
 import { ImgHTMLAttributes } from 'react';
 import clsx from 'clsx';
 import { tokensLogoConfigMapMap } from '@app/data/tokens';
-import styles from './TokenImage.module.scss';
+import styles from './PortfolioGameTokenImage.module.scss';
 
-export interface TokenImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'alt'> {
+export interface PortfolioGameTokenImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'alt'> {
   token: string;
 }
 
-const TokenImage = ({ token, className, ...restProps }: TokenImageProps) => {
+const PortfolioGameTokenImage = ({ token, className, ...restProps }: PortfolioGameTokenImageProps) => {
   const { image, backgroundColor } = tokensLogoConfigMapMap[token];
 
   const tokenImageClassname = clsx(
@@ -21,4 +21,4 @@ const TokenImage = ({ token, className, ...restProps }: TokenImageProps) => {
   return <img className={tokenImageClassname} src={image} alt={`${token} token`} {...restProps} />;
 };
 
-export default TokenImage;
+export default PortfolioGameTokenImage;

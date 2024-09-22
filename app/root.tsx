@@ -20,12 +20,12 @@ import { HttpGameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
 import { HttpCoinsPricingInfoApi } from '@api/CoinsPricingInfoApi';
 import { HttpReferralApi } from '@api/ReferralApi';
 import { HttpCoinsHistoryApi } from '@api/CoinsHistoryApi';
+import { HttpRewardsNotificationApi } from '@api/RewardsNotificationApi';
 import { PageLayoutWithMenu } from '@components/Layouts';
 import LoadingScreen from '@components/LoadingScreen';
 import AuthorizedSection from '@components/AuthorizedSection';
-import OnboardedSection from '@components/OnboardedSection';
+import AppInitializer from '@components/AppInitializer';
 import TelegramInit from '@components/TelegramInit';
-import { SessionProvider } from '@providers/SessionProvider';
 
 import './styles/global.css';
 import './styles/fonts.css';
@@ -57,7 +57,7 @@ export function Layout({ children }: { children: ReactNode }) {
 export function HydrateFallback() {
   return (
     <>
-      <LoadingScreen />
+      <LoadingScreen progress={0} />
     </>
   );
 }
@@ -102,6 +102,7 @@ const App = () => {
       coinsPricingInfoApi: new HttpCoinsPricingInfoApi(apiClient),
       referralApi: new HttpReferralApi(apiClient),
       coinsHistoryApi: new HttpCoinsHistoryApi(apiClient),
+      rewardsNotificationApi: new HttpRewardsNotificationApi(apiClient),
     };
   }, []);
 
@@ -111,13 +112,11 @@ const App = () => {
         <TelegramInit />
         <QueryClientProvider client={queryClient}>
           <ApiProvider value={services}>
-            <SessionProvider>
+            <AppInitializer>
               <AuthorizedSection>
-                <OnboardedSection>
-                  <PageLayoutWithMenu background={pageBackground}>
-                    <Outlet />
-                  </PageLayoutWithMenu>
-                </OnboardedSection>
+                <PageLayoutWithMenu background={pageBackground}>
+                  <Outlet />
+                </PageLayoutWithMenu>
               </AuthorizedSection>
               <ToastContainer
                 pauseOnFocusLoss={false}
@@ -126,7 +125,7 @@ const App = () => {
                 toastStyle={{ zIndex: 1000000 }}
                 position="top-right"
               />
-            </SessionProvider>
+            </AppInitializer>
           </ApiProvider>
         </QueryClientProvider>
       </SDKProvider>

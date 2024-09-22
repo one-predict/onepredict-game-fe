@@ -8,9 +8,10 @@ export interface FixedSlideProps {
   visible: boolean;
   children: ReactNode;
   height?: number;
+  fullScreen?: boolean;
 }
 
-const FixedSlideView = ({ children, visible }: FixedSlideProps) => {
+const FixedSlideView = ({ children, fullScreen, visible }: FixedSlideProps) => {
   const [cachedChildren, onTransitionEnd] = useCacheForTransition(visible ? children : null);
 
   useEffect(() => {
@@ -29,7 +30,10 @@ const FixedSlideView = ({ children, visible }: FixedSlideProps) => {
     <Portal>
       <div
         onTransitionEnd={onTransitionEnd}
-        className={clsx(styles.fixedSlideView, visible && styles.visibleFixedSlideView)}
+        className={clsx(styles.fixedSlideView, {
+          [styles.fullScreenFixedSlideView]: fullScreen,
+          [styles.visibleFixedSlideView]: visible,
+        })}
       >
         {cachedChildren}
       </div>

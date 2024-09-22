@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Typography, { TypographyProps } from '@components/Typography';
+import OurTokenImage from '@components/OurTokenImage';
 import styles from './CoinsDisplay.module.scss';
 
 export interface CoinsDisplayProps extends TypographyProps {
@@ -11,7 +12,7 @@ export interface CoinsDisplayProps extends TypographyProps {
 const CoinsDisplay = ({ containerClassName, coins, postfix, ...typographyProps }: CoinsDisplayProps) => {
   return (
     <div className={clsx(styles.coinsDisplay, containerClassName)}>
-      <img src="/images/token.png" alt="token-image" />
+      <OurTokenImage />
       <Typography {...typographyProps}>
         {coins}
         {postfix ? ` ${postfix}` : ''}

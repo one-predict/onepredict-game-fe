@@ -11,6 +11,7 @@ import { GameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
 import { CoinsPricingInfoApi } from '@api/CoinsPricingInfoApi';
 import { ReferralApi } from '@api/ReferralApi';
 import { CoinsHistoryApi } from '@api/CoinsHistoryApi';
+import { RewardsNotificationApi } from '@api/RewardsNotificationApi';
 
 export interface ApiProviderValue {
   authApi: AuthApi;
@@ -25,6 +26,7 @@ export interface ApiProviderValue {
   coinsPricingInfoApi: CoinsPricingInfoApi;
   referralApi: ReferralApi;
   coinsHistoryApi: CoinsHistoryApi;
+  rewardsNotificationApi: RewardsNotificationApi;
 }
 
 export type Services =
@@ -39,7 +41,8 @@ export type Services =
   | GameCardsMarketplaceApi
   | CoinsPricingInfoApi
   | ReferralApi
-  | CoinsHistoryApi;
+  | CoinsHistoryApi
+  | RewardsNotificationApi;
 
 const ApiContext = createContext<ApiProviderValue>({} as ApiProviderValue);
 
@@ -63,5 +66,6 @@ export const useTournamentDeckApi = createServiceHook<TournamentDeckApi>('tourna
 export const useCoinsPricingInfoApi = createServiceHook<CoinsPricingInfoApi>('coinsPricingInfoApi');
 export const useCoinsHistoryApi = createServiceHook<CoinsHistoryApi>('coinsHistoryApi');
 export const useReferralApi = createServiceHook<ReferralApi>('referralApi');
+export const useRewardsNotificationApi = createServiceHook<RewardsNotificationApi>('rewardsNotificationApi');
 
 export const ApiProvider = ApiContext.Provider;

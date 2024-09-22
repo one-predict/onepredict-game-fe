@@ -1,0 +1,14 @@
+.loader {
+  width: 100%;
+  height: 30px;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px 0 #8B46AB;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(111.04deg, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
+  border-radius: 20px;
+  transition: width 0.5s;
+}

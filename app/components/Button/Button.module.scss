@@ -17,6 +17,7 @@
   font-weight: 500;
   box-sizing: border-box;
   text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
 
   &:not(:disabled):hover {
     &::after {
@@ -62,6 +63,10 @@
   transition: width 0.4s ease;
   border-radius: 12px;
   z-index: 0;
+}
+
+.button-large {
+  min-height: 40px;
 }
 
 .loadingButton {

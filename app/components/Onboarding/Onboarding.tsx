@@ -3,6 +3,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import OnboardingSlide from './OnboardingSlide';
 import OnboardingNextButton from './OnboardingNextButton';
 import Typography from '@components/Typography';
+import OurTokenImage from '@components/OurTokenImage';
 import slides from './slides';
 import styles from './Onboarding.module.scss';
 
@@ -48,7 +49,7 @@ const Onboarding = ({ onBoardingComplete }: OnboardingProps) => {
   return (
     <div className={styles.onboarding}>
       <div className={styles.onboardingPanel}>
-        <img className={styles.coinImage} src="/images/token.png" alt="Logo" />
+        <OurTokenImage className={styles.tokenImage} />
         <Typography variant="body2" color="primary" onClick={onBoardingComplete}>
           Skip
         </Typography>

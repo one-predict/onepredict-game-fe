@@ -5,7 +5,7 @@ import { CoinsHistoricalRecord } from '@api/CoinsHistoryApi';
 import { TokenDirection } from '@api/TokensOfferApi';
 import { PortfolioSelectedToken } from '@api/PortfolioApi';
 import useCoinsSparklinePoints from '@hooks/useCoinsSparklinePoints';
-import TokenImage from '@components/TokenImage';
+import PortfolioGameTokenImage from '@components/PortfoliosGame/PortfolioGameTokenImage';
 import ColoredPoints from '@components/ColoredPoints';
 import Typography from '@components/Typography';
 import TokenPointsSparkline from '@components/TokenPointsSparkline';
@@ -63,7 +63,7 @@ const TokensCard = ({
           </div>
         )}
         <div onClick={() => onTokenClick?.(token)} className={styles.tokenInformation}>
-          <TokenImage className={styles.tokenFrontImage} token={token} />
+          <PortfolioGameTokenImage className={styles.tokenFrontImage} token={token} />
           {token}
         </div>
         {isTokenSelected && (
@@ -96,7 +96,7 @@ const TokensCard = ({
 
     return (
       <div className={styles.tokenBack}>
-        <TokenImage className={styles.tokenBackImage} token={token} />
+        <PortfolioGameTokenImage className={styles.tokenBackImage} token={token} />
         <Typography variant="subtitle2" color="primary">
           {_.upperCase(token)}
         </Typography>

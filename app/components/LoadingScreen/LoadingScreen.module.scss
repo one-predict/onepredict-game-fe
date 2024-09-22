@@ -1,37 +1,3 @@
-@keyframes loaderSpin {
-  0%, 100% {
-    box-shadow: .2em 0 0 0 currentcolor;
-  }
-
-  12% {
-    box-shadow: .2em .2em 0 0 currentcolor;
-  }
-
-  25% {
-    box-shadow: 0 .2em 0 0 currentcolor;
-  }
-
-  37% {
-    box-shadow: -.2em .2em 0 0 currentcolor;
-  }
-
-  50% {
-    box-shadow: -.2em 0 0 0 currentcolor;
-  }
-
-  62% {
-    box-shadow: -.2em -.2em 0 0 currentcolor;
-  }
-
-  75% {
-    box-shadow: 0px -.2em 0 0 currentcolor;
-  }
-
-  87% {
-    box-shadow: .2em -.2em 0 0 currentcolor;
-  }
-}
-
 @keyframes background-animation {
   0% {
     background-position: 0 50%;
@@ -55,8 +21,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, #190A31 0%, #2C1345 50%, rgba(25, 10, 49, 0.8) 100%);
   overflow: auto;
+  padding: 32px;
 }
 
 .logoImage {
@@ -64,41 +30,15 @@
 }
 
 .loader {
-  transform: rotateZ(45deg);
-  perspective: 1000px;
-  border-radius: 50%;
-  width: 150px;
-  height: 150px;
-  color: #FFFFFF;
-  margin-top: -80px;
-}
-
-.loader::before,
-.loader::after {
-  content: '';
-  color: #2CD8D5;
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: inherit;
-  height: inherit;
-  border-radius: 50%;
-  transform: rotateX(70deg);
-  animation: 1s loaderSpin linear infinite;
-}
-
-.loader::after {
-  color: #742AAE;
-  transform: rotateY(70deg);
-  animation-delay: .4s;
+  margin-top: 8px;
 }
 
 .loadingTypography {
   font-weight: bold;
-  background: linear-gradient(270deg, #FFFFFF, #6B8DD6, #742AAE);
+  background: linear-gradient(270deg, #FFFFFF, #6B8DD6, #2CD8D5);
   background-size: 600%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: background-animation 3s ease infinite;
+  margin-top: -60px;
 }

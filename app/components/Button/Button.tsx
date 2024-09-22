@@ -3,15 +3,18 @@ import clsx from 'clsx';
 import ButtonLoader from './ButtonLoader';
 import styles from './Button.module.scss';
 
+export type ButtonSize = 'default' | 'large';
+
 export interface ButtonProps {
   className?: string;
   children?: React.ReactNode;
   disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   loading?: boolean;
+  size?: ButtonSize;
 }
 
-const Button = ({ children, disabled, className, onClick, loading }: ButtonProps) => {
+const Button = ({ children, disabled, className, onClick, loading, size }: ButtonProps) => {
   const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (loading || disabled) {
       return;
@@ -27,6 +30,7 @@ const Button = ({ children, disabled, className, onClick, loading }: ButtonProps
         {
           [styles.loadingButton]: loading,
         },
+        styles[`button-${size}`],
         className,
       )}
       onClick={handleButtonClick}
