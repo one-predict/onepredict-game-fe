@@ -1,0 +1,44 @@
+.questInfoTag {
+  display: flex;
+  width: fit-content;
+  height: 25px;
+  padding: 4.5px 8px;
+}
+
+.moderationQuestInfoTag {
+  @extend .questInfoTag;
+
+  background: linear-gradient(111.04deg, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
+}
+
+.inProgressWithEndDateQuestInfoTag {
+  @extend .questInfoTag;
+
+  background: linear-gradient(111.04deg, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
+}
+
+.waitingForClaimQuestInfoTag {
+  @extend .questInfoTag;
+
+  background: linear-gradient(111.04deg, rgba(255, 223, 0, 1) 0%, rgba(255, 178, 0, 1) 47.26%, rgba(255, 153, 0, 1) 98.45%);
+
+  & > svg {
+    fill: #000000;
+  }
+}
+
+.completedQuestInfoTag {
+  @extend .questInfoTag;
+
+  background: linear-gradient(90deg, #0FD850 0%, #F9F047 100%);
+
+  & > svg {
+    stroke: #000000;
+  }
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}

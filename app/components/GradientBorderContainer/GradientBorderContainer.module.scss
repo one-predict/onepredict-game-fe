@@ -1,0 +1,24 @@
+.gradientBorderContainer {
+  position: relative;
+  background: linear-gradient(111.04deg, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
+  border: none;
+
+  & > .gradientBorderInnerContainer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+}
+
+.gradientBorderContainer::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  left: 1px;
+  background-color: #190A31;
+}

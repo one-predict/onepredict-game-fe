@@ -7,12 +7,19 @@ export interface CoinsDisplayProps extends TypographyProps {
   coins: number;
   postfix?: string;
   containerClassName?: string;
+  tokenImageClassName?: string;
 }
 
-const CoinsDisplay = ({ containerClassName, coins, postfix, ...typographyProps }: CoinsDisplayProps) => {
+const CoinsDisplay = ({
+  containerClassName,
+  coins,
+  postfix,
+  tokenImageClassName,
+  ...typographyProps
+}: CoinsDisplayProps) => {
   return (
     <div className={clsx(styles.coinsDisplay, containerClassName)}>
-      <OurTokenImage />
+      <OurTokenImage className={clsx(styles.tokenImage, tokenImageClassName)} />
       <Typography {...typographyProps}>
         {coins}
         {postfix ? ` ${postfix}` : ''}

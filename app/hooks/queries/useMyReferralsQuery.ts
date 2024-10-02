@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useReferralApi } from '@providers/ApiProvider';
 
-const useMyReferrals = () => {
+const useMyReferralsQuery = () => {
   const referralApi = useReferralApi();
 
   return useQuery({
@@ -10,4 +10,4 @@ const useMyReferrals = () => {
   });
 };
 
-export default useMyReferrals;
+export default useMyReferralsQuery;

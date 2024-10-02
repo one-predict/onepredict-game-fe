@@ -19,7 +19,7 @@ const useJoinTournamentMutation = () => {
         await queryClient.invalidateQueries({ queryKey: ['tournament-decks', { tournamentId, my: true }] }),
       ]);
 
-      toast(`You have successfully joined the tournament!`);
+      toast.success(`You have successfully joined the tournament!`);
     },
     [queryClient],
   );

@@ -1,4 +1,3 @@
-import Table from '@components/Table';
 import { TournamentParticipant } from '@api/TournamentApi';
 import TournamentWinner from './TournamentWinner';
 import styles from './TournamentWinners.module.scss';
@@ -8,7 +7,7 @@ export interface TournamentParticipantsTableProps {
   rankedParticipants: Array<TournamentParticipant>;
 }
 
-const TournamentWinners = ({ className, rankedParticipants }: TournamentParticipantsTableProps) => {
+const TournamentWinners = ({ rankedParticipants }: TournamentParticipantsTableProps) => {
   return (
     <div className={styles.winnersContainer}>
       <TournamentWinner participant={rankedParticipants[1]} placeNumber={2} />

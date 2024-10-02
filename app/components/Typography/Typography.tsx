@@ -4,7 +4,16 @@ import styles from './Typography.module.scss';
 
 export type TypographyTag = 'p' | 'span' | 'div' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 export type TypographyVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subtitle1' | 'subtitle2' | 'body1' | 'body2';
-export type TypographyColor = 'primary' | 'secondary' | 'gradient1' | 'gradient2' | 'gray' | 'yellow' | 'green' | 'red';
+export type TypographyColor =
+  | 'primary'
+  | 'secondary'
+  | 'gradient1'
+  | 'gradient2'
+  | 'gray'
+  | 'yellow'
+  | 'green'
+  | 'red'
+  | 'black';
 export type TypographyAlignment = 'left' | 'center' | 'right';
 
 export interface TypographyProps {

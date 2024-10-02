@@ -21,6 +21,7 @@ import { HttpCoinsPricingInfoApi } from '@api/CoinsPricingInfoApi';
 import { HttpReferralApi } from '@api/ReferralApi';
 import { HttpCoinsHistoryApi } from '@api/CoinsHistoryApi';
 import { HttpRewardsNotificationApi } from '@api/RewardsNotificationApi';
+import { HttpQuestApi } from '@api/QuestApi';
 import { PageLayoutWithMenu } from '@components/Layouts';
 import LoadingScreen from '@components/LoadingScreen';
 import AuthorizedSection from '@components/AuthorizedSection';
@@ -103,6 +104,7 @@ const App = () => {
       referralApi: new HttpReferralApi(apiClient),
       coinsHistoryApi: new HttpCoinsHistoryApi(apiClient),
       rewardsNotificationApi: new HttpRewardsNotificationApi(apiClient),
+      questApi: new HttpQuestApi(apiClient),
     };
   }, []);
 

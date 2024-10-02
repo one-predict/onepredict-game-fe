@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useCoinsHistoryApi } from '@providers/ApiProvider';
 import CoinsHistoricalRecordsPeriod from '@enums/CoinsHistoricalRecordsPeriod';
 
-const useLatestCompletedCoinsHistory = (period = CoinsHistoricalRecordsPeriod.TwentyFourHours) => {
+const useLatestCompletedCoinsHistoryQuery = (period = CoinsHistoricalRecordsPeriod.TwentyFourHours) => {
   const coinsHistoryApi = useCoinsHistoryApi();
 
   return useQuery({
@@ -15,4 +15,4 @@ const useLatestCompletedCoinsHistory = (period = CoinsHistoricalRecordsPeriod.Tw
   });
 };
 
-export default useLatestCompletedCoinsHistory;
+export default useLatestCompletedCoinsHistoryQuery;

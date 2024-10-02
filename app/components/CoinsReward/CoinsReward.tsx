@@ -2,7 +2,7 @@ import Button from '@components/Button';
 import Typography from '@components/Typography';
 import OurTokenImage from '@components/OurTokenImage';
 import { TOKEN_NAME } from '@constants/token';
-import styles from './TokensReward.module.scss';
+import styles from './CoinsReward.module.scss';
 
 export interface CoinsRewardProps {
   count: number;

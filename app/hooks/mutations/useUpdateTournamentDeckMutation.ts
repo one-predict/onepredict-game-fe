@@ -13,7 +13,7 @@ const useUpdateTournamentDeckMutation = () => {
     async (updatedDeck: TournamentDeck) => {
       queryClient.setQueryData(['tournament-decks', { tournamentId: updatedDeck.tournamentId, my: true }], updatedDeck);
 
-      toast(`Your deck has been successfully updated.`);
+      toast.success(`Your deck has been successfully updated.`);
     },
     [queryClient],
   );

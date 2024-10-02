@@ -1,20 +1,22 @@
 import { useState } from 'react';
-import _ from 'lodash';
-import { toast } from 'react-toastify';
-import { useUtils as useTelegramUtils } from '@telegram-apps/sdk-react';
+import { Quest, QuestProgress } from '@api/QuestApi';
 import AppSection from '@enums/AppSection';
-import useMyReferrals from '@hooks/queries/useMyReferrals';
+import useGroupQuestsByStatus from '@hooks/useGroupQuestsByStatus';
+import useMyReferralsQuery from '@hooks/queries/useMyReferralsQuery';
+import useQuestsQuery from '@hooks/queries/useQuestsQuery';
+import useVerifyQuestMutation from '@hooks/mutations/useVerifyQuestMutation';
+import useClaimQuestRewardsMutation from '@hooks/mutations/useClaimQuestRewardsMutation';
+import useStartQuestMutation from '@hooks/mutations/useStartQuestMutation';
 import Typography from '@components/Typography';
 import ButtonsToggle from '@components/ButtonsToggle';
 import PageBody from '@components/PageBody';
-import Button from '@app/components/Button';
 import useSession from '@app/hooks/useSession';
 import ReferralsTable from '@components/ReferralsTable';
 import Loader from '@components/Loader';
 import LabeledContent from '@components/LabeledContent';
-import CopyIcon from '@assets/icons/copy.svg?react';
-import { generateReferralLink, generateShareLink } from '@app/utils/telegram';
-import { TOKEN_NAME } from '@constants/token';
+import QuestsList from '@components/QuestsList';
+import QuestDetailsPopup from '@components/QuestDetailsPopup';
+import InviteFriendsCard from '@components/InviteFriendsCard';
 import styles from './rewards.module.scss';
 
 type RewardsCategory = 'tasks' | 'referrals';
@@ -29,28 +31,53 @@ export const handle = {
 
 const RewardsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<RewardsCategory>('tasks');
+
+  const [questToViewDetails, setQuestToViewDetails] = useState<Quest | null>(null);
+
   const currentUser = useSession();
 
-  const { data: myReferrals } = useMyReferrals();
+  const { data: myReferrals } = useMyReferralsQuery();
+  const { data: allQuests } = useQuestsQuery();
 
-  const telegramUtils = useTelegramUtils(true);
+  const { completedQuests, availableQuests } = useGroupQuestsByStatus(allQuests);
 
-  const handleCopyButtonClick = () => {
-    if (!currentUser) {
-      return;
-    }
+  const { mutateAsync: verifyQuest, status: questVerificationStatus } = useVerifyQuestMutation();
+  const { mutateAsync: claimQuestRewards, status: claimQuestRewardsStatus } = useClaimQuestRewardsMutation();
+  const { mutateAsync: startQuest } = useStartQuestMutation();
 
-    navigator.clipboard.writeText(generateReferralLink(currentUser.id));
+  const showQuestViewDetailsPopup = (quest: Quest) => setQuestToViewDetails(quest);
+  const hideQuestViewDetailsPopup = () => setQuestToViewDetails(null);
 
-    toast('Link copied!');
+  const updateQuestToViewDetailsProgress = (questId: string, updatedQuestProgress: QuestProgress) => {
+    setQuestToViewDetails((previousQuest) => {
+      if (!previousQuest) {
+        return null;
+      }
+
+      return previousQuest.id === questId ? { ...previousQuest, progressState: updatedQuestProgress } : previousQuest;
+    });
   };
 
-  const handleInviteButtonClick = () => {
-    if (!currentUser) {
+  const handleVerifyQuest = async (quest: Quest) => {
+    const updatedQuestProgress = await verifyQuest(quest.id);
+
+    updateQuestToViewDetailsProgress(quest.id, updatedQuestProgress);
+  };
+
+  const handleClaimQuestRewards = async (quest: Quest) => {
+    await claimQuestRewards(quest.id);
+
+    setQuestToViewDetails(null);
+  };
+
+  const handleStartQuest = async (quest: Quest) => {
+    if (quest.progressState) {
       return;
     }
 
-    telegramUtils.openTelegramLink(generateShareLink(currentUser.id));
+    const updatedQuestProgress = await startQuest(quest.id);
+
+    updateQuestToViewDetailsProgress(quest.id, updatedQuestProgress);
   };
 
   const renderReferralsCard = () => {
@@ -71,8 +98,49 @@ const RewardsPage = () => {
     );
   };
 
+  const renderTasksCategory = (category: string, quests: Quest[]) => {
+    return (
+      <div className={styles.tasksCategoryContainer}>
+        <Typography color="secondary" variant="subtitle2">
+          {category}
+        </Typography>
+        <QuestsList quests={quests} noQuestsMessage="No tasks here..." onViewQuest={showQuestViewDetailsPopup} />
+      </div>
+    );
+  };
+
+  const renderTasksSection = () => {
+    if (!allQuests) {
+      return <Loader centered />;
+    }
+
+    return (
+      <div className={styles.tasksSection}>
+        {renderTasksCategory('Available Tasks', availableQuests)}
+        {renderTasksCategory('Completed', completedQuests)}
+      </div>
+    );
+  };
+
+  const renderReferralsSection = () => {
+    return (
+      <div className={styles.referralsSection}>
+        <InviteFriendsCard currentUserId={currentUser?.id} />
+        {myReferrals && (
+          <LabeledContent className={styles.yourFriendsLabeledContent} row title="Your friends:">
+            <Typography>{myReferrals?.length}</Typography>
+          </LabeledContent>
+        )}
+        {renderReferralsCard()}
+      </div>
+    );
+  };
+
   return (
     <PageBody>
+      <Typography className={styles.pageTitle} uppercase alignment="center" variant="h1" color="gradient1">
+        Complete tasks <br /> and get rewards!
+      </Typography>
       <ButtonsToggle
         onSwitch={(category) => setSelectedCategory(category as RewardsCategory)}
         toggles={[
@@ -87,47 +155,17 @@ const RewardsPage = () => {
         ]}
         selectedId={selectedCategory}
       />
-      {selectedCategory === 'tasks' ? (
-        <div className={styles.comingSoonSection}>
-          <Typography variant="h2">{_.capitalize(selectedCategory)} are coming soon!</Typography>
-        </div>
-      ) : (
-        <div className={styles.referralsSection}>
-          <div className={styles.inviteFriendsCard}>
-            <Typography variant="h1" color="gradient1">
-              Invite Friends
-            </Typography>
-            <Typography variant="subtitle2" color="gray">
-              Your friend and you will get{' '}
-              <Typography variant="subtitle2" tag="span" color="green">
-                500 {TOKEN_NAME}
-              </Typography>
-              .
-            </Typography>
-            <Typography variant="subtitle2" color="gray">
-              Get{' '}
-              <Typography variant="subtitle2" tag="span" color="green">
-                10%
-              </Typography>{' '}
-              from your friends coins income.
-            </Typography>
-            <div className={styles.inviteFriendsButtonsContainer}>
-              <Button onClick={handleInviteButtonClick} disabled={!currentUser}>
-                Invite Friend
-              </Button>
-              <Button onClick={handleCopyButtonClick} className={styles.copyButton}>
-                <CopyIcon />
-              </Button>
-            </div>
-          </div>
-          {myReferrals && (
-            <LabeledContent className={styles.yourFriendsLabeledContent} row title="Your friends:">
-              <Typography>{myReferrals?.length}</Typography>
-            </LabeledContent>
-          )}
-          {renderReferralsCard()}
-        </div>
-      )}
+      {selectedCategory === 'tasks' ? renderTasksSection() : renderReferralsSection()}
+      <QuestDetailsPopup
+        isOpen={!!questToViewDetails}
+        quest={questToViewDetails}
+        onVerify={handleVerifyQuest}
+        onClaimReward={handleClaimQuestRewards}
+        onStart={handleStartQuest}
+        onClose={hideQuestViewDetailsPopup}
+        isVerificationInProgress={questVerificationStatus === 'pending'}
+        isRewardClaimingInProgress={claimQuestRewardsStatus === 'pending'}
+      />
     </PageBody>
   );
 };

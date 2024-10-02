@@ -1,7 +1,7 @@
 import { TournamentParticipant } from '@api/TournamentApi';
 import UserAvatar from '@app/components/UserAvatar';
-import styles from './TournamentWinner.module.scss';
 import Typography from '@app/components/Typography';
+import styles from './TournamentWinner.module.scss';
 
 export interface TournamentWinnerProps {
   className?: string;
@@ -10,7 +10,7 @@ export interface TournamentWinnerProps {
   placeNumber: number;
 }
 
-const TournamentWinner = ({ className, participant, isFirstPlace, placeNumber }: TournamentWinnerProps) => {
+const TournamentWinner = ({ participant, isFirstPlace, placeNumber }: TournamentWinnerProps) => {
   const getPlace = () => {
     if (isFirstPlace) {
       return (

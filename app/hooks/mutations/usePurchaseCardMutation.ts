@@ -15,7 +15,7 @@ const usePurchaseCardMutation = () => {
       queryClient.invalidateQueries({ queryKey: ['current-user'] }),
     ]);
 
-    toast(`You have successfully purchased the card!`);
+    toast.success(`You have successfully purchased the card!`);
   }, [queryClient]);
 
   return useMutation<void, DefaultError, GameCardId>({

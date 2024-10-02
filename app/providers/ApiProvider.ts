@@ -12,6 +12,7 @@ import { CoinsPricingInfoApi } from '@api/CoinsPricingInfoApi';
 import { ReferralApi } from '@api/ReferralApi';
 import { CoinsHistoryApi } from '@api/CoinsHistoryApi';
 import { RewardsNotificationApi } from '@api/RewardsNotificationApi';
+import { QuestApi } from '@api/QuestApi';
 
 export interface ApiProviderValue {
   authApi: AuthApi;
@@ -27,6 +28,7 @@ export interface ApiProviderValue {
   referralApi: ReferralApi;
   coinsHistoryApi: CoinsHistoryApi;
   rewardsNotificationApi: RewardsNotificationApi;
+  questApi: QuestApi;
 }
 
 export type Services =
@@ -42,7 +44,8 @@ export type Services =
   | CoinsPricingInfoApi
   | ReferralApi
   | CoinsHistoryApi
-  | RewardsNotificationApi;
+  | RewardsNotificationApi
+  | QuestApi;
 
 const ApiContext = createContext<ApiProviderValue>({} as ApiProviderValue);
 
@@ -67,5 +70,6 @@ export const useCoinsPricingInfoApi = createServiceHook<CoinsPricingInfoApi>('co
 export const useCoinsHistoryApi = createServiceHook<CoinsHistoryApi>('coinsHistoryApi');
 export const useReferralApi = createServiceHook<ReferralApi>('referralApi');
 export const useRewardsNotificationApi = createServiceHook<RewardsNotificationApi>('rewardsNotificationApi');
+export const useQuestApi = createServiceHook<QuestApi>('questApi');
 
 export const ApiProvider = ApiContext.Provider;

@@ -23,7 +23,7 @@ const useApplyCardsToPortfolioMutation = () => {
 
       await Promise.all(promises);
 
-      toast('Cards have been successfully applied to the portfolio.');
+      toast.success('Cards have been successfully applied to the portfolio.');
     },
     [queryClient],
   );

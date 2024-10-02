@@ -9,11 +9,12 @@ export interface PopupProps {
   onClose: () => void;
   children: ReactNode;
   height?: number;
+  contentClassName?: string;
 }
 
 const DEFAULT_POPUP_HEIGHT = 85;
 
-const Popup = ({ height = DEFAULT_POPUP_HEIGHT, children, isOpen, onClose }: PopupProps) => {
+const Popup = ({ height = DEFAULT_POPUP_HEIGHT, children, isOpen, onClose, contentClassName }: PopupProps) => {
   const [cachedChildren, onTransitionEnd] = useCacheForTransition(isOpen ? children : null);
 
   useEffect(() => {
@@ -30,13 +31,14 @@ const Popup = ({ height = DEFAULT_POPUP_HEIGHT, children, isOpen, onClose }: Pop
 
   return (
     <Portal>
+      {isOpen && <div onClick={onClose} className={styles.backdrop}></div>}
       <div
         onTransitionEnd={onTransitionEnd}
         style={{ height: `${height}%` }}
         className={clsx(styles.popup, isOpen && styles.visiblePopup)}
       >
         <div onClick={onClose} className={styles.crossIcon}></div>
-        <div className={styles.popupContent}>{cachedChildren}</div>
+        <div className={clsx(styles.popupContent, contentClassName)}>{cachedChildren}</div>
       </div>
     </Portal>
   );

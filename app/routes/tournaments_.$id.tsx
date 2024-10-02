@@ -12,7 +12,7 @@ import useTournamentLeaderboardQuery from '@hooks/queries/useTournamentLeaderboa
 import useTournamentStatus from '@hooks/useTournamentStatus';
 import useSession from '@hooks/useSession';
 import useMyInventoryQuery from '@hooks/queries/useMyInventoryQuery';
-import useMyTournamentDeck from '@hooks/queries/useMyTournamentDeck';
+import useMyTournamentDeckQuery from '@hooks/queries/useMyTournamentDeckQuery';
 import useGameCardsByIdsQuery from '@hooks/queries/useGameCardsByIdsQuery';
 import useUpdateTournamentDeckMutation from '@hooks/mutations/useUpdateTournamentDeckMutation';
 import useTokensOffersSeriesQuery from '@hooks/queries/useTokensOffersSeriesQuery';
@@ -60,7 +60,7 @@ const TournamentPage = () => {
   const { data: tournamentParticipationRank } = useTournamentParticipationRankQuery(tournament?.id || '');
   const { data: tournamentLeaderboard } = useTournamentLeaderboardQuery(tournament?.id || '');
   const { data: myInventory } = useMyInventoryQuery();
-  const { data: tournamentDeck } = useMyTournamentDeck(tournamentId || '');
+  const { data: tournamentDeck } = useMyTournamentDeckQuery(tournamentId || '');
   const { data: myCards } = useGameCardsByIdsQuery(myInventory?.purchasedCardIds || []);
 
   const myCardsPool = useMemo(() => (myCards ? _.keyBy(myCards, 'id') : undefined), [myCards]);

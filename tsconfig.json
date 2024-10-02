@@ -31,7 +31,8 @@
       "@enums/*": ["./app/enums/*"],
       "@components/*": ["./app/components/*"],
       "@utils/*": ["./app/utils/*"],
-      "@constants/*": ["./app/constants/*"]
+      "@constants/*": ["./app/constants/*"],
+      "@types/*": ["./app/types/*"]
     },
     // Vite takes care of building everything, not tsc.
     "noEmit": true

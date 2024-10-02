@@ -1,0 +1,45 @@
+.questListItem {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 12px;
+  -webkit-tap-highlight-color: transparent;
+
+  &::after {
+    border-radius: 12px;
+  }
+}
+
+.questListItemInnerContainer {
+  position: relative;
+  padding: 16px 16px 24px;
+}
+
+.questListItemContent {
+  width: calc(100% - 110px);
+}
+
+.questListItemTitle {
+  margin-bottom: 8px;
+}
+
+.questImage {
+  width: 60px;
+  height: 60px;
+  margin-right: 12px;
+}
+
+.chevronIcon {
+  position: absolute;
+  top: 16px;
+  right: 21px;
+}
+
+.questInfoTag {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-top-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}

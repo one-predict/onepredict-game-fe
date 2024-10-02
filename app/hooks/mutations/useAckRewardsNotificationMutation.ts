@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { RewardsNotification } from '@api/RewardsNotificationApi';
+import { AnyRewardsNotification } from '@api/RewardsNotificationApi';
 import { useRewardsNotificationApi } from '@providers/ApiProvider';
 
 const useAckRewardsNotificationMutation = () => {
@@ -11,11 +11,11 @@ const useAckRewardsNotificationMutation = () => {
 
   const handleMutate = useCallback(
     async (id: string) => {
-      queryClient.setQueryData(['rewards-notifications', { my: true }], (notifications: RewardsNotification[]) => {
+      queryClient.setQueryData(['rewards-notifications', { my: true }], (notifications: AnyRewardsNotification[]) => {
         return notifications.filter((notification) => notification.id !== id);
       });
 
-      toast('Your rewards have been claimed!');
+      toast.success('Your rewards have been claimed!');
     },
     [queryClient],
   );

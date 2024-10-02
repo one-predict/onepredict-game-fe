@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTournamentDeckApi } from '@providers/ApiProvider';
 
-const useMyTournamentDeck = (tournamentId: string) => {
+const useMyTournamentDeckQuery = (tournamentId: string) => {
   const tournamentDeckApi = useTournamentDeckApi();
 
   return useQuery({
@@ -10,4 +10,4 @@ const useMyTournamentDeck = (tournamentId: string) => {
   });
 };
 
-export default useMyTournamentDeck;
+export default useMyTournamentDeckQuery;

@@ -1,7 +1,7 @@
 import { AnyRewardsNotification } from '@api/RewardsNotificationApi';
 import RewardNotificationType from '@enums/RewardNotificationType';
 import { PageLayout } from '@components/Layouts';
-import CoinsReward from '@components/TokensReward';
+import CoinsReward from '@components/CoinsReward';
 import styles from './RewardsNotification.module.scss';
 
 export interface RewardsNotificationProps {

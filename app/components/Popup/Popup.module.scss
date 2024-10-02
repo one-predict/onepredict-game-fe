@@ -1,3 +1,14 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(2px);
+  z-index: 999;
+  opacity: 1;
+}
+
 .popup {
   position: fixed;
   bottom: 0;
@@ -36,8 +47,7 @@
   right: 12px;
   width: 24px;
   height: 24px;
-  border: 1px solid #ffffff;
-  border-radius: 50%;
+  z-index: 1001;
 }
 
 .crossIcon::before,
@@ -46,8 +56,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 50%;
-  height: 2px;
+  width: 80%;
+  height: 1px;
   background-color: #FFFFFF;
   transform-origin: center;
 }

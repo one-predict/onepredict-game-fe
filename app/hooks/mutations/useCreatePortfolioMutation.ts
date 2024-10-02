@@ -12,7 +12,7 @@ const useCreatePortfolioMutation = () => {
   const handleMutationSuccess = useCallback(async () => {
     await queryClient.invalidateQueries({ queryKey: ['portfolios'] });
 
-    toast(`Your portfolio has been successfully created.`);
+    toast.success(`Your portfolio has been successfully created.`);
   }, [queryClient]);
 
   return useMutation<Portfolio, DefaultError, CreatePortfolioParams>({

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { TokensOffer, TokenDirection } from '@api/TokensOfferApi';
 import { PortfolioSelectedToken } from '@api/PortfolioApi';
-import useLatestCompletedCoinsHistory from '@hooks/queries/useLatestCompletedCoinsHistory';
+import useLatestCompletedCoinsHistoryQuery from '@hooks/queries/useLatestCompletedCoinsHistoryQuery';
 import { SubmitButton } from '@components/Button';
 import Typography from '@components/Typography';
 import TokensCard from '@components/PortfoliosGame/TokensCard';
@@ -19,7 +19,7 @@ const MAX_TOKENS_PER_PORTFOLIO = 6;
 const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfolioProps) => {
   const [selectedTokens, setSelectedTokens] = useState<PortfolioSelectedToken[]>([]);
 
-  const { data: coinsHistoricalRecords } = useLatestCompletedCoinsHistory();
+  const { data: coinsHistoricalRecords } = useLatestCompletedCoinsHistoryQuery();
 
   const handleTokenClick = useCallback(
     (token: string) => {
