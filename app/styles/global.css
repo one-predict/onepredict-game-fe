@@ -43,3 +43,7 @@ button {
   width: 100%;
   max-width: unset;
 }
+
+.ReactCollapse--collapse {
+  transition: height 500ms;
+}

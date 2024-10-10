@@ -17,21 +17,23 @@ import { HttpGameCardApi } from '@api/GameCardApi';
 import { HttpUserInventoryApi } from '@api/UserInventoryApi';
 import { HttpTournamentDeckApi } from '@api/TournamentDeck';
 import { HttpGameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
-import { HttpCoinsPricingInfoApi } from '@api/CoinsPricingInfoApi';
 import { HttpReferralApi } from '@api/ReferralApi';
-import { HttpCoinsHistoryApi } from '@api/CoinsHistoryApi';
+import { HttpDigitalAssetsPricesSnapshotApi } from '@api/DigitalAssetsPricesSnapshotApi';
 import { HttpRewardsNotificationApi } from '@api/RewardsNotificationApi';
 import { HttpQuestApi } from '@api/QuestApi';
+import { HttpUserPredictionChoiceApi } from '@api/PredictionChoiceApi';
+import { HttpPredictionGameRoundApi } from '@api/PredictionGameRoundApi';
+import { HttpPredictionStreakApi } from '@api/PredictionStreakApi';
 import { PageLayoutWithMenu } from '@components/Layouts';
 import LoadingScreen from '@components/LoadingScreen';
 import AuthorizedSection from '@components/AuthorizedSection';
 import AppInitializer from '@components/AppInitializer';
 import TelegramInit from '@components/TelegramInit';
+import ErrorBoundary from '@components/ErrorBoundary';
 
+import 'react-toastify/dist/ReactToastify.css';
 import './styles/global.css';
 import './styles/fonts.css';
-import 'react-toastify/dist/ReactToastify.css';
-import ErrorBoundary from '@components/ErrorBoundary';
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utcPlugin);
@@ -100,11 +102,13 @@ const App = () => {
       userInventoryApi: new HttpUserInventoryApi(apiClient),
       tournamentDeckApi: new HttpTournamentDeckApi(apiClient),
       gameCardsMarketplaceApi: new HttpGameCardsMarketplaceApi(apiClient),
-      coinsPricingInfoApi: new HttpCoinsPricingInfoApi(apiClient),
       referralApi: new HttpReferralApi(apiClient),
-      coinsHistoryApi: new HttpCoinsHistoryApi(apiClient),
+      digitalAssetsPricesSnapshotApi: new HttpDigitalAssetsPricesSnapshotApi(apiClient),
       rewardsNotificationApi: new HttpRewardsNotificationApi(apiClient),
       questApi: new HttpQuestApi(apiClient),
+      predictionChoiceApi: new HttpUserPredictionChoiceApi(apiClient),
+      predictionGameRoundApi: new HttpPredictionGameRoundApi(apiClient),
+      predictionStreakApi: new HttpPredictionStreakApi(apiClient),
     };
   }, []);
 

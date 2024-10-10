@@ -1,0 +1,29 @@
+.nextRoundSectionHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: fit-content;
+  column-gap: 8px;
+}
+
+.sectionInnerContainer {
+  row-gap: 0;
+}
+
+.digitalAssetsPricePredictionCard {
+  margin-top: 16px;
+}
+
+.streaksInfoContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 4px;
+}
+
+.submitButton {
+  margin-top: 16px  ;
+}
+
+.pricingSwitch {
+  top: -42px;
+}

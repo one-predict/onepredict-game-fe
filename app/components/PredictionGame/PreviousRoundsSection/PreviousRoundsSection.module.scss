@@ -1,0 +1,11 @@
+.chevronIcon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  transform: rotateZ(270deg);
+  transition: transform 500ms ease-in-out;
+}
+
+.rotatedChevronIcon {
+  transform: rotateZ(90deg);
+}

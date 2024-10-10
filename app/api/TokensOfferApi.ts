@@ -1,7 +1,5 @@
 import { ApiClient } from './ApiClient';
 
-export type TokenDirection = 'growth' | 'falling';
-
 export interface TokensOffer {
   id: string;
   durationInSeconds: number;

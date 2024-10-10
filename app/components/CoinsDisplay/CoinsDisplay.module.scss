@@ -10,3 +10,8 @@
   width: 24px;
   height: 24px;
 }
+
+.reversedCoinsDisplay {
+  display: flex;
+  flex-direction: row-reverse;
+}

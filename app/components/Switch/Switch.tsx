@@ -16,7 +16,7 @@ const Switch = ({ checked, label, className, onChange }: SwitchProps) => {
       <input checked={checked} onChange={onChange} type="checkbox" />
       <span className={styles.slider} />
       {label && (
-        <Typography color={checked ? 'primary' : 'gray'} tag="span" variant="subtitle1" className={styles.label}>
+        <Typography color={checked ? 'primary' : 'gray'} tag="span" variant="subtitle2" className={styles.label}>
           {label}
         </Typography>
       )}

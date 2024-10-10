@@ -1,0 +1,61 @@
+.pricePredictionView {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1/1;
+  border: 1px solid #8C8498;
+  background: #FFFFFF1A;
+  border-radius: 12px;
+}
+
+.correctResultPricePredictionView {
+  border: 1px solid #10C600;
+}
+
+.wrongResultPricePredictionView {
+  border: 1px solid #D60000;
+}
+
+.pricePredictionIconContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-bottom-left-radius: 12px;
+  border-top-right-radius: 12px;
+  background: #190A31;
+}
+
+.upPredictionChoice {
+  & > svg {
+    stroke: #10C600;
+    fill: #10C600;
+  }
+}
+
+.upArrowIcon {
+  stroke: #10C600;
+  fill: #10C600;
+  transform: rotateZ(180deg);
+}
+
+.downArrowIcon {
+  stroke: #D60000;
+  fill: #D60000;
+}
+
+.assetName {
+  margin-top: 4px;
+}
+
+.assetImage {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}

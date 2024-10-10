@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
 import { TokensOffer, TokenDirection } from '@api/TokensOfferApi';
 import { PortfolioSelectedToken } from '@api/PortfolioApi';
-import useLatestCompletedCoinsHistoryQuery from '@hooks/queries/useLatestCompletedCoinsHistoryQuery';
+import useDigitalAssetsPricesSnapshotsQuery from '@hooks/queries/useDigitalAssetsPricesSnapshotsQuery';
 import { SubmitButton } from '@components/Button';
 import Typography from '@components/Typography';
-import TokensCard from '@components/PortfoliosGame/TokensCard';
+import DigitalAssetsPricePredictionCard from '@components/DigitalAssetsPricePredictionCard';
 import TimeRemaining from '@components/TimeRemaining';
 import styles from './SubmitPortfolio.module.scss';
 
@@ -19,7 +19,7 @@ const MAX_TOKENS_PER_PORTFOLIO = 6;
 const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfolioProps) => {
   const [selectedTokens, setSelectedTokens] = useState<PortfolioSelectedToken[]>([]);
 
-  const { data: coinsHistoricalRecords } = useLatestCompletedCoinsHistoryQuery();
+  const { data: coinsHistoricalRecords } = useDigitalAssetsPricesSnapshotsQuery();
 
   const handleTokenClick = useCallback(
     (token: string) => {
@@ -82,7 +82,7 @@ const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfoli
           );
         }}
       </TimeRemaining>
-      <TokensCard
+      <DigitalAssetsPricePredictionCard
         className={styles.chooseTokensCard}
         availableTokens={offer.tokens}
         selectedTokens={selectedTokens}

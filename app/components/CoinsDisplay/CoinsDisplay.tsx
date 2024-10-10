@@ -8,6 +8,7 @@ export interface CoinsDisplayProps extends TypographyProps {
   postfix?: string;
   containerClassName?: string;
   tokenImageClassName?: string;
+  reversed?: boolean;
 }
 
 const CoinsDisplay = ({
@@ -15,10 +16,11 @@ const CoinsDisplay = ({
   coins,
   postfix,
   tokenImageClassName,
+  reversed,
   ...typographyProps
 }: CoinsDisplayProps) => {
   return (
-    <div className={clsx(styles.coinsDisplay, containerClassName)}>
+    <div className={clsx(styles.coinsDisplay, reversed && styles.reversedCoinsDisplay, containerClassName)}>
       <OurTokenImage className={clsx(styles.tokenImage, tokenImageClassName)} />
       <Typography {...typographyProps}>
         {coins}

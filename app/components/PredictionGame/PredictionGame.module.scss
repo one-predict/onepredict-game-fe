@@ -1,0 +1,22 @@
+
+.predictionGameContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.tokensCard {
+  margin-top: 16px;
+}
+
+.nextRoundHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tokenStreaksContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}

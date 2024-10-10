@@ -8,11 +8,13 @@ import { GameCardApi } from '@api/GameCardApi';
 import { UserInventoryApi } from '@api/UserInventoryApi';
 import { TournamentDeckApi } from '@api/TournamentDeck';
 import { GameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
-import { CoinsPricingInfoApi } from '@api/CoinsPricingInfoApi';
 import { ReferralApi } from '@api/ReferralApi';
-import { CoinsHistoryApi } from '@api/CoinsHistoryApi';
+import { DigitalAssetsPricesSnapshotApi } from '@api/DigitalAssetsPricesSnapshotApi';
 import { RewardsNotificationApi } from '@api/RewardsNotificationApi';
 import { QuestApi } from '@api/QuestApi';
+import { PredictionChoiceApi } from '@api/PredictionChoiceApi';
+import { PredictionGameRoundApi } from '@api/PredictionGameRoundApi';
+import { PredictionStreakApi } from '@api/PredictionStreakApi';
 
 export interface ApiProviderValue {
   authApi: AuthApi;
@@ -24,11 +26,13 @@ export interface ApiProviderValue {
   userInventoryApi: UserInventoryApi;
   tournamentDeckApi: TournamentDeckApi;
   gameCardsMarketplaceApi: GameCardsMarketplaceApi;
-  coinsPricingInfoApi: CoinsPricingInfoApi;
   referralApi: ReferralApi;
-  coinsHistoryApi: CoinsHistoryApi;
+  digitalAssetsPricesSnapshotApi: DigitalAssetsPricesSnapshotApi;
   rewardsNotificationApi: RewardsNotificationApi;
   questApi: QuestApi;
+  predictionChoiceApi: PredictionChoiceApi;
+  predictionGameRoundApi: PredictionGameRoundApi;
+  predictionStreakApi: PredictionStreakApi;
 }
 
 export type Services =
@@ -41,11 +45,13 @@ export type Services =
   | UserInventoryApi
   | TournamentDeckApi
   | GameCardsMarketplaceApi
-  | CoinsPricingInfoApi
   | ReferralApi
-  | CoinsHistoryApi
+  | DigitalAssetsPricesSnapshotApi
   | RewardsNotificationApi
-  | QuestApi;
+  | QuestApi
+  | PredictionChoiceApi
+  | PredictionGameRoundApi
+  | PredictionStreakApi;
 
 const ApiContext = createContext<ApiProviderValue>({} as ApiProviderValue);
 
@@ -66,10 +72,14 @@ export const useGameCardApi = createServiceHook<GameCardApi>('gameCardApi');
 export const useUserInventoryApi = createServiceHook<UserInventoryApi>('userInventoryApi');
 export const useGameCardsMarketplaceApi = createServiceHook<GameCardsMarketplaceApi>('gameCardsMarketplaceApi');
 export const useTournamentDeckApi = createServiceHook<TournamentDeckApi>('tournamentDeckApi');
-export const useCoinsPricingInfoApi = createServiceHook<CoinsPricingInfoApi>('coinsPricingInfoApi');
-export const useCoinsHistoryApi = createServiceHook<CoinsHistoryApi>('coinsHistoryApi');
+export const useDigitalAssetsPricesSnapshotApi = createServiceHook<DigitalAssetsPricesSnapshotApi>(
+  'digitalAssetsPricesSnapshotApi',
+);
 export const useReferralApi = createServiceHook<ReferralApi>('referralApi');
 export const useRewardsNotificationApi = createServiceHook<RewardsNotificationApi>('rewardsNotificationApi');
 export const useQuestApi = createServiceHook<QuestApi>('questApi');
+export const usePredictionChoiceApi = createServiceHook<PredictionChoiceApi>('predictionChoiceApi');
+export const usePredictionGameRoundApi = createServiceHook<PredictionGameRoundApi>('predictionGameRoundApi');
+export const usePredictionStreakApi = createServiceHook<PredictionStreakApi>('predictionStreakApi');
 
 export const ApiProvider = ApiContext.Provider;

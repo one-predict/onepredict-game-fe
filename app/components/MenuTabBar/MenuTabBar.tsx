@@ -22,7 +22,7 @@ export interface MenuTabProps {
 
 const sections: MenuSection[] = [
   {
-    title: 'Home',
+    title: 'Predict',
     icon: <HomeIcon />,
     link: '/',
     section: AppSection.Home,
@@ -65,7 +65,7 @@ const MenuTabBar = ({ className }: MenuTabProps) => {
             onClick={() => navigate(item.link)}
           >
             {item.icon}
-            <Typography className={styles.menuSectionTitle} color="gray" variant="body2" key={index}>
+            <Typography className={styles.menuSectionTitle} color="gray" variant="h6" key={index}>
               {item.title}
             </Typography>
           </div>

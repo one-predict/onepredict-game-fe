@@ -1,0 +1,14 @@
+.predictionGameSectionBorderWrapper {
+  border-radius: 12px;
+
+  &::after {
+    top: 4px;
+    border-radius: 12px;
+  }
+}
+
+.predictionGameSectionInnerContainer {
+  flex-direction: column !important;
+  padding: 16px;
+  row-gap: 16px;
+}
