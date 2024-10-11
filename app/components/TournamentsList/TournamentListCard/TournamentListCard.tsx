@@ -5,11 +5,14 @@ import TournamentAvailabilityInfo from '@components/TournamentAvailabilityInfo';
 import LabeledContent from '@components/LabeledContent';
 import CoinsDisplay from '@components/CoinsDisplay';
 import styles from './TournamentListCard.module.scss';
+import TimeRemaining from '@components/TimeRemaining';
 
 export interface TournamentListCardProps {
   tournament: Tournament;
   onViewDetailsClick: (tournament: Tournament) => void;
 }
+
+const REGISTRATION_ENDS_UPDATE_INTERVAL = 1000;
 
 const TournamentListCard = ({ tournament, onViewDetailsClick }: TournamentListCardProps) => {
   const prizePool = tournament.entryPrice * tournament.participantsCount + tournament.staticPrizePool;
@@ -35,6 +38,15 @@ const TournamentListCard = ({ tournament, onViewDetailsClick }: TournamentListCa
           <CoinsDisplay variant="body2" coins={tournament.entryPrice} />
         </LabeledContent>
       </div>
+      <TimeRemaining updateInterval={REGISTRATION_ENDS_UPDATE_INTERVAL} unixTimestamp={tournament.joinCloseTimestamp}>
+        {({ displayRemainingHours, displayRemainingMinutes, displayRemainingSeconds }) => {
+          return (
+            <Typography className={styles.registrationInfo} color="gray" variant="subtitle2">
+              Registration Ends in {displayRemainingHours}h, {displayRemainingMinutes}m, {displayRemainingSeconds}s
+            </Typography>
+          );
+        }}
+      </TimeRemaining>
       <Button className={styles.viewDetailsButton} onClick={() => onViewDetailsClick(tournament)}>
         View Details
       </Button>

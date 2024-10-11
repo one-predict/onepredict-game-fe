@@ -1,9 +1,5 @@
 .tournamentDetails {
   position: relative;
-  padding: 16px;
-  background-color: #08042D;
-  border: 2.5px solid #8C849866;
-  border-radius: 12px;
 }
 
 .tournamentAvailabilityInfo {
@@ -22,7 +18,7 @@
 .tournamentImage {
   position: absolute;
   top: 48px;
-  right: 24px;
+  right: 0;
   height: 94px;
   width: 94px;
 }
@@ -47,6 +43,15 @@
   display: flex;
   flex-direction: column;
   row-gap: 8px;
+  padding: 16px;
+  background-color: #190A31;
+  border: 2.5px solid #8C849866;
+  border-radius: 12px;
+  min-height: 400px;
+
+  & > div {
+    flex-grow: 1;
+  }
 }
 
 .actionButton {
@@ -77,11 +82,18 @@
   margin-top: 16px;
 }
 
-.participationInfo {
+.joinTournamentSection {
   display: flex;
   flex-direction: column;
   row-gap: 4px;
   margin-top: 24px;
+}
+
+.participationInfoContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+  row-gap: 16px;
 }
 
 .joinTournamentButton {
@@ -94,4 +106,8 @@
 .sectionLoader {
   width: 64px;
   height: 64px;
+}
+
+.tournamentStartNotification {
+  margin-top: 24px;
 }

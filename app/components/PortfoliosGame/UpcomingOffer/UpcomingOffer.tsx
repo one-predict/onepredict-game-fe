@@ -1,5 +1,6 @@
 import { TokensOffer } from '@api/TokensOfferApi';
-import { Portfolio, PortfolioSelectedToken } from '@api/PortfolioApi';
+import { Portfolio } from '@api/PortfolioApi';
+import DigitalAssetPricePrediction from '@types/DigitalAssetPricePrediction';
 import Typography from '@components/Typography';
 import TimeRemaining from '@components/TimeRemaining';
 import PortfolioCard from '@components/PortfoliosGame/PortfolioCard';
@@ -9,7 +10,7 @@ import styles from './UpcomingOffer.module.scss';
 export interface UpcomingOfferProps {
   upcomingOffer: TokensOffer;
   upcomingPortfolio: Portfolio | null;
-  onPortfolioSubmit: (offerId: string, selectedTokens: PortfolioSelectedToken[]) => void;
+  onPortfolioSubmit: (offerId: string, predictions: DigitalAssetPricePrediction[]) => void;
   onEditPortfolioCards?: (portfolio: Portfolio) => void;
   isPortfolioSubmitInProgress?: boolean;
 }

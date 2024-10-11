@@ -1,6 +1,8 @@
-import { useCallback, useState } from 'react';
-import { TokensOffer, TokenDirection } from '@api/TokensOfferApi';
-import { PortfolioSelectedToken } from '@api/PortfolioApi';
+import { useCallback, useMemo, useState } from 'react';
+import { TokensOffer } from '@api/TokensOfferApi';
+import DigitalAssetPricePrediction from '@types/DigitalAssetPricePrediction';
+import DigitalAssetId from '@enums/DigitalAssetId';
+import DigitalAssetPriceDirection from '@enums/DigitalAssetPriceDirection';
 import useDigitalAssetsPricesSnapshotsQuery from '@hooks/queries/useDigitalAssetsPricesSnapshotsQuery';
 import { SubmitButton } from '@components/Button';
 import Typography from '@components/Typography';
@@ -10,57 +12,72 @@ import styles from './SubmitPortfolio.module.scss';
 
 export interface SubmitPortfolioProps {
   offer: TokensOffer;
-  onSubmit: (offerId: string, selectedTokens: PortfolioSelectedToken[]) => void;
+  onSubmit: (offerId: string, predictions: DigitalAssetPricePrediction[]) => void;
   isSubmitInProgress?: boolean;
 }
 
-const MAX_TOKENS_PER_PORTFOLIO = 6;
+const MAX_PREDICTIONS_PER_PORTFOLIO = 6;
 
 const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfolioProps) => {
-  const [selectedTokens, setSelectedTokens] = useState<PortfolioSelectedToken[]>([]);
+  const [predictions, setPredictions] = useState<DigitalAssetPricePrediction[]>([]);
 
-  const { data: coinsHistoricalRecords } = useDigitalAssetsPricesSnapshotsQuery();
+  const { data: pricesSnapshots } = useDigitalAssetsPricesSnapshotsQuery();
 
-  const handleTokenClick = useCallback(
-    (token: string) => {
-      setSelectedTokens((previousSelectedTokens) => {
-        const hasToken = previousSelectedTokens.some((selectedToken) => selectedToken.id === token);
+  const { priceDirections, selectedAssets } = useMemo(() => {
+    return predictions.reduce(
+      (aggregation, prediction) => {
+        aggregation.priceDirections[prediction.assetId] = prediction.priceDirection;
+        aggregation.selectedAssets.push(prediction.assetId);
+
+        return aggregation;
+      },
+      {
+        selectedAssets: [] as DigitalAssetId[],
+        priceDirections: {} as Record<string, DigitalAssetPriceDirection>,
+      },
+    );
+  }, [predictions]);
+
+  const handleAssetClick = useCallback(
+    (assetId: DigitalAssetId) => {
+      setPredictions((previousPredictions) => {
+        const hasToken = previousPredictions.some((prediction) => prediction.assetId === assetId);
 
         if (hasToken) {
-          return previousSelectedTokens.filter((selectedToken) => selectedToken.id !== token);
+          return previousPredictions.filter((prediction) => prediction.assetId !== assetId);
         }
 
-        if (previousSelectedTokens.length >= MAX_TOKENS_PER_PORTFOLIO) {
-          const [, ...restTokens] = previousSelectedTokens;
+        if (previousPredictions.length >= MAX_PREDICTIONS_PER_PORTFOLIO) {
+          const [, ...restPredictions] = previousPredictions;
 
-          return [...restTokens, { id: token, direction: 'growth' }];
+          return [...restPredictions, { assetId, priceDirection: DigitalAssetPriceDirection.Up }];
         }
 
-        return [...previousSelectedTokens, { id: token, direction: 'growth' }];
+        return [...previousPredictions, { assetId, priceDirection: DigitalAssetPriceDirection.Up }];
       });
     },
-    [setSelectedTokens],
+    [setPredictions],
   );
 
-  const handleTokenDirectionSelect = useCallback(
-    (token: string, direction: TokenDirection) => {
-      setSelectedTokens((previousSelectedTokens) => {
-        return previousSelectedTokens.map((selectedToken) => {
-          if (selectedToken.id === token) {
-            return { ...selectedToken, direction };
+  const handleAssetPriceDirectionSelect = useCallback(
+    (assetId: string, priceDirection: DigitalAssetPriceDirection) => {
+      setPredictions((previousPredictions) => {
+        return previousPredictions.map((prediction) => {
+          if (prediction.assetId === assetId) {
+            return { ...prediction, priceDirection };
           }
 
-          return selectedToken;
+          return prediction;
         });
       });
     },
-    [setSelectedTokens],
+    [setPredictions],
   );
 
   return (
     <div className={styles.submitPortfolioContainer}>
       <Typography color="gradient1" variant="h1">
-        Pick {MAX_TOKENS_PER_PORTFOLIO} Tokens
+        Pick {MAX_PREDICTIONS_PER_PORTFOLIO} Tokens
       </Typography>
       <Typography alignment="center" className={styles.submitPortfolioDescription} variant="body1">
         Select if token will go{' '}
@@ -83,19 +100,16 @@ const SubmitPortfolio = ({ offer, onSubmit, isSubmitInProgress }: SubmitPortfoli
         }}
       </TimeRemaining>
       <DigitalAssetsPricePredictionCard
-        className={styles.chooseTokensCard}
-        availableTokens={offer.tokens}
-        selectedTokens={selectedTokens}
-        onTokenClick={handleTokenClick}
-        onTokenDirectionSelect={handleTokenDirectionSelect}
-        coinsHistoricalRecords={coinsHistoricalRecords}
+        className={styles.digitalAssetsPricePredictionCard}
+        availableAssets={offer.assets}
+        selectedAssets={selectedAssets}
+        onAssetClick={handleAssetClick}
+        onAssetPriceDirectionSelect={handleAssetPriceDirectionSelect}
+        priceDirections={priceDirections}
+        pricesSnapshots={pricesSnapshots}
       />
-      {selectedTokens.length === MAX_TOKENS_PER_PORTFOLIO && (
-        <SubmitButton
-          className={styles.submitButton}
-          onClick={() => onSubmit(offer.id, selectedTokens)}
-          loading={isSubmitInProgress}
-        >
+      {predictions.length === MAX_PREDICTIONS_PER_PORTFOLIO && (
+        <SubmitButton onClick={() => onSubmit(offer.id, predictions)} loading={isSubmitInProgress}>
           Submit
         </SubmitButton>
       )}

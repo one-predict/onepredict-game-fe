@@ -1,9 +1,9 @@
-import { UserInventory } from '@api/UserInventoryApi';
-import { TokensOffersSeries } from '@api/TokensOfferApi';
 import { Portfolio } from '@api/PortfolioApi';
 import { Tournament, TournamentLeaderboard, TournamentParticipation } from '@api/TournamentApi';
-import { TournamentDeck } from '@api/TournamentDeck';
+import { TokensOffersSeries } from '@api/TokensOfferApi';
+import DigitalAssetPricePrediction from "@types/DigitalAssetPricePrediction";
 import useTournamentStatus from '@hooks/useTournamentStatus';
+import { getCurrentUnixTimestamp } from '@utils/date';
 import Typography from '@components/Typography';
 import Button from '@components/Button';
 import TournamentLeaderboardComponent from '@components/TournamentLeaderboard';
@@ -11,69 +11,46 @@ import Loader from '@components/Loader';
 import LabeledContent from '@components/LabeledContent';
 import TournamentAvailabilityInfo from '@components/TournamentAvailabilityInfo';
 import CoinsDisplay from '@components/CoinsDisplay';
-import DeckIcon from '@assets/icons/deck.svg?react';
-import PortfolioIcon from '@assets/icons/portfolio.svg?react';
+import TimeRemaining from '@components/TimeRemaining';
+import PortfoliosGame from '@components/PortfoliosGame';
+import ColoredPoints from '@components/ColoredPoints';
 import styles from './TournamentDetails.module.scss';
 
 export interface TournamentDetailsProps {
   tournament: Tournament;
   tournamentParticipation: TournamentParticipation | null;
   tournamentLeaderboard: TournamentLeaderboard | undefined;
-  tournamentDeck: TournamentDeck | null | undefined;
-  tournamentOffersSeries: TokensOffersSeries | undefined;
   portfolios: Record<string, Portfolio> | undefined;
-  myInventory: UserInventory | undefined;
+  offersSeries: TokensOffersSeries | null;
   canJoinTournament?: boolean;
+  onPortfolioSubmit: (offerId: string, predictions: DigitalAssetPricePrediction[]) => void;
+  tournamentParticipationRank: number | null | undefined;
   isTournamentJoiningInProgress?: boolean;
-  onConfigureDeckButtonClick: () => void;
-  onPortfoliosButtonClick: () => void;
   onJoinTournamentButtonClick: () => void;
 }
+
+const REGISTRATION_ENDS_UPDATE_INTERVAL = 1000;
 
 const TournamentDetails = ({
   tournament,
   tournamentLeaderboard,
-  myInventory,
-  tournamentDeck,
   tournamentParticipation,
   tournamentOffersSeries,
   portfolios,
+  offersSeries,
+  tournamentParticipationRank,
   canJoinTournament,
+  onPortfolioSubmit,
   isTournamentJoiningInProgress,
   onJoinTournamentButtonClick,
-  onConfigureDeckButtonClick,
-  onPortfoliosButtonClick,
 }: TournamentDetailsProps) => {
   const tournamentStatus = useTournamentStatus(tournament);
 
-  const renderTournamentDeckSection = () => {
-    if (tournamentStatus !== 'upcoming' || tournamentDeck === null) {
-      return null;
-    }
-
-    if (tournamentDeck === undefined || myInventory === undefined) {
-      return <Loader className={styles.sectionLoader} centered />;
-    }
-
-    return (
-      <div className={styles.tournamentDeckSection}>
-        {myInventory.availableCardSlots > tournamentDeck.totalDeckSize && (
-          <Typography color="yellow" variant="body2">
-            You have {myInventory.availableCardSlots - tournamentDeck.totalDeckSize} free slots in your deck!
-          </Typography>
-        )}
-        <div onClick={onConfigureDeckButtonClick} className={styles.actionButton}>
-          <DeckIcon />
-          <Typography variant="h4" color="primary">
-            Configure Deck
-          </Typography>
-        </div>
-      </div>
-    );
-  };
+  const isRegistrationOpen =
+    tournamentStatus === 'live' && tournament.joinCloseTimestamp - getCurrentUnixTimestamp() > 0;
 
   const renderPortfoliosSection = () => {
-    if (tournamentStatus !== 'live') {
+    if (tournamentStatus !== 'live' || tournamentParticipation === null) {
       return null;
     }
 
@@ -81,21 +58,14 @@ const TournamentDetails = ({
       return <Loader className={styles.sectionLoader} centered />;
     }
 
-    const upcomingOffer = tournamentOffersSeries.next;
-
     return (
       <div className={styles.portfoliosSection}>
-        {upcomingOffer && !portfolios[upcomingOffer.id] && (
-          <Typography color="yellow" variant="body2">
-            You have an available portfolio to submit!
-          </Typography>
-        )}
-        <div onClick={onPortfoliosButtonClick} className={styles.actionButton}>
-          <PortfolioIcon />
-          <Typography variant="h4" color="primary">
-            Portfolios
-          </Typography>
-        </div>
+        <PortfoliosGame
+          offersSeries={offersSeries ?? null}
+          portfolios={portfolios ?? null}
+          onPortfolioSubmit={onPortfolioSubmit}
+          isPortfolioSubmitInProgress={false}
+        />
       </div>
     );
   };
@@ -112,6 +82,23 @@ const TournamentDetails = ({
     );
   };
 
+  const renderParticipationInfo = () => {
+    if (tournamentParticipation === undefined || tournamentParticipationRank === undefined) {
+      return null;
+    }
+
+    if (tournamentParticipation === null) {
+      return <Typography>—</Typography>;
+    }
+
+    return (
+      <>
+        <Typography variant="h1">{tournamentParticipationRank}</Typography>
+        <ColoredPoints points={tournamentParticipation.points} />
+      </>
+    );
+  };
+
   return (
     <div className={styles.tournamentDetails}>
       <TournamentAvailabilityInfo className={styles.tournamentAvailabilityInfo} tournament={tournament} />
@@ -122,11 +109,20 @@ const TournamentDetails = ({
         </Typography>
         <Typography variant="body2">{tournament.description}</Typography>
       </div>
-      {!tournamentParticipation && (
-        <div className={styles.participationInfo}>
-          <Typography color="gray" variant="subtitle2">
-            Your not a participant of tournament:
-          </Typography>
+      {!tournamentParticipation && isRegistrationOpen && (
+        <div className={styles.joinTournamentSection}>
+          <TimeRemaining
+            updateInterval={REGISTRATION_ENDS_UPDATE_INTERVAL}
+            unixTimestamp={tournament.joinCloseTimestamp}
+          >
+            {({ displayRemainingHours, displayRemainingMinutes, displayRemainingSeconds }) => {
+              return (
+                <Typography color="gray" variant="subtitle2">
+                  Registration Ends in {displayRemainingHours}h, {displayRemainingMinutes}m, {displayRemainingSeconds}s
+                </Typography>
+              );
+            }}
+          </TimeRemaining>
           <Button
             className={styles.joinTournamentButton}
             disabled={!canJoinTournament}
@@ -137,6 +133,9 @@ const TournamentDetails = ({
           </Button>
         </div>
       )}
+      <div className={styles.participationInfoContainer}>
+        <LabeledContent title="Your Rank">{renderParticipationInfo()}</LabeledContent>
+      </div>
       <div className={styles.tournamentPrizeInfo}>
         <LabeledContent title="Prize Pool">
           <CoinsDisplay
@@ -150,7 +149,6 @@ const TournamentDetails = ({
         </LabeledContent>
       </div>
       <div className={styles.detailsSections}>
-        {renderTournamentDeckSection()}
         {renderPortfoliosSection()}
         {renderLeaderboardSection()}
       </div>

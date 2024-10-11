@@ -9,7 +9,7 @@ import BoldArrowIcon from '@assets/icons/bold-arrow.svg?react';
 import styles from './DigitalAssetPricePredictionView.module.scss';
 
 export interface DigitalAssetPricePredictionViewProps {
-  priceChange: number | undefined;
+  priceChange?: number | null;
   prediction: DigitalAssetPricePrediction;
 }
 
@@ -19,7 +19,7 @@ const DigitalAssetPricePredictionView = ({ prediction, priceChange }: DigitalAss
   const arrowIconClassName =
     prediction.priceDirection === DigitalAssetPriceDirection.Up ? styles.upArrowIcon : styles.downArrowIcon;
 
-  const isPriceChangeAvailable = priceChange !== undefined;
+  const isPriceChangeAvailable = priceChange !== null && priceChange !== undefined;
 
   const isPricePredictionCorrect =
     prediction.priceDirection === DigitalAssetPriceDirection.Down ? priceChange < 0 : priceChange > 0;
@@ -28,6 +28,29 @@ const DigitalAssetPricePredictionView = ({ prediction, priceChange }: DigitalAss
     [styles.correctResultPricePredictionView]: isPriceChangeAvailable && isPricePredictionCorrect,
     [styles.wrongResultPricePredictionView]: isPriceChangeAvailable && !isPricePredictionCorrect,
   });
+
+  const renderPriceChange = () => {
+    if (priceChange === undefined) {
+      return null;
+    }
+
+    if (priceChange === null) {
+      return (
+        <Typography color="gray" variant="subtitle2">
+          No Data
+        </Typography>
+      );
+    }
+
+    return (
+      <ColoredPoints
+        variant="subtitle2"
+        postfix="%"
+        hideTriangle
+        points={_.round(priceChange, PRICE_CHANGE_ROUND_PRECISION)}
+      />
+    );
+  };
 
   return (
     <div className={pricePredictionViewContainerComposedClassName}>
@@ -38,18 +61,7 @@ const DigitalAssetPricePredictionView = ({ prediction, priceChange }: DigitalAss
       <Typography className={styles.assetName} uppercase variant="subtitle2" color="primary">
         {prediction.assetId}
       </Typography>
-      {priceChange ? (
-        <ColoredPoints
-          variant="subtitle2"
-          postfix="%"
-          hideTriangle
-          points={_.round(priceChange, PRICE_CHANGE_ROUND_PRECISION)}
-        />
-      ) : (
-        <Typography color="gray" variant="subtitle2">
-          No Data
-        </Typography>
-      )}
+      {renderPriceChange()}
     </div>
   );
 };

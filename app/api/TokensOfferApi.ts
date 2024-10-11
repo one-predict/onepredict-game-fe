@@ -1,12 +1,13 @@
+import DigitalAssetId from '@enums/DigitalAssetId';
 import { ApiClient } from './ApiClient';
 
 export interface TokensOffer {
   id: string;
   durationInSeconds: number;
   opensAfterTimestamp: number;
-  tokens: string[];
+  assets: DigitalAssetId[];
   timestamp: number;
-  tournamentId: string | null;
+  tournamentId: string;
 }
 
 export interface TokensOffersSeries {

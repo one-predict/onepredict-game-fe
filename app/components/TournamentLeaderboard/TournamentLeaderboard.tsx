@@ -24,7 +24,7 @@ const TournamentLeaderboard = ({ rankedParticipants }: TournamentLeaderboardProp
           <TournamentParticipantsTable className={styles.participantsTable} rankedParticipants={rankedParticipants} />
         </>
       ) : (
-        <Typography className={styles.noParticipantsText} alignment="center" color="gradient2" variant="h4">
+        <Typography className={styles.noParticipantsText} alignment="center" color="gray" variant="h4">
           No participants yet!
         </Typography>
       )}

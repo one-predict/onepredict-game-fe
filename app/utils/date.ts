@@ -1,6 +1,10 @@
 import dayjs from 'dayjs';
 import { MAX_SAFE_DATE } from '@constants/date';
 
+export const getCurrentUnixTimestamp = () => {
+  return dayjs().unix();
+};
+
 export const getUnixTimestampFromDate = (date: Date | string) => {
   return dayjs(date).unix();
 };

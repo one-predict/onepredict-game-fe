@@ -19,9 +19,9 @@ export const handle = {
 };
 
 const TournamentsPage = () => {
-  const [tournamentStatus, setTournamentStatus] = useState<TournamentStatus | 'all'>('all');
+  const [tournamentStatus, setTournamentStatus] = useState<TournamentStatus>(TournamentStatus.Available);
 
-  const { data: tournaments } = useLatestTournamentsQuery(tournamentStatus === 'all' ? undefined : tournamentStatus);
+  const { data: tournaments } = useLatestTournamentsQuery(tournamentStatus);
 
   const navigate = useNavigate();
 
@@ -33,19 +33,15 @@ const TournamentsPage = () => {
     <PageBody>
       <ButtonsToggle
         className={styles.buttonsToggle}
-        onSwitch={(status) => setTournamentStatus(status as TournamentStatus | 'all')}
+        onSwitch={(status) => setTournamentStatus(status as TournamentStatus)}
         toggles={[
           {
-            title: 'All',
-            id: 'all',
+            title: 'Available',
+            id: TournamentStatus.Available,
           },
           {
-            title: 'Live',
-            id: TournamentStatus.Live,
-          },
-          {
-            title: 'Upcoming',
-            id: TournamentStatus.Upcoming,
+            title: 'Finished',
+            id: TournamentStatus.Finished,
           },
         ]}
         selectedId={tournamentStatus}

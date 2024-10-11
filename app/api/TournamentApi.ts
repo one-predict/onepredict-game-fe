@@ -1,8 +1,7 @@
 import { ApiClient } from './ApiClient';
 
 export enum TournamentStatus {
-  Upcoming = 'upcoming',
-  Live = 'live',
+  Available = 'available',
   Finished = 'finished',
 }
 
@@ -16,6 +15,7 @@ export interface Tournament {
   startTimestamp: number;
   endTimestamp: number;
   roundDurationInSeconds: number;
+  joinCloseTimestamp: number;
   imageUrl?: string;
 }
 

@@ -1,15 +1,15 @@
 import { Portfolio } from '@api/PortfolioApi';
 import { TokensOffer } from '@api/TokensOfferApi';
 import Typography from '@components/Typography';
-import FinishedTokensOfferCard from './FinishedTokensOfferCard';
-import styles from './FinishedTokensOffersList.module.scss';
+import FinishedOfferCard from './FinishedOfferCard';
+import styles from './FinishedOffersList.module.scss';
 
-export interface FinishedTokensOffersListProps {
+export interface FinishedOffersListProps {
   offers: TokensOffer[];
   portfolios: Record<string, Portfolio>;
 }
 
-const FinishedTokensOffersList = ({ offers, portfolios }: FinishedTokensOffersListProps) => {
+const FinishedOffersList = ({ offers, portfolios }: FinishedOffersListProps) => {
   if (!offers.length) {
     return (
       <Typography className={styles.noOffersText} variant="subtitle1">
@@ -23,10 +23,10 @@ const FinishedTokensOffersList = ({ offers, portfolios }: FinishedTokensOffersLi
       {offers.map((offer) => {
         const portfolio = portfolios[offer.id];
 
-        return <FinishedTokensOfferCard key={offer.id} offer={offer} portfolio={portfolio} />;
+        return <FinishedOfferCard key={offer.id} offer={offer} portfolio={portfolio} />;
       })}
     </div>
   );
 };
 
-export default FinishedTokensOffersList;
+export default FinishedOffersList;

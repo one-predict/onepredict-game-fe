@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import clsx from 'clsx';
 import { TokensOffersSeries } from '@api/TokensOfferApi';
-import { Portfolio, PortfolioSelectedToken } from '@api/PortfolioApi';
+import { Portfolio } from '@api/PortfolioApi';
+import DigitalAssetPricePrediction from '@types/DigitalAssetPricePrediction';
 import ButtonsToggle from '@components/ButtonsToggle';
 import Loader from '@components/Loader';
 import Typography from '@components/Typography';
 import UpcomingOffer from './UpcomingOffer';
 import LiveOffer from './LiveOffer';
-import FinishedTokensOffersList from './FinishedTokensOffersList';
+import FinishedOffersList from './FinishedOffersList';
 import styles from './PortfoliosGame.module.scss';
 
 export type OffersCategory = 'upcoming' | 'live' | 'finished';
@@ -16,7 +17,7 @@ export interface PortfoliosGameProps {
   className?: string;
   offersSeries: TokensOffersSeries | null;
   portfolios: Record<string, Portfolio> | null;
-  onPortfolioSubmit: (offerId: string, selectedTokens: PortfolioSelectedToken[]) => void;
+  onPortfolioSubmit: (offerId: string, predictions: DigitalAssetPricePrediction[]) => void;
   onEditPortfolioCards?: (portfolio: Portfolio) => void;
   isPortfolioSubmitInProgress?: boolean;
 }
@@ -64,7 +65,7 @@ const PortfoliosGame = ({
       );
     }
 
-    return <FinishedTokensOffersList portfolios={portfolios} offers={finishedOffers} />;
+    return <FinishedOffersList portfolios={portfolios} offers={finishedOffers} />;
   };
 
   return (

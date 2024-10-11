@@ -1,5 +1,15 @@
+import DigitalAssetPricePrediction from '@types/DigitalAssetPricePrediction';
 import { ApiClient } from './ApiClient';
-import { TokenDirection } from '@api/TokensOfferApi';
+
+export interface PortfolioDigitalAssetPricePredictionSummary {
+  priceChange: number;
+  points: number;
+}
+
+export interface PortfolioResult {
+  predictionSummaries: Record<string, PortfolioDigitalAssetPricePredictionSummary>;
+  totalPoints: number;
+}
 
 export interface Portfolio {
   id: string;
@@ -7,22 +17,16 @@ export interface Portfolio {
   offerId: string;
   interval: [number, number];
   createdAt: Date;
-  selectedTokens: PortfolioSelectedToken[];
-  appliedCardsStack: Record<string, number>;
-  tournamentId: string | null;
-  points: number;
-  earnedCoins: number;
+  predictions: DigitalAssetPricePrediction[];
+  tournamentId: string;
+  result?: PortfolioResult;
   isAwarded: boolean;
-}
-
-export interface PortfolioSelectedToken {
-  id: string;
-  direction: TokenDirection;
 }
 
 export interface CreatePortfolioParams {
   offerId: string;
-  selectedTokens: PortfolioSelectedToken[];
+  tournamentId: string;
+  predictions: DigitalAssetPricePrediction[];
 }
 
 export interface PortfolioApi {

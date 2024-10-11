@@ -15,7 +15,6 @@ import { HttpTokensOfferApi } from '@api/TokensOfferApi';
 import { HttpTournamentApi } from '@api/TournamentApi';
 import { HttpGameCardApi } from '@api/GameCardApi';
 import { HttpUserInventoryApi } from '@api/UserInventoryApi';
-import { HttpTournamentDeckApi } from '@api/TournamentDeck';
 import { HttpGameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
 import { HttpReferralApi } from '@api/ReferralApi';
 import { HttpDigitalAssetsPricesSnapshotApi } from '@api/DigitalAssetsPricesSnapshotApi';
@@ -100,7 +99,6 @@ const App = () => {
       tournamentApi: new HttpTournamentApi(apiClient),
       gameCardApi: new HttpGameCardApi(apiClient),
       userInventoryApi: new HttpUserInventoryApi(apiClient),
-      tournamentDeckApi: new HttpTournamentDeckApi(apiClient),
       gameCardsMarketplaceApi: new HttpGameCardsMarketplaceApi(apiClient),
       referralApi: new HttpReferralApi(apiClient),
       digitalAssetsPricesSnapshotApi: new HttpDigitalAssetsPricesSnapshotApi(apiClient),

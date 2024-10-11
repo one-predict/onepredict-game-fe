@@ -6,7 +6,6 @@ import { TokensOfferApi } from '@api/TokensOfferApi';
 import { TournamentApi } from '@api/TournamentApi';
 import { GameCardApi } from '@api/GameCardApi';
 import { UserInventoryApi } from '@api/UserInventoryApi';
-import { TournamentDeckApi } from '@api/TournamentDeck';
 import { GameCardsMarketplaceApi } from '@api/GameCardsMarketplaceApi';
 import { ReferralApi } from '@api/ReferralApi';
 import { DigitalAssetsPricesSnapshotApi } from '@api/DigitalAssetsPricesSnapshotApi';
@@ -24,7 +23,6 @@ export interface ApiProviderValue {
   tournamentApi: TournamentApi;
   gameCardApi: GameCardApi;
   userInventoryApi: UserInventoryApi;
-  tournamentDeckApi: TournamentDeckApi;
   gameCardsMarketplaceApi: GameCardsMarketplaceApi;
   referralApi: ReferralApi;
   digitalAssetsPricesSnapshotApi: DigitalAssetsPricesSnapshotApi;
@@ -71,7 +69,6 @@ export const useTournamentApi = createServiceHook<TournamentApi>('tournamentApi'
 export const useGameCardApi = createServiceHook<GameCardApi>('gameCardApi');
 export const useUserInventoryApi = createServiceHook<UserInventoryApi>('userInventoryApi');
 export const useGameCardsMarketplaceApi = createServiceHook<GameCardsMarketplaceApi>('gameCardsMarketplaceApi');
-export const useTournamentDeckApi = createServiceHook<TournamentDeckApi>('tournamentDeckApi');
 export const useDigitalAssetsPricesSnapshotApi = createServiceHook<DigitalAssetsPricesSnapshotApi>(
   'digitalAssetsPricesSnapshotApi',
 );

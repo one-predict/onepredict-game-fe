@@ -10,10 +10,9 @@ import ColoredPoints from '@components/ColoredPoints';
 import ExpandIcon from '@assets/icons/expand.svg?react';
 import CrossIcon from '@assets/icons/cross.svg?react';
 import { getDateFromUnixTimestamp } from '@utils/date';
-import styles from './FinishedTokensOfferCard.module.scss';
-import CoinsDisplay from '@components/CoinsDisplay';
+import styles from './FinishedOfferCard.module.scss';
 
-export interface FinishedTokensOfferCardProps {
+export interface FinishedOfferCardProps {
   offer: TokensOffer;
   portfolio: Portfolio | null;
 }
@@ -26,7 +25,7 @@ const getNoResultsText = (portfolio: Portfolio | null) => {
   return !portfolio.isAwarded ? 'Waiting for results...' : '';
 };
 
-const FinishedTokensOfferCard = ({ offer, portfolio }: FinishedTokensOfferCardProps) => {
+const FinishedOfferCard = ({ offer, portfolio }: FinishedOfferCardProps) => {
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const formattedDate = dayjs(getDateFromUnixTimestamp(offer.timestamp)).format('YYYY-MM-DD HH:mm');
@@ -45,18 +44,13 @@ const FinishedTokensOfferCard = ({ offer, portfolio }: FinishedTokensOfferCardPr
       <Typography className={styles.offerDate} variant="subtitle2">
         {formattedDate}
       </Typography>
-      {portfolio && portfolio.isAwarded ? (
+      {portfolio && portfolio.result ? (
         <>
           <div className={styles.prizeSection}>
-            <ColoredPoints points={portfolio.points} />
-            <CoinsDisplay
-              containerClassName={styles.earnedCoinsDisplay}
-              postfix="earned."
-              coins={portfolio.earnedCoins}
-            />
+            <ColoredPoints points={portfolio.result.totalPoints} />
           </div>
           <Collapse theme={{ collapse: styles.collapseContainer, content: styles.collapseContent }} isOpened={expanded}>
-            <PortfolioCard portfolio={portfolio} />
+            <PortfolioCard portfolio={portfolio} showPriceChange />
           </Collapse>
         </>
       ) : (
@@ -73,4 +67,4 @@ const FinishedTokensOfferCard = ({ offer, portfolio }: FinishedTokensOfferCardPr
   );
 };
 
-export default FinishedTokensOfferCard;
+export default FinishedOfferCard;

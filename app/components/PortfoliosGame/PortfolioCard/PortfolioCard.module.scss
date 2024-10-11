@@ -1,21 +1,6 @@
-.appliedCardsSection {
-  display: flex;
-  flex-direction: column;
-  width: calc(100% + 32px);
-  margin-top: 24px;
-}
-
-.appliedCardsSectionHeader {
-  position: relative;
-  width: fit-content;
-  align-self: center;
-}
-
-.editIcon {
-  position: absolute;
-  top: -1px;
-  left: calc(100% + 8px);
-  width: 24px;
-  height: 24px;
-  stroke: #439CB5;
+.portfolioCard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
 }

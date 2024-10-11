@@ -8,11 +8,13 @@ export interface TournamentParticipantsTableProps {
 }
 
 const TournamentWinners = ({ rankedParticipants }: TournamentParticipantsTableProps) => {
+  const [firstPlace, secondPlace, thirdPlace] = rankedParticipants;
+
   return (
     <div className={styles.winnersContainer}>
-      <TournamentWinner participant={rankedParticipants[1]} placeNumber={2} />
-      <TournamentWinner participant={rankedParticipants[0]} isFirstPlace={true} placeNumber={1} />
-      <TournamentWinner participant={rankedParticipants[2]} placeNumber={3} />
+      {secondPlace && <TournamentWinner participant={rankedParticipants[1]} placeNumber={2} />}
+      {firstPlace && <TournamentWinner participant={rankedParticipants[0]} isFirstPlace={true} placeNumber={1} />}
+      {thirdPlace && <TournamentWinner participant={rankedParticipants[2]} placeNumber={3} />}
     </div>
   );
 };
