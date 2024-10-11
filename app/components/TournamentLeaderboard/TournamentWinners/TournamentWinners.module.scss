@@ -1,9 +1,22 @@
 .winnersContainer {
   display: flex;
   justify-content: space-between;
-  padding-top: 40px;
 }
 
-.firstPlace {
-  width: 10px;
+.winner {
+  &:first-child {
+    order: 1;
+  }
+
+  &:nth-child(2) {
+    order: 0;
+  }
+
+  &:nth-child(3) {
+    order: 2;
+  }
+
+  &:not(:first-child) {
+    margin-top: 44px;
+  }
 }

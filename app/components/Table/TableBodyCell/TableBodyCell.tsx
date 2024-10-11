@@ -5,11 +5,18 @@ import styles from './TableBodyCell.module.scss';
 export interface TableBodyCellProps {
   className?: string;
   overflowed?: boolean;
+  overflowedContentClassName?: string;
   beforeOverflowedContent?: ReactNode;
   children: ReactNode;
 }
 
-const TableBodyCell = ({ children, className, overflowed = false, beforeOverflowedContent }: TableBodyCellProps) => {
+const TableBodyCell = ({
+  overflowedContentClassName,
+  children,
+  className,
+  overflowed = false,
+  beforeOverflowedContent,
+}: TableBodyCellProps) => {
   const getTableBodyCellContent = () => {
     if (typeof children === 'number') {
       return children;
@@ -23,7 +30,11 @@ const TableBodyCell = ({ children, className, overflowed = false, beforeOverflow
   return (
     <div className={clsx(styles.tableBodyCell, className)}>
       {beforeOverflowedContent}
-      {overflowed && <div className={styles.overflowedTableBodyCellContainer}>{tableBodyCellContent}</div>}
+      {overflowed && (
+        <div className={clsx(styles.overflowedTableBodyCellContainer, overflowedContentClassName)}>
+          {tableBodyCellContent}
+        </div>
+      )}
       {!overflowed && tableBodyCellContent}
     </div>
   );

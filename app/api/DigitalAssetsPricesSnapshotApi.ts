@@ -10,6 +10,7 @@ export interface DigitalAssetsPricesSnapshot {
 
 export interface DigitalAssetsPricesSnapshotApi {
   getLatestSnapshots(period: DigitalAssetsPricesSnapshotsPeriod): Promise<DigitalAssetsPricesSnapshot[]>;
+  getSnapshotByTimestamp(timestamp: number): Promise<DigitalAssetsPricesSnapshot>;
 }
 
 export class HttpDigitalAssetsPricesSnapshotApi implements DigitalAssetsPricesSnapshotApi {
@@ -20,5 +21,9 @@ export class HttpDigitalAssetsPricesSnapshotApi implements DigitalAssetsPricesSn
       `/digital-assets-prices-snapshots/latest?period=${period}`,
       'GET',
     );
+  }
+
+  public getSnapshotByTimestamp(timestamp: number) {
+    return this.client.makeCall<DigitalAssetsPricesSnapshot>(`/digital-assets-prices-snapshots/${timestamp}`, 'GET');
   }
 }

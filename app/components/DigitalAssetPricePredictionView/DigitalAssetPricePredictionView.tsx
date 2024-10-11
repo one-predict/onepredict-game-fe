@@ -9,7 +9,7 @@ import BoldArrowIcon from '@assets/icons/bold-arrow.svg?react';
 import styles from './DigitalAssetPricePredictionView.module.scss';
 
 export interface DigitalAssetPricePredictionViewProps {
-  priceChange?: number | null;
+  priceChange?: number;
   prediction: DigitalAssetPricePrediction;
 }
 
@@ -19,7 +19,7 @@ const DigitalAssetPricePredictionView = ({ prediction, priceChange }: DigitalAss
   const arrowIconClassName =
     prediction.priceDirection === DigitalAssetPriceDirection.Up ? styles.upArrowIcon : styles.downArrowIcon;
 
-  const isPriceChangeAvailable = priceChange !== null && priceChange !== undefined;
+  const isPriceChangeAvailable = priceChange !== undefined;
 
   const isPricePredictionCorrect =
     prediction.priceDirection === DigitalAssetPriceDirection.Down ? priceChange < 0 : priceChange > 0;
@@ -32,14 +32,6 @@ const DigitalAssetPricePredictionView = ({ prediction, priceChange }: DigitalAss
   const renderPriceChange = () => {
     if (priceChange === undefined) {
       return null;
-    }
-
-    if (priceChange === null) {
-      return (
-        <Typography color="gray" variant="subtitle2">
-          No Data
-        </Typography>
-      );
     }
 
     return (

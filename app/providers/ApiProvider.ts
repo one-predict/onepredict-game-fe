@@ -14,6 +14,7 @@ import { QuestApi } from '@api/QuestApi';
 import { PredictionChoiceApi } from '@api/PredictionChoiceApi';
 import { PredictionGameRoundApi } from '@api/PredictionGameRoundApi';
 import { PredictionStreakApi } from '@api/PredictionStreakApi';
+import { DigitalAssetsTickApi } from '@api/DigitalAssetsTickApi';
 
 export interface ApiProviderValue {
   authApi: AuthApi;
@@ -31,6 +32,7 @@ export interface ApiProviderValue {
   predictionChoiceApi: PredictionChoiceApi;
   predictionGameRoundApi: PredictionGameRoundApi;
   predictionStreakApi: PredictionStreakApi;
+  digitalAssetsTickApi: DigitalAssetsTickApi;
 }
 
 export type Services =
@@ -41,7 +43,6 @@ export type Services =
   | TournamentApi
   | GameCardApi
   | UserInventoryApi
-  | TournamentDeckApi
   | GameCardsMarketplaceApi
   | ReferralApi
   | DigitalAssetsPricesSnapshotApi
@@ -49,7 +50,8 @@ export type Services =
   | QuestApi
   | PredictionChoiceApi
   | PredictionGameRoundApi
-  | PredictionStreakApi;
+  | PredictionStreakApi
+  | DigitalAssetsTickApi;
 
 const ApiContext = createContext<ApiProviderValue>({} as ApiProviderValue);
 
@@ -78,5 +80,6 @@ export const useQuestApi = createServiceHook<QuestApi>('questApi');
 export const usePredictionChoiceApi = createServiceHook<PredictionChoiceApi>('predictionChoiceApi');
 export const usePredictionGameRoundApi = createServiceHook<PredictionGameRoundApi>('predictionGameRoundApi');
 export const usePredictionStreakApi = createServiceHook<PredictionStreakApi>('predictionStreakApi');
+export const useDigitalAssetsTickApi = createServiceHook<DigitalAssetsTickApi>('digitalAssetsTickApi');
 
 export const ApiProvider = ApiContext.Provider;

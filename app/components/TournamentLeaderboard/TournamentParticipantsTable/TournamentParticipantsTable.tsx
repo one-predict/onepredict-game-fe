@@ -4,6 +4,7 @@ import TournamentParticipantRow from './TournamentParticipantRow';
 
 export interface TournamentParticipantsTableProps {
   className?: string;
+  startsFrom?: number;
   rankedParticipants: Array<TournamentParticipant>;
 }
 
@@ -22,14 +23,18 @@ const TOURNAMENTS_TABLE_CELLS = [
   },
 ];
 
-const TournamentParticipantsTable = ({ className, rankedParticipants }: TournamentParticipantsTableProps) => {
+const TournamentParticipantsTable = ({
+  startsFrom = 0,
+  className,
+  rankedParticipants,
+}: TournamentParticipantsTableProps) => {
   const renderRow = (participant: TournamentParticipant, rowCellWidthConfig: number[], index: number) => {
     return (
       <TournamentParticipantRow
         key={participant.id}
         rowCellWidthConfig={rowCellWidthConfig}
         participant={participant}
-        index={index}
+        index={index + startsFrom}
       />
     );
   };

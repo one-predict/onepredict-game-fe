@@ -15,7 +15,7 @@ const TournamentParticipantRow = ({ rowCellWidthConfig, participant, index }: To
   return (
     <TableRow cellWidthConfig={rowCellWidthConfig}>
       <TableBodyCell
-        className={styles.prizePlace}
+        overflowedContentClassName={styles.rankCellOverflowedContent}
         beforeOverflowedContent={<CupIcon className={styles.cupIcon} />}
         overflowed
       >
@@ -32,17 +32,9 @@ const TournamentParticipantRow = ({ rowCellWidthConfig, participant, index }: To
         overflowed
       >
         {participant.username}
-        <ColoredPoints points={participant.points}></ColoredPoints>
       </TableBodyCell>
-      <TableBodyCell
-        className={styles.pointsText}
-        beforeOverflowedContent={<img src={'/images/token.png'} className={styles.pointsImg}></img>}
-        overflowed
-      >
-        {
-          // TODO add rewards
-        }
-        0
+      <TableBodyCell className={styles.pointsText}>
+        <ColoredPoints points={participant.points} />
       </TableBodyCell>
     </TableRow>
   );

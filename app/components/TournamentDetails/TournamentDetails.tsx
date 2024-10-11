@@ -1,7 +1,7 @@
 import { Portfolio } from '@api/PortfolioApi';
 import { Tournament, TournamentLeaderboard, TournamentParticipation } from '@api/TournamentApi';
 import { TokensOffersSeries } from '@api/TokensOfferApi';
-import DigitalAssetPricePrediction from "@types/DigitalAssetPricePrediction";
+import DigitalAssetPricePrediction from '@types/DigitalAssetPricePrediction';
 import useTournamentStatus from '@hooks/useTournamentStatus';
 import { getCurrentUnixTimestamp } from '@utils/date';
 import Typography from '@components/Typography';

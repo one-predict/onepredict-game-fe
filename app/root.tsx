@@ -23,6 +23,7 @@ import { HttpQuestApi } from '@api/QuestApi';
 import { HttpUserPredictionChoiceApi } from '@api/PredictionChoiceApi';
 import { HttpPredictionGameRoundApi } from '@api/PredictionGameRoundApi';
 import { HttpPredictionStreakApi } from '@api/PredictionStreakApi';
+import { HttpDigitalAssetsTickApi } from '@api/DigitalAssetsTickApi';
 import { PageLayoutWithMenu } from '@components/Layouts';
 import LoadingScreen from '@components/LoadingScreen';
 import AuthorizedSection from '@components/AuthorizedSection';
@@ -107,6 +108,7 @@ const App = () => {
       predictionChoiceApi: new HttpUserPredictionChoiceApi(apiClient),
       predictionGameRoundApi: new HttpPredictionGameRoundApi(apiClient),
       predictionStreakApi: new HttpPredictionStreakApi(apiClient),
+      digitalAssetsTickApi: new HttpDigitalAssetsTickApi(apiClient),
     };
   }, []);
 

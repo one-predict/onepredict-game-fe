@@ -1,4 +1,6 @@
 import { PredictionChoice } from '@api/PredictionChoiceApi';
+import useDigitalAssetsLatestTickQuery from '@hooks/queries/useDigitalAssetsLatestTickQuery';
+import usePredictionChoiceAssetIds from '@hooks/usePredictionChoiceAssetIds';
 import Typography from '@components/Typography';
 import PredictionGameSection from '@components/PredictionGame/PredictionGameSection';
 import DigitalAssetPricePredictionView from '@components/DigitalAssetPricePredictionView';
@@ -9,6 +11,10 @@ export interface LiveRoundSectionProps {
 }
 
 const LiveRoundSection = ({ liveRoundChoice }: LiveRoundSectionProps) => {
+  const assetIds = usePredictionChoiceAssetIds(liveRoundChoice);
+
+  const { data: ticks } = useDigitalAssetsLatestTickQuery(assetIds);
+
   return (
     <PredictionGameSection>
       <div className={styles.sectionHeader}>
@@ -20,7 +26,11 @@ const LiveRoundSection = ({ liveRoundChoice }: LiveRoundSectionProps) => {
       {liveRoundChoice ? (
         <div className={styles.liveRoundPredictions}>
           {liveRoundChoice?.predictions.map((prediction) => (
-            <DigitalAssetPricePredictionView key={prediction.assetId} priceChange={undefined} prediction={prediction} />
+            <DigitalAssetPricePredictionView
+              key={prediction.assetId}
+              priceChange={ticks?.[prediction.assetId]?.currentHourPriceChangePercentage}
+              prediction={prediction}
+            />
           ))}
         </div>
       ) : (

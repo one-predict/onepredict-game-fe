@@ -3,7 +3,7 @@ import { useNavigate, useMatches } from '@remix-run/react';
 import clsx from 'clsx';
 import AppSection from '@enums/AppSection';
 import Typography from '@components/Typography';
-import HomeIcon from '@assets/icons/home.svg?react';
+import CrystalBal from '@assets/icons/crystal-ball.svg?react';
 import ShoppingBagIcon from '@assets/icons/shopping-bag.svg?react';
 import DiamondIcon from '@assets/icons/diamong.svg?react';
 import CupIcon from '@assets/icons/cup.svg?react';
@@ -23,7 +23,7 @@ export interface MenuTabProps {
 const sections: MenuSection[] = [
   {
     title: 'Predict',
-    icon: <HomeIcon />,
+    icon: <CrystalBal />,
     link: '/',
     section: AppSection.Home,
   },

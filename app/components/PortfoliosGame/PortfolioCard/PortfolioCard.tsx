@@ -6,7 +6,6 @@ import styles from './PortfolioCard.module.scss';
 export interface PortfolioCardProps {
   className?: string;
   portfolio: Portfolio;
-  showPriceChange?: boolean;
 }
 
 const PortfolioCard = ({ showPriceChange, portfolio, className }: PortfolioCardProps) => {

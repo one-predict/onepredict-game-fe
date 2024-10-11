@@ -1,77 +1,69 @@
-.winnerContainer {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin: auto;
+.winner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.firstPlaceContainer {
-    position: relative;
-    top: -40px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin: auto;
-}
-
-.participantAvatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
+.winnerAvatar {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 8px;
 }
 
 .reward {
-    border-radius: 15px;
-    padding: 5px;
-    background: linear-gradient(111.04deg, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
-    display: flex;
+  border-radius: 12px;
+  padding: 5px 12px;
+  background: #FFFFFF1A;
+  border: 2.5px solid rgba(140, 132, 152, 0.4);
+  margin-top: 4px;
 }
 
 .rewardNumber {
-    padding-top: 4px;
+  padding-top: 4px;
 }
 
 .tokenImg {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 .zeroCircle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(111.04deg, rgba(161, 236, 223, 0.05) 0%, rgba(157, 188, 255, 0.05) 47.26%, rgba(204, 143, 255, 0.05) 98.45%);
-    border-radius: 50%;
-    width: 110px;
-    height: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(111.04deg, rgba(161, 236, 223, 0.05) 0%, rgba(157, 188, 255, 0.05) 47.26%, rgba(204, 143, 255, 0.05) 98.45%);
+  border-radius: 50%;
+  width: 110px;
+  height: 110px;
 }
 
 .firstCircle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(111.04deg, rgba(161, 236, 223, 0.1) 0%, rgba(157, 188, 255, 0.1) 47.26%, rgba(204, 143, 255, 0.1) 98.45%);
-    border-radius: 50%;
-    width: 90px;
-    height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(111.04deg, rgba(161, 236, 223, 0.1) 0%, rgba(157, 188, 255, 0.1) 47.26%, rgba(204, 143, 255, 0.1) 98.45%);
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
 }
 
 .secondCircle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(111.04deg, rgba(161, 236, 223, 0.2) 0%, rgba(157, 188, 255, 0.2) 47.26%, rgba(204, 143, 255, 0.2) 98.45%);
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(111.04deg, rgba(161, 236, 223, 0.2) 0%, rgba(157, 188, 255, 0.2) 47.26%, rgba(204, 143, 255, 0.2) 98.45%);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
 }
 
 .thirdCircle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(111.04deg, rgba(161, 236, 223, 0.3) 0%, rgba(157, 188, 255, 0.3) 47.26%, rgba(204, 143, 255, 0.3) 98.45%);
-    border-radius: 50%;
-    width: 46px;
-    height: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(111.04deg, rgba(161, 236, 223, 0.3) 0%, rgba(157, 188, 255, 0.3) 47.26%, rgba(204, 143, 255, 0.3) 98.45%);
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
 }

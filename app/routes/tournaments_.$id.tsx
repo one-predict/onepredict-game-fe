@@ -48,7 +48,12 @@ const TournamentPage = () => {
   const { mutateAsync: joinTournament, status: joinTournamentMutationStatus } = useJoinTournamentMutation();
   const { mutateAsync: createPortfolio, status: createPortfolioStatus } = useCreatePortfolioMutation();
 
+<<<<<<< Updated upstream
   const canJoinTournament = !!currentUser && currentUser.coinsBalance > tournament?.entryPrice;
+=======
+  const canJoinTournament =
+    tournament?.isTonConnected || (!!currentUser && currentUser.coinsBalance > tournament?.entryPrice);
+>>>>>>> Stashed changes
 
   useBackButton(
     true,

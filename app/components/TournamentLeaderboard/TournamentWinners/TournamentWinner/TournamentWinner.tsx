@@ -1,33 +1,28 @@
+import clsx from 'clsx';
 import { TournamentParticipant } from '@api/TournamentApi';
-import UserAvatar from '@app/components/UserAvatar';
-import Typography from '@app/components/Typography';
+import UserAvatar from '@components/UserAvatar';
+import Typography from '@components/Typography';
+import ColoredPoints from '@components/ColoredPoints';
 import styles from './TournamentWinner.module.scss';
 
 export interface TournamentWinnerProps {
   className?: string;
   participant: TournamentParticipant;
-  isFirstPlace?: boolean;
   placeNumber: number;
 }
 
-const TournamentWinner = ({ participant, isFirstPlace, placeNumber }: TournamentWinnerProps) => {
-  const getPlace = () => {
-    if (isFirstPlace) {
-      return (
-        <div className={styles.zeroCircle}>
-          <div className={styles.firstCircle}>
-            <div className={styles.secondCircle}>
-              <div className={styles.thirdCircle}>
-                <Typography color="primary" variant="body1">
-                  {placeNumber}
-                </Typography>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      return (
+const TournamentWinner = ({ participant, placeNumber, className }: TournamentWinnerProps) => {
+  return (
+    <div className={clsx(styles.winner, className)}>
+      <UserAvatar className={styles.winnerAvatar} imageUrl={participant.imageUrl} username={participant.username} />
+      <Typography color="primary" variant="body2">
+        {participant.username}
+      </Typography>
+      <div className={styles.reward}>
+        <ColoredPoints points={participant.points} />
+      </div>
+      {}
+      <div className={styles.zeroCircle}>
         <div className={styles.firstCircle}>
           <div className={styles.secondCircle}>
             <div className={styles.thirdCircle}>
@@ -37,26 +32,7 @@ const TournamentWinner = ({ participant, isFirstPlace, placeNumber }: Tournament
             </div>
           </div>
         </div>
-      );
-    }
-  };
-  return (
-    <div className={isFirstPlace ? styles.firstPlaceContainer : styles.winnerContainer}>
-      <UserAvatar
-        className={styles.participantAvatar}
-        imageUrl={participant.imageUrl}
-        username={participant.username}
-      />
-      <Typography color="primary" variant="body1">
-        {participant.username}
-      </Typography>
-      <div className={styles.reward}>
-        <img src={'/images/token.png'} className={styles.tokenImg}></img>
-        <Typography color="primary" variant="body1" className={styles.rewardNumber}>
-          0
-        </Typography>
       </div>
-      {getPlace()}
     </div>
   );
 };
