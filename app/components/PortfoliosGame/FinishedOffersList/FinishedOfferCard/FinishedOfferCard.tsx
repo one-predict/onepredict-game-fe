@@ -50,7 +50,7 @@ const FinishedOfferCard = ({ offer, portfolio }: FinishedOfferCardProps) => {
             <ColoredPoints points={portfolio.result.totalPoints} />
           </div>
           <Collapse theme={{ collapse: styles.collapseContainer, content: styles.collapseContent }} isOpened={expanded}>
-            <PortfolioCard portfolio={portfolio} showPriceChange />
+            <PortfolioCard portfolio={portfolio} />
           </Collapse>
         </>
       ) : (
