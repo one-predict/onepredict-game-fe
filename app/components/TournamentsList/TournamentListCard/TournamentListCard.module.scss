@@ -57,8 +57,9 @@
   box-shadow: 0 0 100px 50px #3a1f66;
 }
 
-.viewDetailsButton {
+.actionButton {
   width: fit-content;
+  min-width: 150px;
 }
 
 .tournamentListCardFooter {

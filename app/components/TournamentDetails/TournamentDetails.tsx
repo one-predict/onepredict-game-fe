@@ -11,7 +11,6 @@ import Loader from '@components/Loader';
 import LabeledContent from '@components/LabeledContent';
 import TournamentAvailabilityInfo from '@components/TournamentAvailabilityInfo';
 import CoinsDisplay from '@components/CoinsDisplay';
-import TimeRemaining from '@components/TimeRemaining';
 import PortfoliosGame from '@components/PortfoliosGame';
 import ColoredPoints from '@components/ColoredPoints';
 import styles from './TournamentDetails.module.scss';
@@ -28,8 +27,6 @@ export interface TournamentDetailsProps {
   isTournamentJoiningInProgress?: boolean;
   onJoinTournamentButtonClick: () => void;
 }
-
-const REGISTRATION_ENDS_UPDATE_INTERVAL = 1000;
 
 const TournamentDetails = ({
   tournament,
@@ -111,18 +108,6 @@ const TournamentDetails = ({
       </div>
       {!tournamentParticipation && isRegistrationOpen && (
         <div className={styles.joinTournamentSection}>
-          <TimeRemaining
-            updateInterval={REGISTRATION_ENDS_UPDATE_INTERVAL}
-            unixTimestamp={tournament.joinCloseTimestamp}
-          >
-            {({ displayRemainingHours, displayRemainingMinutes, displayRemainingSeconds }) => {
-              return (
-                <Typography color="gray" variant="subtitle2">
-                  Registration Ends in {displayRemainingHours}h, {displayRemainingMinutes}m, {displayRemainingSeconds}s
-                </Typography>
-              );
-            }}
-          </TimeRemaining>
           <Button
             className={styles.joinTournamentButton}
             disabled={!canJoinTournament}

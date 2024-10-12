@@ -24,18 +24,17 @@ const UpcomingOffer = ({
 }: UpcomingOfferProps) => {
   return upcomingPortfolio ? (
     <div className={styles.upcomingPortfolio}>
-      <Typography variant="h1" color="gradient1">
-        Your choice:
-      </Typography>
-      <TimeRemaining unixTimestamp={upcomingOffer.timestamp}>
-        {({ remainingDays, remainingHours, remainingMinutes }) => {
-          return (
-            <Typography alignment="center" variant="body2" color="yellow">
-              Live in {remainingDays}d {remainingHours}h {remainingMinutes}m
-            </Typography>
-          );
-        }}
-      </TimeRemaining>
+      <div className={styles.upcomingPortfolioBackdrop}>
+        <TimeRemaining unixTimestamp={upcomingOffer.timestamp}>
+          {({ remainingDays, remainingHours, remainingMinutes }) => {
+            return (
+              <Typography alignment="center" variant="h3" color="yellow">
+                Live in {remainingDays}d {remainingHours}h {remainingMinutes}m
+              </Typography>
+            );
+          }}
+        </TimeRemaining>
+      </div>
       <PortfolioCard
         className={styles.upcomingPortfolioCard}
         onEditPortfolioCards={onEditPortfolioCards}

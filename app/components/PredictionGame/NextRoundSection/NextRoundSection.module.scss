@@ -21,7 +21,14 @@
 }
 
 .submitButton {
-  margin-top: 16px  ;
+  margin-top: 16px;
+}
+
+.myChoice {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 16px;
 }
 
 .pricingSwitch {

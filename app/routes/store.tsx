@@ -71,31 +71,31 @@ const StorePage = () => {
         ]}
         selectedId={selectedCategory}
       />
-      {selectedCategory === 'cards' && (
-        <>
-          <CardsMarketplace
-            className={styles.cardsMarketplace}
-            gameCards={gameCards}
-            purchasedCardsPool={purchasedGameCardsPool}
-            onCardClick={handleGameCardClick}
-            onPurchaseCard={handlePurchaseCard}
-          />
-          <BuyGameCardPopup
-            isOpen={!!cardToObserve}
-            card={cardToObserve}
-            userBalance={currentUser?.coinsBalance ?? null}
-            onBuyCardClick={handlePurchaseCard}
-            isBuyInProgress={purchaseCardStatus === 'pending'}
-            isCardAlreadyPurchased={!!cardToObserve && !!purchasedGameCardsPool?.[cardToObserve.id]}
-            onClose={() => setCardToObserve(null)}
-          />
-        </>
-      )}
-      {selectedCategory === 'perks' && (
+      <div className={styles.categoryBody}>
         <div className={styles.comingSoonSection}>
-          <Typography variant="h2">Perks are coming soon!</Typography>
+          <Typography variant="h2">{_.upperFirst(selectedCategory)} are coming soon!</Typography>
         </div>
-      )}
+        {selectedCategory === 'cards' && (
+          <>
+            <CardsMarketplace
+              className={styles.cardsMarketplace}
+              gameCards={gameCards}
+              purchasedCardsPool={purchasedGameCardsPool}
+              onCardClick={handleGameCardClick}
+              onPurchaseCard={handlePurchaseCard}
+            />
+            <BuyGameCardPopup
+              isOpen={!!cardToObserve}
+              card={cardToObserve}
+              userBalance={currentUser?.coinsBalance ?? null}
+              onBuyCardClick={handlePurchaseCard}
+              isBuyInProgress={purchaseCardStatus === 'pending'}
+              isCardAlreadyPurchased={!!cardToObserve && !!purchasedGameCardsPool?.[cardToObserve.id]}
+              onClose={() => setCardToObserve(null)}
+            />
+          </>
+        )}
+      </div>
     </PageBody>
   );
 };

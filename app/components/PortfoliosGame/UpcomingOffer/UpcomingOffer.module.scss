@@ -1,8 +1,21 @@
 .upcomingPortfolio {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+}
+
+.upcomingPortfolioBackdrop {
+  position: absolute;
+  backdrop-filter: blur(3px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% + 4px);
+  width: calc(100% + 4px);
+  z-index: 4;
 }
 
 .upcomingPortfolioCard {

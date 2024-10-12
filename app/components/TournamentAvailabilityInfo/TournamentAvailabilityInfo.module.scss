@@ -21,13 +21,21 @@
 .upcomingStatusBadge {
   @extend .statusBadge;
 
-  background-color: #FFB800;
+  background: linear-gradient(111.04deg, #2CD8D5 0%, #6B8DD6 47.26%, #8E37D7 98.45%);
 }
 
 .liveStatusBadge {
   @extend .statusBadge;
 
-  background-color: #10C600;
+  background: linear-gradient(90deg, #0FD850 0%, #F9F047 100%);
+  color: #000000;
+}
+
+.registrationStatusBadge {
+  @extend .statusBadge;
+
+  background: linear-gradient(111.04deg, rgba(255, 223, 0, 1) 0%, rgba(255, 178, 0, 1) 47.26%, rgba(255, 153, 0, 1) 98.45%);
+  color: #000000;
 }
 
 .finishedStatusBadge {

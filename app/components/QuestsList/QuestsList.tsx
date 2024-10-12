@@ -1,7 +1,7 @@
 import { Quest } from '@api/QuestApi';
 import QuestListItem from './QuestListItem';
-import styles from './QuestsList.module.scss';
 import Typography from '@components/Typography';
+import styles from './QuestsList.module.scss';
 
 export interface QuestsListProps {
   quests: Quest[];

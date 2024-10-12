@@ -8,21 +8,17 @@ export interface PortfolioCardProps {
   portfolio: Portfolio;
 }
 
-const PortfolioCard = ({ showPriceChange, portfolio, className }: PortfolioCardProps) => {
+const PortfolioCard = ({ portfolio, className }: PortfolioCardProps) => {
   return (
     <div className={clsx(styles.portfolioCard, className)}>
       {portfolio.predictions.map((prediction) => {
         const { result } = portfolio;
 
         const predictionSummaries = result?.predictionSummaries ?? {};
-        const priceChange = predictionSummaries[prediction.assetId]?.priceChange ?? null;
+        const priceChange = predictionSummaries[prediction.assetId]?.priceChange ?? undefined;
 
         return (
-          <DigitalAssetPricePredictionView
-            key={prediction.assetId}
-            prediction={prediction}
-            priceChange={showPriceChange ? priceChange : undefined}
-          />
+          <DigitalAssetPricePredictionView key={prediction.assetId} prediction={prediction} priceChange={priceChange} />
         );
       })}
     </div>

@@ -1,24 +1,24 @@
 import { Tournament } from '@api/TournamentApi';
+import useTournamentStatus from '@hooks/useTournamentStatus';
 import Button from '@components/Button';
 import Typography from '@components/Typography';
 import TournamentAvailabilityInfo from '@components/TournamentAvailabilityInfo';
 import LabeledContent from '@components/LabeledContent';
 import CoinsDisplay from '@components/CoinsDisplay';
 import styles from './TournamentListCard.module.scss';
-import TimeRemaining from '@components/TimeRemaining';
 
 export interface TournamentListCardProps {
   tournament: Tournament;
   onViewDetailsClick: (tournament: Tournament) => void;
 }
 
-const REGISTRATION_ENDS_UPDATE_INTERVAL = 1000;
-
 const TournamentListCard = ({ tournament, onViewDetailsClick }: TournamentListCardProps) => {
   const prizePool = tournament.entryPrice * tournament.participantsCount + tournament.staticPrizePool;
 
+  const tournamentStatus = useTournamentStatus(tournament);
+
   return (
-    <div className={styles.tournamentListCard}>
+    <div onClick={() => onViewDetailsClick(tournament)} className={styles.tournamentListCard}>
       <TournamentAvailabilityInfo className={styles.tournamentAvailabilityInfo} tournament={tournament} />
       <div className={styles.titleWithParticipantsContainer}>
         <Typography variant="h1" color="gradient1">
@@ -38,17 +38,8 @@ const TournamentListCard = ({ tournament, onViewDetailsClick }: TournamentListCa
           <CoinsDisplay variant="body2" coins={tournament.entryPrice} />
         </LabeledContent>
       </div>
-      <TimeRemaining updateInterval={REGISTRATION_ENDS_UPDATE_INTERVAL} unixTimestamp={tournament.joinCloseTimestamp}>
-        {({ displayRemainingHours, displayRemainingMinutes, displayRemainingSeconds }) => {
-          return (
-            <Typography className={styles.registrationInfo} color="gray" variant="subtitle2">
-              Registration Ends in {displayRemainingHours}h, {displayRemainingMinutes}m, {displayRemainingSeconds}s
-            </Typography>
-          );
-        }}
-      </TimeRemaining>
-      <Button className={styles.viewDetailsButton} onClick={() => onViewDetailsClick(tournament)}>
-        View Details
+      <Button className={styles.actionButton} onClick={() => onViewDetailsClick(tournament)}>
+        {tournamentStatus === 'finished' ? 'View Details' : 'Play'}
       </Button>
     </div>
   );

@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import clsx from 'clsx';
 import { TokensOffer } from '@api/TokensOfferApi';
 import { Portfolio } from '@api/PortfolioApi';

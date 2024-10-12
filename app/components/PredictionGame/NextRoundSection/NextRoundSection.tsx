@@ -14,6 +14,7 @@ import DigitalAssetStreakMultiplier from '@components/PredictionGame/DigitalAsse
 import Button from '@components/Button';
 import { getPriceDirectionsFromChoice } from './utils';
 import styles from './NextRoundSection.module.scss';
+import DigitalAssetPricePredictionView from '@components/DigitalAssetPricePredictionView';
 
 export interface NextRoundSectionProps {
   predictionStreak: PredictionStreak | null;
@@ -87,34 +88,46 @@ const NextRoundSection = ({
           }}
         </TimeRemaining>
       </div>
-      <DigitalAssetsPricePredictionCard
-        className={styles.digitalAssetsPricePredictionCard}
-        availableAssets={nextRoundsAssets}
-        selectedAssets={nextRoundsAssets}
-        priceDirections={priceDirections}
-        pricesSnapshots={pricesSnapshots}
-        onAssetPriceDirectionSelect={handleAssetPriceDirectionSelect}
-        pricingSwitchClassName={styles.pricingSwitch}
-      />
-      <div className={styles.streaksInfoContainer}>
-        {nextRoundsAssets.map((assetId) => (
-          <DigitalAssetStreakMultiplier
-            key={assetId}
-            alignment="center"
-            variant="h6"
-            streak={predictionStreak?.assetStreaks[assetId] || 0}
+      {nextRoundChoice ? (
+        <div>
+          <div className={styles.myChoice}>
+            {nextRoundChoice.predictions.map((prediction) => (
+              <DigitalAssetPricePredictionView key={prediction.assetId} prediction={prediction} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <>
+          <DigitalAssetsPricePredictionCard
+            className={styles.digitalAssetsPricePredictionCard}
+            availableAssets={nextRoundsAssets}
+            selectedAssets={nextRoundsAssets}
+            priceDirections={priceDirections}
+            pricesSnapshots={pricesSnapshots}
+            onAssetPriceDirectionSelect={handleAssetPriceDirectionSelect}
+            pricingSwitchClassName={styles.pricingSwitch}
           />
-        ))}
-      </div>
-      {allPriceDirectionsSelected && isPriceDirectionsChanged && (
-        <Button
-          className={styles.submitButton}
-          loading={isSaveChangesInProgress}
-          onClick={handleSaveChangesButtonClick}
-          size="large"
-        >
-          Submit
-        </Button>
+          <div className={styles.streaksInfoContainer}>
+            {nextRoundsAssets.map((assetId) => (
+              <DigitalAssetStreakMultiplier
+                key={assetId}
+                alignment="center"
+                variant="h6"
+                streak={predictionStreak?.assetStreaks[assetId] || 0}
+              />
+            ))}
+          </div>
+          {allPriceDirectionsSelected && isPriceDirectionsChanged && (
+            <Button
+              className={styles.submitButton}
+              loading={isSaveChangesInProgress}
+              onClick={handleSaveChangesButtonClick}
+              size="large"
+            >
+              Submit
+            </Button>
+          )}
+        </>
       )}
     </PredictionGameSection>
   );
