@@ -1,3 +1,4 @@
+import { TonConnectButton, useTonWallet, useTonConnectUI, SendTransactionRequest } from '@tonconnect/ui-react';
 import { Portfolio } from '@api/PortfolioApi';
 import { Tournament, TournamentLeaderboard, TournamentParticipation } from '@api/TournamentApi';
 import { TokensOffersSeries } from '@api/TokensOfferApi';
@@ -13,7 +14,10 @@ import TournamentAvailabilityInfo from '@components/TournamentAvailabilityInfo';
 import CoinsDisplay from '@components/CoinsDisplay';
 import PortfoliosGame from '@components/PortfoliosGame';
 import ColoredPoints from '@components/ColoredPoints';
+import { prepareSendTransaction } from '@app/utils/ton-transactions';
 import styles from './TournamentDetails.module.scss';
+
+const VITE_TON_TOURNAMENT_ADDRESS = import.meta.env.VITE_TON_TOURNAMENT_ADDRESS;
 
 export interface TournamentDetailsProps {
   tournament: Tournament;
@@ -25,7 +29,7 @@ export interface TournamentDetailsProps {
   onPortfolioSubmit: (offerId: string, predictions: DigitalAssetPricePrediction[]) => void;
   tournamentParticipationRank: number | null | undefined;
   isTournamentJoiningInProgress?: boolean;
-  onJoinTournamentButtonClick: () => void;
+  onJoinTournamentButtonClick: (walletAddress?: string) => void;
 }
 
 const TournamentDetails = ({
@@ -41,6 +45,10 @@ const TournamentDetails = ({
   isTournamentJoiningInProgress,
   onJoinTournamentButtonClick,
 }: TournamentDetailsProps) => {
+  const wallet = useTonWallet();
+  const [tonConnectUI, setOptions] = useTonConnectUI();
+  const tournamentTicker = tournament.isTonConnected ? 'AIP' : 'TON';
+
   const tournamentStatus = useTournamentStatus(tournament);
 
   const isRegistrationOpen =
@@ -79,6 +87,39 @@ const TournamentDetails = ({
     );
   };
 
+  const handleJoinButtonClick = async () => {
+    if (tournament.isTonConnected) {
+      const result = await tonConnectUI.sendTransaction(
+        prepareSendTransaction(VITE_TON_TOURNAMENT_ADDRESS, tournament.entryPrice),
+      );
+
+      if (result?.boc) {
+        onJoinTournamentButtonClick(wallet?.account.address);
+      }
+
+      return;
+    }
+
+    onJoinTournamentButtonClick('');
+  };
+
+  const renderJoinButton = () => {
+    if (tournament.isTonConnected && !wallet?.account.address) {
+      return <TonConnectButton className={styles.viewDetailsButton} />;
+    }
+
+    return (
+      <Button
+        className={styles.joinTournamentButton}
+        disabled={!canJoinTournament}
+        onClick={handleJoinButtonClick}
+        loading={isTournamentJoiningInProgress}
+      >
+        Join for {tournament.entryPrice} {tournamentTicker}
+      </Button>
+    );
+  };
+
   const renderParticipationInfo = () => {
     if (tournamentParticipation === undefined || tournamentParticipationRank === undefined) {
       return null;
@@ -108,14 +149,7 @@ const TournamentDetails = ({
       </div>
       {!tournamentParticipation && isRegistrationOpen && (
         <div className={styles.joinTournamentSection}>
-          <Button
-            className={styles.joinTournamentButton}
-            disabled={!canJoinTournament}
-            onClick={onJoinTournamentButtonClick}
-            loading={isTournamentJoiningInProgress}
-          >
-            Join for {tournament.entryPrice} AIP
-          </Button>
+          {renderJoinButton()}
         </div>
       )}
       <div className={styles.participationInfoContainer}>
@@ -125,6 +159,7 @@ const TournamentDetails = ({
         <LabeledContent title="Prize Pool">
           <CoinsDisplay
             coins={tournament.participantsCount * tournament.entryPrice + tournament.staticPrizePool}
+            tokenImageSrc={tournament.isTonConnected ? '/images/ton-token.png' : '/images/token.png'}
           ></CoinsDisplay>
         </LabeledContent>
         <LabeledContent title="Participants">

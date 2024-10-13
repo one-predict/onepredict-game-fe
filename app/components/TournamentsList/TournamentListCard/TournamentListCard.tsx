@@ -32,15 +32,24 @@ const TournamentListCard = ({ tournament, onViewDetailsClick }: TournamentListCa
       <div className={styles.tournamentImageShadow} />
       <div className={styles.tournamentPrizeInfo}>
         <LabeledContent title="Prize Pool">
-          <CoinsDisplay variant="body2" coins={prizePool} />
+          <CoinsDisplay
+            variant="body2"
+            coins={prizePool}
+            tokenImageSrc={tournament.isTonConnected ? '/images/ton-token.png' : '/images/token.png'}
+          />
         </LabeledContent>
         <LabeledContent title="Entry Fee">
-          <CoinsDisplay variant="body2" coins={tournament.entryPrice} />
+          <CoinsDisplay
+            variant="body2"
+            coins={tournament.entryPrice}
+            tokenImageSrc={tournament.isTonConnected ? '/images/ton-token.png' : '/images/token.png'}
+          />
         </LabeledContent>
       </div>
       <Button className={styles.actionButton} onClick={() => onViewDetailsClick(tournament)}>
         {tournamentStatus === 'finished' ? 'View Details' : 'Play'}
       </Button>
+
     </div>
   );
 };

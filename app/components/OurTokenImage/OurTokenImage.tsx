@@ -3,7 +3,7 @@ import { ImgHTMLAttributes } from 'react';
 export type OurTokenImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src' | 'alt'>;
 
 const OurTokenImage = ({ ...imageProps }) => {
-  return <img {...imageProps} src="/images/token.png" alt="token-image" />;
+  return <img {...imageProps} alt="token-image" />;
 };
 
 export default OurTokenImage;

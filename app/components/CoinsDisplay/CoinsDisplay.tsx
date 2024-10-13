@@ -8,6 +8,7 @@ export interface CoinsDisplayProps extends TypographyProps {
   postfix?: string;
   containerClassName?: string;
   tokenImageClassName?: string;
+  tokenImageSrc?: string;
   reversed?: boolean;
 }
 
@@ -17,6 +18,7 @@ const CoinsDisplay = ({
   postfix,
   tokenImageClassName,
   reversed,
+  tokenImageSrc = '/images/token.png',
   ...typographyProps
 }: CoinsDisplayProps) => {
   return (

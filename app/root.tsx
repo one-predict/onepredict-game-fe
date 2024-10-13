@@ -1,6 +1,7 @@
 import { Outlet, Links, Meta, Scripts, ScrollRestoration, useMatches } from '@remix-run/react';
 import { ReactNode, useMemo } from 'react';
 import { SDKProvider } from '@telegram-apps/sdk-react';
+import { THEME, TonConnectUIProvider } from '@tonconnect/ui-react';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import utcPlugin from 'dayjs/plugin/utc';
@@ -116,24 +117,32 @@ const App = () => {
     <ErrorBoundary>
       <SDKProvider debug>
         <TelegramInit />
-        <QueryClientProvider client={queryClient}>
-          <ApiProvider value={services}>
-            <AppInitializer>
-              <AuthorizedSection>
-                <PageLayoutWithMenu background={pageBackground}>
-                  <Outlet />
-                </PageLayoutWithMenu>
-              </AuthorizedSection>
-              <ToastContainer
-                pauseOnFocusLoss={false}
-                pauseOnHover={false}
-                theme="dark"
-                toastStyle={{ zIndex: 1000000 }}
-                position="top-right"
-              />
-            </AppInitializer>
-          </ApiProvider>
-        </QueryClientProvider>
+        <TonConnectUIProvider
+          manifestUrl="https://s3.eu-central-1.amazonaws.com/game.aipick.io/tonconnect-manifest.json"
+          uiPreferences={{ theme: THEME.DARK }}
+          // actionsConfiguration={{
+          //   twaReturnUrl: 'https://t.me/DemoDappWithTonConnectBot/demo',
+          // }}
+        >
+          <QueryClientProvider client={queryClient}>
+            <ApiProvider value={services}>
+              <AppInitializer>
+                <AuthorizedSection>
+                  <PageLayoutWithMenu background={pageBackground}>
+                    <Outlet />
+                  </PageLayoutWithMenu>
+                </AuthorizedSection>
+                <ToastContainer
+                  pauseOnFocusLoss={false}
+                  pauseOnHover={false}
+                  theme="dark"
+                  toastStyle={{ zIndex: 1000000 }}
+                  position="top-right"
+                />
+              </AppInitializer>
+            </ApiProvider>
+          </QueryClientProvider>
+        </TonConnectUIProvider>
       </SDKProvider>
     </ErrorBoundary>
   );

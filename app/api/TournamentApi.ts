@@ -17,6 +17,7 @@ export interface Tournament {
   roundDurationInSeconds: number;
   joinCloseTimestamp: number;
   imageUrl?: string;
+  isTonConnected?: boolean;
 }
 
 export interface TournamentParticipant {
@@ -48,7 +49,7 @@ export interface TournamentApi {
   getTournamentLeaderboard(tournamentId: string): Promise<TournamentLeaderboard>;
   getTournamentParticipation(tournamentId: string): Promise<TournamentParticipation | null | undefined>;
   getTournamentParticipationRank(tournamentId: string): Promise<number>;
-  joinTournament(tournamentId: string): Promise<void>;
+  joinTournament(tournamentId: string, walletAddress: string): Promise<void>;
 }
 
 export class HttpTournamentApi implements TournamentApi {
@@ -90,7 +91,9 @@ export class HttpTournamentApi implements TournamentApi {
     return rank;
   }
 
-  public async joinTournament(tournamentId: string) {
-    await this.client.makeCall<{ success: boolean }>(`/tournaments/${tournamentId}/participation`, 'POST', {});
+  public async joinTournament(tournamentId: string, walletAddress: string) {
+    await this.client.makeCall<{ success: boolean }>(`/tournaments/${tournamentId}/participation`, 'POST', {
+      walletAddress,
+    });
   }
 }
