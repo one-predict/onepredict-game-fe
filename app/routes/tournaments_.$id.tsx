@@ -48,7 +48,9 @@ const TournamentPage = () => {
   const { mutateAsync: joinTournament, status: joinTournamentMutationStatus } = useJoinTournamentMutation();
   const { mutateAsync: createPortfolio, status: createPortfolioStatus } = useCreatePortfolioMutation();
 
-  const canJoinTournament = !!currentUser && currentUser.coinsBalance > tournament?.entryPrice;
+  const canJoinTournament =
+    tournament?.isTonConnected ||
+    !!currentUser && currentUser.coinsBalance > tournament?.entryPrice);
 
   useBackButton(
     true,
@@ -64,13 +66,16 @@ const TournamentPage = () => {
     [showPortfolios],
   );
 
-  const handleJoinTournamentButtonClick = useCallback(async () => {
-    if (!tournament) {
-      return;
-    }
+  const handleJoinTournamentButtonClick = useCallback(
+    async (walletAddress?: string) => {
+      if (!tournament) {
+        return;
+      }
 
-    await joinTournament(tournament.id);
-  }, [joinTournament, tournament]);
+      await joinTournament({ tournamentId: tournament.id, walletAddress: walletAddress || '' });
+    },
+    [joinTournament, tournament],
+  );
 
   const handlePortfoliosButtonClick = useCallback(() => {
     setShowPortfolios(true);
