@@ -1,10 +1,9 @@
-import { toast } from 'react-toastify';
 import { useUtils as useTelegramUtils } from '@telegram-apps/sdk-react';
 import { TOKEN_NAME } from '@constants/token';
 import Typography from '@components/Typography';
 import Button from '@components/Button';
-import CopyIcon from '@assets/icons/copy.svg?react';
-import { generateReferralLink, generateShareLink } from '@utils/telegram';
+import CopyButton from '@components/CopyButton';
+import { generateReferralLink, generateShareFriendLink } from '@utils/telegram';
 import styles from './InviteFriendsCard.module.scss';
 
 export interface InviteFriendsCardProps {
@@ -14,22 +13,12 @@ export interface InviteFriendsCardProps {
 const InviteFriendsCard = ({ currentUserId }: InviteFriendsCardProps) => {
   const telegramUtils = useTelegramUtils(true);
 
-  const handleCopyButtonClick = () => {
-    if (!currentUserId) {
-      return;
-    }
-
-    navigator.clipboard.writeText(generateReferralLink(currentUserId));
-
-    toast('Link copied!');
-  };
-
   const handleInviteButtonClick = () => {
     if (!currentUserId) {
       return;
     }
 
-    telegramUtils.openTelegramLink(generateShareLink(currentUserId));
+    telegramUtils.openTelegramLink(generateShareFriendLink(currentUserId));
   };
 
   return (
@@ -55,9 +44,7 @@ const InviteFriendsCard = ({ currentUserId }: InviteFriendsCardProps) => {
         <Button onClick={handleInviteButtonClick} disabled={!currentUserId}>
           Invite Friend
         </Button>
-        <Button onClick={handleCopyButtonClick} className={styles.copyButton}>
-          <CopyIcon />
-        </Button>
+        <CopyButton textToCopy={currentUserId ? generateReferralLink(currentUserId) : ''} />
       </div>
     </div>
   );

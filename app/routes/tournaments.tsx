@@ -7,6 +7,7 @@ import Loader from '@components/Loader';
 import TournamentsList from '@components/TournamentsList';
 import PageBody from '@components/PageBody';
 import ButtonsToggle from '@components/ButtonsToggle';
+import ShareTournamentPopup from '@components/ShareTournamentPopup';
 import styles from './tournaments.module.scss';
 
 export const handle = {
@@ -20,6 +21,8 @@ export const handle = {
 
 const TournamentsPage = () => {
   const [tournamentStatus, setTournamentStatus] = useState<TournamentStatus>(TournamentStatus.Available);
+
+  const [tournamentToShare, setTournamentToShare] = useState<Tournament | null>(null);
 
   const { data: tournaments } = useLatestTournamentsQuery(tournamentStatus);
 
@@ -47,10 +50,19 @@ const TournamentsPage = () => {
         selectedId={tournamentStatus}
       />
       {tournaments ? (
-        <TournamentsList tournaments={tournaments} onViewTournamentDetailsClick={handleViewTournamentDetailsClick} />
+        <TournamentsList
+          tournaments={tournaments}
+          onViewTournamentDetailsClick={handleViewTournamentDetailsClick}
+          onShareTournamentClick={(tournament) => setTournamentToShare(tournament)}
+        />
       ) : (
         <Loader centered />
       )}
+      <ShareTournamentPopup
+        tournament={tournamentToShare}
+        isOpen={!!tournamentToShare}
+        onClose={() => setTournamentToShare(null)}
+      />
     </PageBody>
   );
 };

@@ -14,12 +14,8 @@ import useBackButton from '@hooks/useBackButton';
 import useJoinTournamentMutation from '@hooks/mutations/useJoinTournamentMutation';
 import useCreatePortfolioMutation from '@hooks/mutations/useCreatePortfolioMutation';
 import PageBody from '@components/PageBody';
-import Typography from '@components/Typography';
 import Loader from '@components/Loader';
-import LabeledContent from '@components/LabeledContent';
 import TournamentDetails from '@components/TournamentDetails';
-import PortfoliosGame from '@components/PortfoliosGame';
-import FixedSlideView from '@components/FixedSlideView';
 import styles from './tournament.module.scss';
 
 export const handle = {
@@ -30,8 +26,6 @@ const TournamentPage = () => {
   const navigate = useNavigate();
 
   const { id: tournamentId } = useParams<{ id: string }>();
-
-  const [showPortfolios, setShowPortfolios] = useState(false);
 
   const currentUser = useSession();
 
@@ -48,20 +42,15 @@ const TournamentPage = () => {
   const { mutateAsync: joinTournament, status: joinTournamentMutationStatus } = useJoinTournamentMutation();
   const { mutateAsync: createPortfolio, status: createPortfolioStatus } = useCreatePortfolioMutation();
 
-  const canJoinTournament = tournament?.isTonConnected || !!currentUser && currentUser.coinsBalance > tournament?.entryPrice;
+  const canJoinTournament =
+    tournament?.isTonConnected || (!!currentUser && currentUser.coinsBalance > tournament?.entryPrice);
 
   useBackButton(
     true,
     () => {
-      if (showPortfolios) {
-        setShowPortfolios(false);
-
-        return;
-      }
-
       navigate('/tournaments');
     },
-    [showPortfolios],
+    [],
   );
 
   const handleJoinTournamentButtonClick = useCallback(
@@ -74,10 +63,6 @@ const TournamentPage = () => {
     },
     [joinTournament, tournament],
   );
-
-  const handlePortfoliosButtonClick = useCallback(() => {
-    setShowPortfolios(true);
-  }, [setShowPortfolios]);
 
   const handlePortfolioSubmit = useCallback(
     async (offerId: string, predictions: DigitalAssetPricePrediction[]) => {
@@ -107,27 +92,11 @@ const TournamentPage = () => {
           onPortfolioSubmit={handlePortfolioSubmit}
           isTournamentJoiningInProgress={joinTournamentMutationStatus === 'pending'}
           onJoinTournamentButtonClick={handleJoinTournamentButtonClick}
-          onPortfoliosButtonClick={handlePortfoliosButtonClick}
+          isPortfolioSubmitInProgress={createPortfolioStatus === 'pending'}
         />
       ) : (
         <Loader centered />
       )}
-      <FixedSlideView visible={showPortfolios} onClose={() => setShowPortfolios(false)}>
-        {showPortfolios && (
-          <>
-            <LabeledContent className={styles.portfoliosTournamentDescription} row title="Tournament:">
-              <Typography variant="h6">{tournament?.title}</Typography>
-            </LabeledContent>
-            <PortfoliosGame
-              className={styles.portfoliosGame}
-              offersSeries={offersSeries ?? null}
-              portfolios={portfolios ?? null}
-              onPortfolioSubmit={handlePortfolioSubmit}
-              isPortfolioSubmitInProgress={createPortfolioStatus === 'pending'}
-            />
-          </>
-        )}
-      </FixedSlideView>
     </PageBody>
   );
 };

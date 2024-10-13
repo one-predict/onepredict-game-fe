@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import { Tournament } from '@api/TournamentApi';
 import useTournamentStatus from '@hooks/useTournamentStatus';
 import Button from '@components/Button';
@@ -5,17 +6,25 @@ import Typography from '@components/Typography';
 import TournamentAvailabilityInfo from '@components/TournamentAvailabilityInfo';
 import LabeledContent from '@components/LabeledContent';
 import CoinsDisplay from '@components/CoinsDisplay';
+import ShareIcon from '@assets/icons/share.svg?react';
 import styles from './TournamentListCard.module.scss';
 
 export interface TournamentListCardProps {
   tournament: Tournament;
   onViewDetailsClick: (tournament: Tournament) => void;
+  onShareClick?: (tournament: Tournament) => void;
 }
 
-const TournamentListCard = ({ tournament, onViewDetailsClick }: TournamentListCardProps) => {
+const TournamentListCard = ({ tournament, onViewDetailsClick, onShareClick }: TournamentListCardProps) => {
   const prizePool = tournament.entryPrice * tournament.participantsCount + tournament.staticPrizePool;
 
   const tournamentStatus = useTournamentStatus(tournament);
+
+  const handleShareButtonClick = (event: MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+
+    onShareClick?.(tournament);
+  };
 
   return (
     <div onClick={() => onViewDetailsClick(tournament)} className={styles.tournamentListCard}>
@@ -46,10 +55,15 @@ const TournamentListCard = ({ tournament, onViewDetailsClick }: TournamentListCa
           />
         </LabeledContent>
       </div>
-      <Button className={styles.actionButton} onClick={() => onViewDetailsClick(tournament)}>
-        {tournamentStatus === 'finished' ? 'View Details' : 'Play'}
-      </Button>
-
+      <div className={styles.actionsContainer}>
+        <Button className={styles.actionButton} onClick={() => onViewDetailsClick(tournament)}>
+          {tournamentStatus === 'finished' ? 'View Details' : 'Play'}
+        </Button>
+        <div onClick={handleShareButtonClick} className={styles.shareButton}>
+          <ShareIcon />
+          <Typography variant="subtitle2">Share</Typography>
+        </div>
+      </div>
     </div>
   );
 };

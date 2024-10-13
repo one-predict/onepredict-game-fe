@@ -3,18 +3,20 @@ import clsx from 'clsx';
 import useCacheForTransition from '@hooks/useCacheForTransition';
 import Portal from '@components/Portal';
 import styles from './Popup.module.scss';
+import Typography from '@components/Typography';
 
 export interface PopupProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
+  title?: string;
   height?: number;
   contentClassName?: string;
 }
 
 const DEFAULT_POPUP_HEIGHT = 85;
 
-const Popup = ({ height = DEFAULT_POPUP_HEIGHT, children, isOpen, onClose, contentClassName }: PopupProps) => {
+const Popup = ({ height = DEFAULT_POPUP_HEIGHT, title, children, isOpen, onClose, contentClassName }: PopupProps) => {
   const [cachedChildren, onTransitionEnd] = useCacheForTransition(isOpen ? children : null);
 
   useEffect(() => {
@@ -38,6 +40,11 @@ const Popup = ({ height = DEFAULT_POPUP_HEIGHT, children, isOpen, onClose, conte
         className={clsx(styles.popup, isOpen && styles.visiblePopup)}
       >
         <div onClick={onClose} className={styles.crossIcon}></div>
+        {title && (
+          <Typography className={styles.popupTitle} alignment="center" variant="h3">
+            {title}
+          </Typography>
+        )}
         <div className={clsx(styles.popupContent, contentClassName)}>{cachedChildren}</div>
       </div>
     </Portal>

@@ -74,6 +74,7 @@ export const digitalAssetLogoConfigMap: Record<
   },
   solana: {
     image: '/images/coins/solana.png',
+    backgroundColor: 'dark',
   },
   starknet: {
     image: '/images/coins/starknet.png',

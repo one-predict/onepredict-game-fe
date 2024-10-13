@@ -57,9 +57,27 @@
   box-shadow: 0 0 100px 50px #3a1f66;
 }
 
+.actionsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .actionButton {
   width: fit-content;
   min-width: 150px;
+}
+
+.shareButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  column-gap: 4px;
+  width: fit-content;
+  padding: 4px 16px;
+  border-radius: 12px;
+  background: #FFFFFF1A;
 }
 
 .tournamentListCardFooter {

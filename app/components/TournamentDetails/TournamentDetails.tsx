@@ -29,6 +29,7 @@ export interface TournamentDetailsProps {
   onPortfolioSubmit: (offerId: string, predictions: DigitalAssetPricePrediction[]) => void;
   tournamentParticipationRank: number | null | undefined;
   isTournamentJoiningInProgress?: boolean;
+  isPortfolioSubmitInProgress?: boolean;
   onJoinTournamentButtonClick: (walletAddress?: string) => void;
 }
 
@@ -44,6 +45,7 @@ const TournamentDetails = ({
   onPortfolioSubmit,
   isTournamentJoiningInProgress,
   onJoinTournamentButtonClick,
+  isPortfolioSubmitInProgress,
 }: TournamentDetailsProps) => {
   const wallet = useTonWallet();
   const [tonConnectUI, setOptions] = useTonConnectUI();
@@ -69,7 +71,7 @@ const TournamentDetails = ({
           offersSeries={offersSeries ?? null}
           portfolios={portfolios ?? null}
           onPortfolioSubmit={onPortfolioSubmit}
-          isPortfolioSubmitInProgress={false}
+          isPortfolioSubmitInProgress={isPortfolioSubmitInProgress}
         />
       </div>
     );
@@ -148,9 +150,7 @@ const TournamentDetails = ({
         <Typography variant="body2">{tournament.description}</Typography>
       </div>
       {!tournamentParticipation && isRegistrationOpen && (
-        <div className={styles.joinTournamentSection}>
-          {renderJoinButton()}
-        </div>
+        <div className={styles.joinTournamentSection}>{renderJoinButton()}</div>
       )}
       <div className={styles.participationInfoContainer}>
         <LabeledContent title="Your Rank">{renderParticipationInfo()}</LabeledContent>

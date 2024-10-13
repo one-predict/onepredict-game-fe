@@ -8,9 +8,15 @@ export interface TournamentsListProps {
   className?: string;
   tournaments: Tournament[];
   onViewTournamentDetailsClick: (tournament: Tournament) => void;
+  onShareTournamentClick?: (tournament: Tournament) => void;
 }
 
-const TournamentsList = ({ className, tournaments, onViewTournamentDetailsClick }: TournamentsListProps) => {
+const TournamentsList = ({
+  className,
+  tournaments,
+  onViewTournamentDetailsClick,
+  onShareTournamentClick,
+}: TournamentsListProps) => {
   if (!tournaments.length) {
     return (
       <Typography variant="subtitle1" className={styles.noTournamentsMessage}>
@@ -26,6 +32,7 @@ const TournamentsList = ({ className, tournaments, onViewTournamentDetailsClick 
           key={tournament.id}
           tournament={tournament}
           onViewDetailsClick={onViewTournamentDetailsClick}
+          onShareClick={onShareTournamentClick}
         />
       ))}
     </div>

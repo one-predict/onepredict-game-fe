@@ -1,4 +1,5 @@
 import { ReactNode, useEffect } from 'react';
+import { useNavigate } from '@remix-run/react';
 import { mockTelegramEnv, parseInitData } from '@telegram-apps/sdk';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
 import useCurrentUserQuery from '@hooks/queries/useCurrentUserQuery';
@@ -13,6 +14,7 @@ import LoadingScreen from '@components/LoadingScreen';
 import OnboardingScreen from '@components/OnboardingScreen';
 import RewardsNotification from '@components/RewardsNotification';
 import FixedSlideView from '@components/FixedSlideView';
+import { safeDecodeStartParams } from '@utils/telegram';
 
 export interface AppInitializerProps {
   children: ReactNode;
@@ -52,6 +54,8 @@ if (typeof window !== 'undefined' && import.meta.env.MODE === 'development') {
 const RESET_LOADING_DELAY = 1000;
 
 const AppInitializer = ({ children }: AppInitializerProps) => {
+  const navigate = useNavigate();
+
   const { data: currentUser } = useCurrentUserQuery();
   const { mutateAsync: signIn } = useSignInMutation();
   const { mutateAsync: acknowledgeRewardsNotification } = useAckRewardsNotificationMutation();
@@ -67,10 +71,16 @@ const AppInitializer = ({ children }: AppInitializerProps) => {
   const [loadingProgress, loadingFinished] = useResourcesLoadingProgress([currentUser, myRewardsNotifications]);
 
   useAsyncEffect(async () => {
+    const startParams = safeDecodeStartParams(launchParams?.startParam || '');
+
+    if (startParams.initialPage) {
+      navigate(startParams.initialPage);
+    }
+
     if (launchParams?.initDataRaw && currentUser === null) {
       await signIn({
         signInMessage: launchParams.initDataRaw,
-        referralId: launchParams.startParam || undefined,
+        referralId: startParams.referralId ?? undefined,
       });
     }
   }, [launchParams, currentUser]);

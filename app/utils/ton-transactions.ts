@@ -1,4 +1,4 @@
-import { SendTransactionRequest } from "@tonconnect/ui-react";
+import { SendTransactionRequest } from '@tonconnect/ui-react';
 
 const tonsToNanotons = (amount: number) => {
   return amount * Math.pow(10, 9);
