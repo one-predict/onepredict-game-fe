@@ -48,9 +48,7 @@ const TournamentPage = () => {
   const { mutateAsync: joinTournament, status: joinTournamentMutationStatus } = useJoinTournamentMutation();
   const { mutateAsync: createPortfolio, status: createPortfolioStatus } = useCreatePortfolioMutation();
 
-  const canJoinTournament =
-    tournament?.isTonConnected ||
-    !!currentUser && currentUser.coinsBalance > tournament?.entryPrice);
+  const canJoinTournament = tournament?.isTonConnected || !!currentUser && currentUser.coinsBalance > tournament?.entryPrice;
 
   useBackButton(
     true,
