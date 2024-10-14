@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@remix-run/dev": "^2.11.0",
+    "@sentry/vite-plugin": "^2.22.5",
     "@types/lodash": "^4.17.0",
     "@types/node": "22.1.0",
     "@types/react": "^18.2.66",
