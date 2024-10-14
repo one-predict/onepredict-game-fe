@@ -23,7 +23,7 @@ const CoinsDisplay = ({
 }: CoinsDisplayProps) => {
   return (
     <div className={clsx(styles.coinsDisplay, reversed && styles.reversedCoinsDisplay, containerClassName)}>
-      <OurTokenImage className={clsx(styles.tokenImage, tokenImageClassName)} />
+      <OurTokenImage className={clsx(styles.tokenImage, tokenImageClassName)} src={tokenImageSrc} />
       <Typography {...typographyProps}>
         {coins}
         {postfix ? ` ${postfix}` : ''}

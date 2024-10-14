@@ -15,6 +15,7 @@ import CoinsDisplay from '@components/CoinsDisplay';
 import PortfoliosGame from '@components/PortfoliosGame';
 import ColoredPoints from '@components/ColoredPoints';
 import { prepareSendTransaction } from '@app/utils/ton-transactions';
+import {TOKEN_NAME} from "@constants/token";
 import styles from './TournamentDetails.module.scss';
 
 const VITE_TON_TOURNAMENT_ADDRESS = import.meta.env.VITE_TON_TOURNAMENT_ADDRESS;
@@ -33,6 +34,8 @@ export interface TournamentDetailsProps {
   onJoinTournamentButtonClick: (walletAddress?: string) => void;
 }
 
+const AVAILABLE_FOR_PORTFOLIO_TOURNAMENT_STATUSES = ['registration', 'live'];
+
 const TournamentDetails = ({
   tournament,
   tournamentLeaderboard,
@@ -49,15 +52,14 @@ const TournamentDetails = ({
 }: TournamentDetailsProps) => {
   const wallet = useTonWallet();
   const [tonConnectUI, setOptions] = useTonConnectUI();
-  const tournamentTicker = tournament.isTonConnected ? 'AIP' : 'TON';
+  const tournamentTicker = tournament.isTonConnected ? 'TON' : TOKEN_NAME;
 
   const tournamentStatus = useTournamentStatus(tournament);
 
-  const isRegistrationOpen =
-    tournamentStatus === 'live' && tournament.joinCloseTimestamp - getCurrentUnixTimestamp() > 0;
+  const isRegistrationOpen = tournamentStatus === 'registration' && tournament.joinCloseTimestamp - getCurrentUnixTimestamp() > 0;
 
   const renderPortfoliosSection = () => {
-    if (tournamentStatus !== 'live' || tournamentParticipation === null) {
+    if (!AVAILABLE_FOR_PORTFOLIO_TOURNAMENT_STATUSES.includes(tournamentStatus) || tournamentParticipation === null) {
       return null;
     }
 
